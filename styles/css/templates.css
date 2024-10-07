@@ -1,0 +1,49 @@
+
+ .backpack{
+    background-color: rgb(76, 115, 180);
+}
+.rare{
+    background-color: rgb(44, 108, 23);
+}
+.uncommon{
+    background-color: rgb(28, 104, 166);
+}
+.epic{
+    background-color: rgb(123, 60, 169);
+}
+.legendary{
+    background-color: rgb(145, 74, 29);
+}
+.marvel{
+    background-color: rgb(190, 22, 22);
+}
+.starwars{
+    background-color: rgb(219, 166, 34);
+}
+.slurp{
+    background-color: rgb(18, 182, 191);
+}
+.dc{
+    background-color: rgb(45, 81, 143);
+}
+.icon{
+    background-color: rgb(107, 231, 231);
+}
+.gaminglegends{
+    background-color: rgb(61, 7, 65);
+}
+.dark{
+    background-color: rgb(227, 109, 213);
+}
+.shadow{
+    background-color: rgb(50, 50, 50);
+}
+.molten{
+    background-color: rgb(213, 83, 33);
+}
+.frozen{
+    background-color: rgb(152, 234, 246);
+}
+.lava{
+    background:radial-gradient(rgb(252, 166, 55),rgb(58, 14, 54));
+}

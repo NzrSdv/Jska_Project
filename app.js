@@ -3,7 +3,7 @@ let fetchStatus = false;
 LoadingAnimation();
 
 const products = document.querySelector(".products");
-const rares = ["backpack", "rare", "uncommon", "epic", "legendary"];
+const rares = ["common", "rare", "uncommon", "epic", "legendary"];
 const types = [
   "wrap",
   "emote",
@@ -19,7 +19,7 @@ class Product {
     this.rarity = rarity;
     this.type = type;
     this.image = image;
-    this.cost = 50;
+    this.cost = 100;
   }
   toFindTheCost() {
     let k = rares.indexOf(this.rarity);
@@ -27,36 +27,118 @@ class Product {
     let list = [k,kt]
     console.log(list)
     if(k == 1){
-        if(kt == 5){
-            this.cost = 100
+        if(kt == 0){
+            this.cost = 300;
         }
-    }
-    else if(k == 2){
-        if(kt == 5){
+        else if(kt == 1){
+            this.cost = 200;
+        }
+        else if(kt == 2){
+            this.cost = 500;
+        }
+        else if(kt == 3){
+            this.cost = 500;
+        }
+        else if(kt == 4){
+            this.cost = 0;
+        }
+        else if(kt == 5){
             this.cost = 200
+        }
+        else if(kt == 6){
+            this.cost = 800
+        }
+    } 
+    else if(k == 2){
+        if(kt == 0){
+            this.cost = 600;
+        }
+        else if(kt == 1){
+            this.cost = 500;
+        }
+        else if(kt == 2){
+            this.cost = 800;
+        }
+        else if(kt == 3){
+            this.cost = 800;
+        }
+        else if(kt == 4){
+            this.cost = 0;
+        }
+        else if(kt == 5){
+            this.cost = 400
+        }
+        else if(kt == 6){
+            this.cost = 1200
         }
     }
     else if(k == 3){
-        if(kt == 5){
-            this.cost = 400
+        if(kt == 0){
+            this.cost = 900;
         }
-    }
-    else if(k == 4){
-        if(kt == 5){
+        else if(kt == 1){
+            this.cost = 800;
+        }
+        else if(kt == 2){
+            this.cost = 1200;
+        }
+        else if(kt == 3){
+            this.cost = 1500;
+        }
+        else if(kt == 4){
+            this.cost = 1000;
+        }
+        else if(kt == 5){
             this.cost = 700
         }
+        else if(kt == 6){
+            this.cost = 1500;
+        }
     }
-    else if(k == 5){
-        if(kt == 5){
+    else if(k == 4 || k == -1){
+        if(kt == 0){
+            this.cost = 1200;
+        }
+        else if(kt == 1){
+            this.cost = 1100;
+        }
+        else if(kt == 2){
+            this.cost = 2000;
+        }
+        else if(kt == 3){
+            this.cost = 1500;
+        }
+        else if(kt == 4){
+            this.cost = 0;
+        }
+        else if(kt == 5){
             this.cost = 900
+        }
+        else if(kt == 6){
+            this.cost = 2000;
         }
     }
     else{
-        if(kt == 5){
-            this.cost = 500
+        if(kt == 0){
+            this.cost = 300;
         }
-        else{
-            this.cost = 1
+        else if(kt == 1){
+            this.cost = 200;
+        }
+        else if(kt == 2){
+            this.cost = 500;
+        }
+        else if(kt == 3){
+            this.cost = 500;
+        }
+        else if(kt == 4){
+            this.cost = 500;
+        }
+        else if(kt == 5){
+            this.cost = 100
+        }
+        else if(kt == 6){
+            this.cost = 800
         }
     }
   }
@@ -75,12 +157,16 @@ class ProductManager {
     if (isData) {
       this.datas.forEach((element) => {
         products.innerHTML += `
-                <div class="product">
+                <div class="product ${element.rarity}">
             <img src="${element.image}" alt="" class="product--image">
             <h2 class="product-name">${element.name}</h2>
             <div class="line">
                 <h3 class="product-type">${element.type}</h3>
-                <h3 class="product-price">${element.cost} VB</h3>
+                <h3 class="product-rarity">${element.rarity}</h3>
+            </div>
+            <div class = "line"> 
+            <h3 class="product-cost">${element.cost} VB</h3>
+            <button class="product--cart">add to cart</button>
             </div>
         </div>`;
       });
@@ -99,7 +185,7 @@ if (!localStorage.getItem("products")) {
       let list = [];
       PM = new ProductManager(list, []);
 
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < 20; i++) {
         list.push(
           new Product(
             ans.data[i].name,
