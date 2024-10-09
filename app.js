@@ -143,7 +143,8 @@ class Product {
     }
   }
 }
-
+class CartProduct extends Product{
+}
 class ProductManager {
   constructor(datas, carts) {
     this.datas = datas;
@@ -166,7 +167,7 @@ class ProductManager {
             </div>
             <div class = "line"> 
             <h3 class="product-cost">${element.cost} VB</h3>
-            <button class="product--cart">add to cart</button>
+            <button class="product--cart" onclick="">add to cart</button>
             </div>
         </div>`;
       });
@@ -185,7 +186,6 @@ if (!localStorage.getItem("products")) {
       let list = [];
       PM = new ProductManager(list, []);
 
-      for (let i = 0; i < 20; i++) {
         list.push(
           new Product(
             ans.data[i].name,
@@ -196,7 +196,6 @@ if (!localStorage.getItem("products")) {
         );
         list[i].toFindTheCost();
         PM.addData(list[i]);
-      }
       localStorage.setItem("products", JSON.stringify(list));
     })
     .then(() => {
@@ -218,4 +217,9 @@ function LoadingAnimation() {
       loading.classList.add("none");
     }
   }, 1000);
+}
+
+function addToTheCartButton(cost,type){
+  console.log(cost)
+  console.log(type)
 }

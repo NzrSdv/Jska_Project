@@ -6,42 +6,29 @@ body {
   font-family: "Roboto", sans-serif;
   font-weight: 500;
   font-style: normal;
-}
-.loader {
-  width: 100%;
-  height: 100dvh;
-  background-color: rgba(0, 0, 0, 0.5);
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  color: white;
+  gap:20px;
 }
-.loader--circle {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  border-left: 20px solid white;
-  border-right: 20px solid white;
-  border-top: 20px solid transparent;
-  border-bottom: 20px solid transparent;
-  transition: 1s ease-in-out;
-  animation: spin 2s ease-in-out infinite;
+body::-webkit-scrollbar{
+  display: none;
+}
+.header{
+  width: 100%;
+  height: 15dvh;
+  background-color: rgb(12, 19, 161);
 }
 
 .products {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 20px 10px;
 }
 
 .product {
-  width: 300px;
-  border: 1px solid black;
+  width: 325px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -74,14 +61,7 @@ button.product--cart:hover {
 }
 
 /* "backpack", "rare", "uncommon", "epic", "legendary" */
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
+
 
 .none {
   display: none;
