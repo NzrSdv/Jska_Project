@@ -14,7 +14,7 @@ const types = [
   "skin",
 ];
 class Product {
-  constructor(name, rarity,image, type) {
+  constructor(name, rarity, image, type) {
     this.name = name;
     this.rarity = rarity;
     this.type = type;
@@ -24,127 +24,92 @@ class Product {
   toFindTheCost() {
     let k = rares.indexOf(this.rarity);
     let kt = types.indexOf(this.type);
-    let list = [k,kt]
-    console.log(list)
-    if(k == 1){
-        if(kt == 0){
-            this.cost = 300;
-        }
-        else if(kt == 1){
-            this.cost = 200;
-        }
-        else if(kt == 2){
-            this.cost = 500;
-        }
-        else if(kt == 3){
-            this.cost = 500;
-        }
-        else if(kt == 4){
-            this.cost = 0;
-        }
-        else if(kt == 5){
-            this.cost = 200
-        }
-        else if(kt == 6){
-            this.cost = 800
-        }
-    } 
-    else if(k == 2){
-        if(kt == 0){
-            this.cost = 600;
-        }
-        else if(kt == 1){
-            this.cost = 500;
-        }
-        else if(kt == 2){
-            this.cost = 800;
-        }
-        else if(kt == 3){
-            this.cost = 800;
-        }
-        else if(kt == 4){
-            this.cost = 0;
-        }
-        else if(kt == 5){
-            this.cost = 400
-        }
-        else if(kt == 6){
-            this.cost = 1200
-        }
-    }
-    else if(k == 3){
-        if(kt == 0){
-            this.cost = 900;
-        }
-        else if(kt == 1){
-            this.cost = 800;
-        }
-        else if(kt == 2){
-            this.cost = 1200;
-        }
-        else if(kt == 3){
-            this.cost = 1500;
-        }
-        else if(kt == 4){
-            this.cost = 1000;
-        }
-        else if(kt == 5){
-            this.cost = 700
-        }
-        else if(kt == 6){
-            this.cost = 1500;
-        }
-    }
-    else if(k == 4 || k == -1){
-        if(kt == 0){
-            this.cost = 1200;
-        }
-        else if(kt == 1){
-            this.cost = 1100;
-        }
-        else if(kt == 2){
-            this.cost = 2000;
-        }
-        else if(kt == 3){
-            this.cost = 1500;
-        }
-        else if(kt == 4){
-            this.cost = 0;
-        }
-        else if(kt == 5){
-            this.cost = 900
-        }
-        else if(kt == 6){
-            this.cost = 2000;
-        }
-    }
-    else{
-        if(kt == 0){
-            this.cost = 300;
-        }
-        else if(kt == 1){
-            this.cost = 200;
-        }
-        else if(kt == 2){
-            this.cost = 500;
-        }
-        else if(kt == 3){
-            this.cost = 500;
-        }
-        else if(kt == 4){
-            this.cost = 500;
-        }
-        else if(kt == 5){
-            this.cost = 100
-        }
-        else if(kt == 6){
-            this.cost = 800
-        }
+    let list = [k, kt];
+    console.log(list);
+    if (k == 1) {
+      if (kt == 0) {
+        this.cost = 300;
+      } else if (kt == 1) {
+        this.cost = 200;
+      } else if (kt == 2) {
+        this.cost = 500;
+      } else if (kt == 3) {
+        this.cost = 500;
+      } else if (kt == 4) {
+        this.cost = 0;
+      } else if (kt == 5) {
+        this.cost = 200;
+      } else if (kt == 6) {
+        this.cost = 800;
+      }
+    } else if (k == 2) {
+      if (kt == 0) {
+        this.cost = 600;
+      } else if (kt == 1) {
+        this.cost = 500;
+      } else if (kt == 2) {
+        this.cost = 800;
+      } else if (kt == 3) {
+        this.cost = 800;
+      } else if (kt == 4) {
+        this.cost = 0;
+      } else if (kt == 5) {
+        this.cost = 400;
+      } else if (kt == 6) {
+        this.cost = 1200;
+      }
+    } else if (k == 3) {
+      if (kt == 0) {
+        this.cost = 900;
+      } else if (kt == 1) {
+        this.cost = 800;
+      } else if (kt == 2) {
+        this.cost = 1200;
+      } else if (kt == 3) {
+        this.cost = 1500;
+      } else if (kt == 4) {
+        this.cost = 1000;
+      } else if (kt == 5) {
+        this.cost = 700;
+      } else if (kt == 6) {
+        this.cost = 1500;
+      }
+    } else if (k == 4 || k == -1) {
+      if (kt == 0) {
+        this.cost = 1200;
+      } else if (kt == 1) {
+        this.cost = 1100;
+      } else if (kt == 2) {
+        this.cost = 2000;
+      } else if (kt == 3) {
+        this.cost = 1500;
+      } else if (kt == 4) {
+        this.cost = 0;
+      } else if (kt == 5) {
+        this.cost = 900;
+      } else if (kt == 6) {
+        this.cost = 2000;
+      }
+    } else {
+      if (kt == 0) {
+        this.cost = 300;
+      } else if (kt == 1) {
+        this.cost = 200;
+      } else if (kt == 2) {
+        this.cost = 500;
+      } else if (kt == 3) {
+        this.cost = 500;
+      } else if (kt == 4) {
+        this.cost = 500;
+      } else if (kt == 5) {
+        this.cost = 100;
+      } else if (kt == 6) {
+        this.cost = 800;
+      }
     }
   }
 }
-class CartProduct extends Product{
-}
+class CartProduct extends Product {}
 class ProductManager {
   constructor(datas, carts) {
     this.datas = datas;
@@ -185,25 +150,29 @@ if (!localStorage.getItem("products")) {
     .then((ans) => {
       let list = [];
       PM = new ProductManager(list, []);
-
+      for (let i = 0; i < 20; i++) {
         list.push(
           new Product(
             ans.data[i].name,
             ans.data[i].rarity.value,
-            ans.data[i].images.icon == undefined ? "./imgs/default_image.webp":ans.data[i].images.icon,
+            ans.data[i].images.icon == undefined
+              ? "./imgs/default_image.webp"
+              : ans.data[i].images.icon,
             ans.data[i].type.value
           )
         );
         list[i].toFindTheCost();
         PM.addData(list[i]);
-      localStorage.setItem("products", JSON.stringify(list));
+        localStorage.setItem("products", JSON.stringify(list));
+      }
     })
+
     .then(() => {
       fetchStatus = true;
       PM.render(true);
     });
 } else {
-    fetchStatus = true;
+  fetchStatus = true;
   let data = JSON.parse(localStorage.getItem("products"));
   PM = new ProductManager([...data], []);
   PM.render(true);
@@ -219,7 +188,7 @@ function LoadingAnimation() {
   }, 1000);
 }
 
-function addToTheCartButton(cost,type){
-  console.log(cost)
-  console.log(type)
+function addToTheCartButton(cost, type) {
+  console.log(cost);
+  console.log(type);
 }
