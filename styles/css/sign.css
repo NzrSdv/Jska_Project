@@ -1,0 +1,45 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100dvh;
+}
+.sign-window{
+    width: 600px;
+    height: 500px;
+    border-radius: 20px;
+    background-color: rgb(87, 94, 225);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap:10px;
+}
+.inputs-section {
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+}
+.input-line {
+    background-color:  rgb(67, 73, 172);
+    border-radius: 40px;
+    padding:10px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 10px;
+}
+.input-name {
+    height: 10px;
+    text-align: center;
+    transition: .2s ease-in-out;
+    transform: translateY(12px);
+}
+.input {
+    color:white;
+    background-color:transparent;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.539);
+}

@@ -9,9 +9,12 @@ const types = [
   "backpack",
   "skin",
 ];
+
+//add Box window
 let Addedbox = document.querySelectorAll(".additionalInfo--message");
 let boxAnimationStatus = false;
 let boxIndex = 0;
+
  class ProductManager {
   constructor(datas, carts) {
     this.datas = datas;

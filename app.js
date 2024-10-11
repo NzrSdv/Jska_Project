@@ -1,4 +1,4 @@
-
+let cartLink = document.getElementById("cartLink");
 
 const loading = document.querySelector(".loader");
 let fetchStatus = false;
@@ -41,3 +41,9 @@ if (!localStorage.getItem("products")) {
   PM = new ProductManager([...data], []);
   PM.render(true);
 }
+
+cartLink.addEventListener("click", () =>{
+  if(!JSON.parse(localStorage.getItem("isSigned"))){
+    cartLink.href = "./pages/SignIn.html"
+  }
+})

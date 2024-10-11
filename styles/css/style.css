@@ -5,9 +5,14 @@
 /* files */
 @import url("./templates.css");
 @import url("./header.css");
-body {
+*{
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: rgb(143, 147, 230);
+  
   font-family: "Roboto", sans-serif;
   font-weight: 500;
   font-style: normal;
@@ -15,6 +20,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap:20px;
+  color: white;
 }
 body::-webkit-scrollbar{
   display: none;
