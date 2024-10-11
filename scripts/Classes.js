@@ -9,7 +9,9 @@ const types = [
   "backpack",
   "skin",
 ];
-
+let Addedbox = document.querySelectorAll(".additionalInfo--message");
+let boxAnimationStatus = false;
+let boxIndex = 0;
  class ProductManager {
   constructor(datas, carts) {
     this.datas = datas;
@@ -31,7 +33,7 @@ const types = [
       this.datas.forEach((element) => {
         products.innerHTML += `
                   <div class="product ${element.rarity}">
-              <img src="${element.image}" alt="" class="product--image">
+              <img src="${element.image}" alt="" class="product--image" loading="lazy">
               <h2 class="product-name">${element.name}</h2>
               <div class="line">
                   <h3 class="product-type">${element.type}</h3>
@@ -48,7 +50,7 @@ const types = [
         this.carts.forEach(element => {
             products.innerHTML += `
             <div class="product ${element.rarity}">
-                        <img src="${element.image}" alt="" class="product--image">
+                        <img src="${element.image}" loading="lazy" alt="" class="product--image">
                         <h2 class="product-name">${element.name}</h2>
               <div class="line">
                   <h3 class="product-type">${element.type}</h3>
@@ -172,11 +174,9 @@ const types = [
   AllSumUpdate() {
       this.toFindTheCost();
     this.AllSum = this.cost * this.quantity;
-    console.log(this.AllSum);
   }
   PlusQuantity() {
     this.quantity++;
-    console.log(this.quantity);
     this.AllSumUpdate();
   }
   MinusQuantity() {
