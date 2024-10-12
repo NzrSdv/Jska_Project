@@ -3,12 +3,14 @@ let inputs = document.querySelectorAll(".input");
 inputs.forEach((element) => {
   element.addEventListener("focus", () => {
     let label = element.parentElement.children[0];
-      label.style.transform = "translateY(0px)";
+      label.classList.remove("normal--position")
+      label.classList.add("moved--position");
   });
   element.addEventListener("focusout", () => {
     let label = element.parentElement.children[0];
     if (element.value.trim() == "") {
-      label.style.transform = "translateY(12px)";
+      label.classList.add("normal--position")
+      label.classList.remove("moved--position");
     }
   });
 });
