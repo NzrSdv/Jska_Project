@@ -192,3 +192,35 @@ let boxIndex = 0;
       }
   }
 }
+
+class User{
+  constructor(name,login,email,password){
+    this.name = name;
+    this.login = login;
+    this.email = email;
+    this.password = password;
+  }
+  passwordCheck(newPassword){
+   return this.password == newPassword;
+  }
+  loginCheck(newLogin){
+    return this.login == newLogin;
+  }
+}
+class UserManager{
+  constructor(users,lastUser){
+    this.users = users;
+    this.lastUser = lastUser;
+  }
+  addUser(newUser){
+    this.users.push(newUser);
+  }
+  userFind(uLogin,uPassword){
+    this.users.forEach((element,index) => {
+      if(element.passwordCheck(uPassword) && element.loginCheck(uLogin)){
+        return index;
+      }
+     })
+     return 0;
+  }
+}
