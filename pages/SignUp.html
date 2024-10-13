@@ -1,33 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign Up</title>
-    <link rel="stylesheet" href="../styles/css/style.css">
-    <link rel="stylesheet" href="../styles/css/sign.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../styles/css/style.css" />
+    <link rel="stylesheet" href="../styles/css/sign.css" />
+  </head>
+  <body>
     <div class="sign-window">
-        <h3 class="sign-title">Sign Up</h3>
-        <div class="inputs-section">
-            <div class="input-line">
-                <h4 class="input-name normal--position">login</h4>
-                <input type="text" class="input">
-            </div>
-            <div class="input-line">
-                <h4 class="input-name normal--position">passowrd</h4>
-                <input type="text" class="input">
-            </div>
+      <h3 class="sign-title">Sign Up</h3>
+      <div class="inputs-section">
+        <div class="input-line">
+          <div class="input-field">
+            <h4 class="input-name normal--position">login</h4>
+            <input type="text" class="input" />
+          </div>
         </div>
-        <button class="signBtn signIn-btn">Sign up</button>
-        <p class="alternative--pages">
-            already have an account? <a class="link-page" href="./SignIn.html">Sign In</a>
-        </p>
-        <a href="../index.html" class="link-page">Home</a>
+        <div class="input-line">
+          <div class="input-field">
+            <h4 class="input-name normal--position">passowrd</h4>
+            <input type="password" class="input" />
+          </div>
+          <button class="show-btn">
+            <img src="../imgs/visible-ico.svg" alt="" />
+          </button>
+        </div>
+      </div>
+      <button class="signBtn">Sign up</button>
+      <p class="alternative--pages">
+        already have an account?
+        <a class="link-page" href="./SignIn.html">Sign In</a>
+      </p>
+      <a href="../index.html" class="link-page">Home</a>
     </div>
 
     <script src="../scripts/Classes.js"></script>
     <script src="../scripts/Sign.js"></script>
-</body>
+  </body>
 </html>
