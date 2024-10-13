@@ -37,8 +37,10 @@ body {
   align-items: center;
 }
 .input-name {
+  font-size: small;
   pointer-events: none;
   transition: 0.2s ease-in-out;
+
 }
 .normal--position {
   opacity: 0.3;
@@ -93,9 +95,12 @@ a {
   color: rgba(255, 255, 255, 0.5);
 }
 .error {
-  color: red;
+  opacity: 1;
+  transition:  all 0s;
+  color: rgb(213, 79, 79);
   text-align: center;
   font-size: small;
+  animation: errorAnimation forwards .4s ;
 }
 
 .show-btn {
@@ -117,4 +122,17 @@ a {
 }
 .show-btn img {
   pointer-events: none;
+}
+
+
+@keyframes errorAnimation{
+  0%,100%{
+    transform: translateX(0px);
+  }
+  20%,50%,80%{
+    transform: translateX(10px);
+  }
+  30%,60%,90%{
+    transform: translateX(-10px);
+  }
 }

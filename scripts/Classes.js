@@ -206,14 +206,24 @@ class User{
   loginCheck(newLogin){
     return this.login == newLogin;
   }
+  loggedLS(){
+    localStorage.setItem("logged",JSON.stringify(this));
+  }
 }
 class UserManager{
   constructor(users,lastUser){
     this.users = users;
     this.lastUser = lastUser;
+    this.localStorageUpdate();
+  }
+  localStorageUpdate(){
+    localStorage.setItem("users",JSON.stringify(this.users));
+    localStorage.setItem("lastUser",JSON.stringify(this.lastUser));
+
   }
   addUser(newUser){
     this.users.push(newUser);
+    this.localStorageUpdate();
   }
   userFind(uLogin,uPassword){
     this.users.forEach((element,index) => {
@@ -221,6 +231,6 @@ class UserManager{
         return index;
       }
      })
-     return 0;
+     return -1;
   }
 }
