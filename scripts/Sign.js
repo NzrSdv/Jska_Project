@@ -120,6 +120,7 @@ signInBtn.addEventListener("click", () => {
       UM.users[index].loggedLS();
       window.open("../index.html","_self");
     }
+    console.log(UM.userFind(login, password))
     console.log(UM.userFind(login, password) != -1)
   }
 });

@@ -3,7 +3,11 @@ let cartLink = document.getElementById("cartLink");
 const loading = document.querySelector(".loader");
 let fetchStatus = false;
 LoadingAnimation();
-
+if(JSON.parse(localStorage.getItem("logged"))){
+  document.querySelectorAll(".not-logged").forEach(element => {
+    element.remove();
+  })
+}
 let PM;
 if (!localStorage.getItem("products")) {
   fetch("https://fortnite-api.com/v2/cosmetics/br/?&language=ru", {
@@ -43,7 +47,10 @@ if (!localStorage.getItem("products")) {
 }
 
 cartLink.addEventListener("click", () =>{
-  if(!JSON.parse(localStorage.getItem("isSigned"))){
+  if(JSON.parse(localStorage.getItem("logged"))){
+
+  }
+  else{
     cartLink.href = "./pages/SignIn.html"
   }
 })

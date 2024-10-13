@@ -226,11 +226,21 @@ class UserManager{
     this.localStorageUpdate();
   }
   userFind(uLogin,uPassword){
+    let state =false;
+    let id = 0;
     this.users.forEach((element,index) => {
+      console.log(element.passwordCheck(uPassword))
+      console.log(element.loginCheck(uLogin))
       if(element.passwordCheck(uPassword) && element.loginCheck(uLogin)){
-        return index;
+        state = true;
+        id = index;
       }
      })
-     return -1;
+     if(state){
+      return id;
+     }
+     else{
+      return -1;
+     }
   }
 }
