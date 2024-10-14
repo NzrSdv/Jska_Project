@@ -1,5 +1,22 @@
 const products = document.querySelector(".products");
-const rares = ["common", "rare", "uncommon", "epic", "legendary"];
+const rares = [
+  "common",
+  "rare",
+  "uncommon",
+  "epic",
+  "legendary",
+  "marvel",
+  "starwars",
+  "slurp",
+  "dc",
+  "icon",
+  "gaminglegends",
+  "dark",
+  "shadow",
+  "molten",
+  "forzen",
+  "lava",
+];
 const types = [
   "wrap",
   "emote",
@@ -15,7 +32,7 @@ let Addedbox = document.querySelectorAll(".additionalInfo--message");
 let boxAnimationStatus = false;
 let boxIndex = 0;
 
- class ProductManager {
+class ProductManager {
   constructor(datas, carts) {
     this.datas = datas;
     this.carts = carts;
@@ -33,25 +50,30 @@ let boxIndex = 0;
     products.innerHTML = "";
 
     if (isData) {
-      this.datas.forEach((element) => {
+      for (let i = 0; i < this.datas.length / 10; i++) {
+        for (let j = 0; j < 10; j++) {
+          products.innerHTML += `
+          <div class="product ${this.datas[i * 10 + j].rarity}" data-fullInfo = "${JSON.stringify(this.datas[i*10 + j])}">
+      <img src="${
+        this.datas[i * 10 + j].image
+      }" alt="" class="product--image" loading="lazy">
+      <h2 class="product-name info-important">${this.datas[i * 10 + j].name}</h2>
+      <div class="line">
+          <h3 class="product-type info-important">${this.datas[i * 10 + j].type}</h3>
+          <h3 class="product-rarity info-important">${this.datas[i * 10 + j].rarity}</h3>
+      </div>
+      <div class = "line"> 
+      <h3 class="product-cost info-important">${this.datas[i * 10 + j].cost} VB</h3>
+      <button class="product--cart" onclick="addToTheCartButton(${
+        this.datas[i * 10 + j].id
+      })">add to cart</button>
+      </div>
+  </div>`;
+        }
+      }
+    } else {
+      this.carts.forEach((element) => {
         products.innerHTML += `
-                  <div class="product ${element.rarity}">
-              <img src="${element.image}" alt="" class="product--image" loading="lazy">
-              <h2 class="product-name">${element.name}</h2>
-              <div class="line">
-                  <h3 class="product-type">${element.type}</h3>
-                  <h3 class="product-rarity">${element.rarity}</h3>
-              </div>
-              <div class = "line"> 
-              <h3 class="product-cost">${element.cost} VB</h3>
-              <button class="product--cart" onclick="addToTheCartButton(${element.id})">add to cart</button>
-              </div>
-          </div>`;
-      });
-    }
-    else{
-        this.carts.forEach(element => {
-            products.innerHTML += `
             <div class="product ${element.rarity}">
                         <img src="${element.image}" loading="lazy" alt="" class="product--image">
                         <h2 class="product-name">${element.name}</h2>
@@ -65,12 +87,12 @@ let boxIndex = 0;
                 <button class="changeQ minus-Q" onclick="minusCartProduct(${element.id})">-</button>
             </div>
             <h3 class="product-sum">${element.AllSum} VB</h3>
-                </div>`
-        })
+                </div>`;
+      });
     }
   }
 }
- class Product {
+class Product {
   constructor(id, name, rarity, image, type, cost = 100) {
     this.id = id;
     this.name = name;
@@ -131,7 +153,7 @@ let boxIndex = 0;
       } else if (kt == 6) {
         this.cost = 1500;
       }
-    } else if (k == 4 || k == -1) {
+    } else if (k >= 4) {
       if (kt == 0) {
         this.cost = 1200;
       } else if (kt == 1) {
@@ -166,7 +188,7 @@ let boxIndex = 0;
     }
   }
 }
- class CartProduct extends Product {
+class CartProduct extends Product {
   constructor(id, name, rarity, type, image, cost, quantity) {
     super(id, name, rarity, image, type, cost);
     this.quantity = quantity;
@@ -175,7 +197,7 @@ let boxIndex = 0;
     this.AllSumUpdate();
   }
   AllSumUpdate() {
-      this.toFindTheCost();
+    this.toFindTheCost();
     this.AllSum = this.cost * this.quantity;
   }
   PlusQuantity() {
@@ -183,67 +205,64 @@ let boxIndex = 0;
     this.AllSumUpdate();
   }
   MinusQuantity() {
-      if(this.quantity > 1){
-          this.quantity--;
-          this.AllSumUpdate();
-      }
-      else{
-          alert("cannot change it below 0")
-      }
+    if (this.quantity > 1) {
+      this.quantity--;
+      this.AllSumUpdate();
+    } else {
+      alert("cannot change it below 0");
+    }
   }
 }
 
-class User{
-  constructor(name,login,email,password){
+class User {
+  constructor(name, login, email, password) {
     this.name = name;
     this.login = login;
     this.email = email;
     this.password = password;
   }
-  passwordCheck(newPassword){
-   return this.password == newPassword;
+  passwordCheck(newPassword) {
+    return this.password == newPassword;
   }
-  loginCheck(newLogin){
+  loginCheck(newLogin) {
     return this.login == newLogin;
   }
-  loggedLS(){
-    localStorage.setItem("logged",JSON.stringify(this));
+  loggedLS() {
+    localStorage.setItem("logged", JSON.stringify(this));
   }
 }
-class UserManager{
-  constructor(users,lastUser){
+class UserManager {
+  constructor(users, lastUser) {
     this.users = users;
     this.lastUser = lastUser;
     this.localStorageUpdate();
   }
-  hasLastUser(){
-    return this.lastUser == {} ? false :  true;
+  hasLastUser() {
+    return this.lastUser == {} ? false : true;
   }
-  localStorageUpdate(){
-    localStorage.setItem("users",JSON.stringify(this.users));
-    localStorage.setItem("lastUser",JSON.stringify(this.lastUser));
-
+  localStorageUpdate() {
+    localStorage.setItem("users", JSON.stringify(this.users));
+    localStorage.setItem("lastUser", JSON.stringify(this.lastUser));
   }
-  addUser(newUser){
+  addUser(newUser) {
     this.users.push(newUser);
     this.localStorageUpdate();
   }
-  userFind(uLogin,uPassword){
-    let state =false;
+  userFind(uLogin, uPassword) {
+    let state = false;
     let id = 0;
-    this.users.forEach((element,index) => {
-      console.log(element.passwordCheck(uPassword))
-      console.log(element.loginCheck(uLogin))
-      if(element.passwordCheck(uPassword) && element.loginCheck(uLogin)){
+    this.users.forEach((element, index) => {
+      console.log(element.passwordCheck(uPassword));
+      console.log(element.loginCheck(uLogin));
+      if (element.passwordCheck(uPassword) && element.loginCheck(uLogin)) {
         state = true;
         id = index;
       }
-     })
-     if(state){
+    });
+    if (state) {
       return id;
-     }
-     else{
+    } else {
       return -1;
-     }
+    }
   }
 }
