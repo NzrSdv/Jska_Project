@@ -1,10 +1,17 @@
 let cartLink = document.getElementById("cartLink");
 
+let search = document.querySelector(".catalog-search");
+
 const loading = document.querySelector(".loader");
 let fetchStatus = false;
 LoadingAnimation();
 if(JSON.parse(localStorage.getItem("logged"))){
   document.querySelectorAll(".not-logged").forEach(element => {
+    element.remove();
+  })
+}
+else{
+  document.querySelectorAll(".is-logged").forEach(element => {
     element.remove();
   })
 }
@@ -47,10 +54,35 @@ if (!localStorage.getItem("products")) {
 }
 
 cartLink.addEventListener("click", () =>{
-  if(JSON.parse(localStorage.getItem("logged"))){
+  if(!JSON.parse(localStorage.getItem("logged"))){
+    cartLink.href = "./pages/SignIn.html"
+  }
+})
 
+search.addEventListener("input",() => {
+  console.log(search.value)
+  if(search.value.trim() == ""){
+    PM.render(true);
   }
   else{
-    cartLink.href = "./pages/SignIn.html"
+    let value = search.value;
+    document.querySelectorAll(".product").forEach(element => {
+      if(element.textContent.includes(value)){
+        element.classList.remove("none");
+      }
+      else{
+        element.classList.add("none");
+        if(document.querySelector(".message") != null){
+          document.querySelector(".message").remove();
+        }
+      }
+    })
+    if(document.querySelectorAll(".product.none").length == PM.datas.length && document.querySelector(".message") == null){
+      products.innerHTML += `
+      <div class="message">
+              <h2 class="text-message">ничего не найдено</h2>
+            </div>
+      `
+    }
   }
 })
