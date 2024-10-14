@@ -216,6 +216,9 @@ class UserManager{
     this.lastUser = lastUser;
     this.localStorageUpdate();
   }
+  hasLastUser(){
+    return this.lastUser == {} ? false :  true;
+  }
   localStorageUpdate(){
     localStorage.setItem("users",JSON.stringify(this.users));
     localStorage.setItem("lastUser",JSON.stringify(this.lastUser));
