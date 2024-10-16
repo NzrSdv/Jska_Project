@@ -113,16 +113,19 @@ select>option{
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap:10px;
+  gap:20px;
+  justify-content: space-between;
 }
 .product--image {
   width: 250px;
 }
 .product-name{
+  font-size: medium;
   text-align: center;
 }
 .line {
   display: flex;
+  font-size: small;
   gap: 20px;
   justify-content: space-between;
   align-items: center;
@@ -153,6 +156,47 @@ button.product--cart:hover {
   background-color: rgb(124, 193, 124);
 }
 
+.delete-window {
+  width: 100dvw;
+  height: 100dvh;
+  position: absolute;
+  background-color: rgba(0,0,0,.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.dw-content {
+  z-index: 2;
+  padding:40px 20px;
+  border-radius: 20px;
+  background-color: rgb(87, 94, 225);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:20px;
+}
+.buttons {
+  display: flex;
+  gap:10px;
+}
+.commitBtn {
+  padding:8px 15px;
+  border-radius:4px;
+  border: none;
+  outline: none;
+  background-color:rgb(143, 147, 230);
+  color:white;
+  transition: ease-in-out .1s;
+}
+.commitBtn:hover{
+  transform: scale(1.1);
+}
+.yes{
+  background-color: rgb(86, 183, 86);
+}
+.no{
+  background-color: rgb(186, 64, 64);
+}
 /* "backpack", "rare", "uncommon", "epic", "legendary" */
 
 

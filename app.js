@@ -47,7 +47,7 @@ if (!localStorage.getItem("products")) {
   let data = [...JSON.parse(localStorage.getItem("products"))];
   if(JSON.parse(localStorage.getItem("cart"))){
     let cart = JSON.parse(localStorage.getItem("cart")).map(element => {
-      return new Product(element.id,element.name,element.rarity,element.image,element.type,element.cost);
+      return new CartProduct(element.id,element.name,element.rarity,element.image,element.type,element.cost,element.quantity);
     })
     PM = new ProductManager(data,cart);
   }
@@ -64,60 +64,10 @@ cartLink.addEventListener("click", () => {
   }
 });
 let search = document.querySelector(".catalog-search");
-let searchIsEmpty = true;
 search.addEventListener("input",searchFunc);
 
 let select = document.querySelector(".sort");
 //default rarity- rarity+ cost+ cost -
 select.addEventListener("change", () => {
-  let val = select.value;
-    switch (val) {
-      case "0":
-        PM.datas = JSON.parse(localStorage.getItem("products")).map(
-          (element) =>
-            new Product(
-              element.id,
-              element.name,
-              element.rarity,
-              element.image,
-              element.type,
-              element.cost
-            )
-        );
-        break;
-      case "1":
-        PM.datas.sort((a, b) => {
-          if (rares.indexOf(a.rarity) > rares.indexOf(b.rarity)) {
-            return -1;
-          } else if (rares.indexOf(a.rarity) < rares.indexOf(b.rarity)) {
-            return 1;
-          } else {
-            return 0;
-          }
-        });
-
-        break;
-      case "2":
-        PM.datas.sort((a, b) => {
-          if (rares.indexOf(a.rarity) > rares.indexOf(b.rarity)) {
-            return 1;
-          } else if (rares.indexOf(a.rarity) < rares.indexOf(b.rarity)) {
-            return -1;
-          } else {
-            return 0;
-          }
-        });
-        break;
-      case "3":
-        PM.datas.sort((a, b) => a.cost - b.cost);
-        break;
-      case "4":
-        PM.datas.sort((a, b) => b.cost - a.cost);
-        break;
-      default:
-        console.log("def");
-        break;
-      }
-      PM.render(window.location.pathname == "/index.html");
-    searchFunc();
+  sortation(true);
 });

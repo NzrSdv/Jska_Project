@@ -1,4 +1,4 @@
-const products = document.querySelector(".products");
+let products = document.querySelector(".products");
 const rares = [
   "common",
   "rare",
@@ -43,6 +43,27 @@ class ProductManager {
   addCart(element) {
     this.carts.push(element);
   }
+  removeCart(id){
+    this.carts = this.carts.filter(elem => {
+      if(elem.id != id){
+        return elem
+      } 
+    })
+    if(this.carts.length == 0){
+      products.innerHTML = `
+      <div class="message">
+              <h2 class="text-message">ничего не найдено</h2>
+            </div>
+      `;
+      localStorage.removeItem("cart");
+    }
+    else{
+      this.CartUpdate();
+      console.log(this.carts)
+      this.render(false);
+    }
+  }
+  
   CartUpdate() {
     localStorage.setItem("cart", JSON.stringify(this.carts));
   }
@@ -84,25 +105,27 @@ class ProductManager {
       this.carts.forEach((element) => {
         products.innerHTML += `
             <div class="product ${element.rarity}">
-                        <img src="${element.image}" loading="lazy" alt="" class="product--image">
-                        <h2 class="product-name">${element.name}</h2>
-              <div class="line">
-                  <h3 class="product-type">${element.type}</h3>
-                  <h3 class="product-rarity">${element.rarity}</h3>
-              </div>
-              <div class = "line"> 
-                <button class="changeQ plus-Q" onclick="plusCartProduct(${element.id})">+</button>
-                <h3 class="product-Q">${element.quantity}</h3>
-                <button class="changeQ minus-Q" onclick="minusCartProduct(${element.id})">-</button>
-            </div>
-            <h3 class="product-sum">${element.AllSum} VB</h3>
-                </div>`;
+            <div class="search--akparat">
+            <img src="${element.image}" loading="lazy" alt="" class="product--image">
+            <h2 class="product-name">${element.name}</h2>
+  <div class="line">
+      <h3 class="product-type">${element.type}</h3>
+      <h3 class="product-rarity">${element.rarity}</h3>
+  </div>
+  <div class = "line"> 
+    <button class="changeQ plus-Q" onclick="plusCartProduct(${element.id})">+</button>
+    <h3 class="product-Q">${element.quantity}</h3>
+    <button class="changeQ minus-Q" onclick="minusCartProduct(${element.id})">-</button>
+</div>
+<h3 class="product-sum">${element.AllSum} VB</h3>
+    </div>
+            </div>`;
       });
     }
   }
 }
 class Product {
-  constructor(id, name, rarity, image, type, cost = 100) {
+  constructor(id, name, rarity, image='../imgs/default_image.webp', type, cost = 100) {
     this.id = id;
     this.name = name;
     this.rarity = rarity;
@@ -218,7 +241,8 @@ class CartProduct extends Product {
       this.quantity--;
       this.AllSumUpdate();
     } else {
-      alert("cannot change it below 0");
+      selectedCartProductId = this.id;
+      delw.classList.remove("none")
     }
   }
 }

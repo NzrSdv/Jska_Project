@@ -22,7 +22,7 @@ function AddedBoxAnimation() {
   }
 }
 function addToTheCartButton(id) {
-  if(JSON.parse(localStorage.getItem("logged")) != undefined){
+  if (JSON.parse(localStorage.getItem("logged")) != undefined) {
     let status = false;
     let inde;
     PM.carts.forEach((element, index) => {
@@ -39,16 +39,23 @@ function addToTheCartButton(id) {
     } else {
       let elem = PM.datas[id];
       PM.addCart(
-        new CartProduct(id, elem.name, elem.rarity, elem.type, elem.image, 100, 1)
+        new CartProduct(
+          id,
+          elem.name,
+          elem.rarity,
+          elem.type,
+          elem.image,
+          100,
+          1
+        )
       );
       PM.carts[PM.carts.length - 1].AllSumUpdate();
       Addedbox[boxIndex].textContent = "Успешно добавлено в корзину";
       PM.CartUpdate();
     }
     AddedBoxAnimation();
-  }
-  else{
-    window.open("../pages/SignIn.html","_self")
+  } else {
+    window.open("../pages/SignIn.html", "_self");
   }
 }
 
@@ -62,7 +69,7 @@ function plusCartProduct(id) {
   if (sorted != undefined) {
     PM.carts[sorted].PlusQuantity();
   } else {
-    alert("nod");
+    PM.removeCart(selectedCartProductId);
   }
   PM.CartUpdate();
   PM.render(false);
@@ -75,7 +82,7 @@ function minusCartProduct(id) {
     }
   });
   if (sorted != undefined) {
-    PM.carts[sorted].MinusQuantity();
+     PM.carts[sorted].MinusQuantity();
   } else {
     alert("nod");
   }
@@ -83,10 +90,9 @@ function minusCartProduct(id) {
   PM.render(false);
 }
 
-function searchFunc(){
+function searchFunc() {
   if (search.value.trim() == "") {
-    PM.render(true);
-    searchIsEmpty = true;
+    PM.render(window.location.pathname == "/index.html");
   } else {
     let value = search.value;
     document.querySelectorAll(".product").forEach((element) => {
@@ -106,16 +112,136 @@ function searchFunc(){
     });
     if (
       document.querySelectorAll(".product.none").length == PM.datas.length &&
-      document.querySelector(".message") == null
+      document.querySelector(".message") == null &&
+      window.location.pathname == "/index.html"
     ) {
       products.innerHTML += `
       <div class="message">
               <h2 class="text-message">ничего не найдено</h2>
             </div>
       `;
-      searchIsEmpty = false;
-    } else {
-      searchIsEmpty = false;
+    } else if (
+      document.querySelectorAll(".product.none").length == PM.carts.length &&
+      document.querySelector(".message") == null &&
+      window.location.pathname == "/pages/Cart.html"
+    ) {
+      products.innerHTML += `
+      <div class="message">
+              <h2 class="text-message">ничего не найдено</h2>
+            </div>
+      `;
     }
   }
+}
+function cartCheck() {
+  return localStorage.getItem("cart") == undefined ? false : true;
+}
+function sortation(isCatalog) {
+  let val = select.value;
+  if (isCatalog) {
+    switch (val) {
+      case "0":
+        PM.datas = JSON.parse(localStorage.getItem("products")).map(
+          (element) => {
+            return new Product(
+              element.id,
+              element.name,
+              element.rarity,
+              element.image,
+              element.type,
+              element.cost
+            );
+          }
+        );
+        break;
+      case "1":
+        PM.datas.sort((a, b) => {
+          if (rares.indexOf(a.rarity) > rares.indexOf(b.rarity)) {
+            return -1;
+          } else if (rares.indexOf(a.rarity) < rares.indexOf(b.rarity)) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+
+        break;
+      case "2":
+        PM.datas.sort((a, b) => {
+          if (rares.indexOf(a.rarity) > rares.indexOf(b.rarity)) {
+            return 1;
+          } else if (rares.indexOf(a.rarity) < rares.indexOf(b.rarity)) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
+        break;
+      case "3":
+        PM.datas.sort((a, b) => a.cost - b.cost);
+        break;
+      case "4":
+        PM.datas.sort((a, b) => b.cost - a.cost);
+        break;
+      default:
+        console.log("def");
+        break;
+    }
+  } else if (!isCatalog && cartCheck()) {
+    switch (val) {
+      case "0":
+        PM.carts = JSON.parse(localStorage.getItem("cart")).map((element) => {
+          return new CartProduct(
+            element.id,
+            element.name,
+            element.rarity,
+            element.image,
+            element.type,
+            element.cost,
+            element.quantity
+          );
+        });
+        break;
+      case "1":
+        PM.carts.sort((a, b) => {
+          if (rares.indexOf(a.rarity) > rares.indexOf(b.rarity)) {
+            return -1;
+          } else if (rares.indexOf(a.rarity) < rares.indexOf(b.rarity)) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+
+        break;
+      case "2":
+        PM.carts.sort((a, b) => {
+          if (rares.indexOf(a.rarity) > rares.indexOf(b.rarity)) {
+            return 1;
+          } else if (rares.indexOf(a.rarity) < rares.indexOf(b.rarity)) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
+        break;
+      case "3":
+        PM.carts.sort((a, b) => a.cost - b.cost);
+        break;
+      case "4":
+        PM.carts.sort((a, b) => b.cost - a.cost);
+        break;
+      default:
+        console.log("def");
+        break;
+    }
+  } else {
+    products.innerHTML += `
+      <div class="message">
+              <h2 class="text-message">ничего не найдено</h2>
+            </div>
+      `;
+  }
+  PM.render(isCatalog);
+  searchFunc();
 }
