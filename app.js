@@ -1,6 +1,5 @@
 let cartLink = document.getElementById("cartLink");
 
-
 const loading = document.querySelector(".loader");
 let fetchStatus = false;
 LoadingAnimation();
@@ -57,85 +56,62 @@ cartLink.addEventListener("click", () => {
   }
 });
 let search = document.querySelector(".catalog-search");
-
+let searchIsEmpty = true;
 search.addEventListener("input", () => {
-  if (search.value.trim() == "") {
-    PM.render(true);
-  } else {
-    let value = search.value;
-    document.querySelectorAll(".product").forEach((element) => {
-      if (element.querySelector(".search--akparat").textContent.toLowerCase().includes(value)) {
-        element.classList.remove("none");
-      } else {
-        element.classList.add("none");
-        if (document.querySelector(".message") != null) {
-          document.querySelector(".message").remove();
-        }
-      }
-    });
-    if (
-      document.querySelectorAll(".product.none").length == PM.datas.length &&
-      document.querySelector(".message") == null
-    ) {
-      products.innerHTML += `
-      <div class="message">
-              <h2 class="text-message">ничего не найдено</h2>
-            </div>
-      `;
-    }
-  }
+  searchFunc();
 });
 
 let select = document.querySelector(".sort");
-//default rarity- rarity+
+//default rarity- rarity+ cost+ cost -
 select.addEventListener("change", () => {
   let val = select.value;
-  switch (val) {
-    case "0":
-      PM.datas = JSON.parse(localStorage.getItem("products")).map(
-        (element) =>
-          new Product(
-            element.id,
-            element.name,
-            element.rarity,
-            element.image,
-            element.type,
-            element.cost
-          )
-      );
-      break;
-    case "1":
-      PM.datas.sort((a, b) => {
-        if (rares.indexOf(a.rarity) > rares.indexOf(b.rarity)) {
-          return -1;
-        } else if (rares.indexOf(a.rarity) < rares.indexOf(b.rarity)) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
+    switch (val) {
+      case "0":
+        PM.datas = JSON.parse(localStorage.getItem("products")).map(
+          (element) =>
+            new Product(
+              element.id,
+              element.name,
+              element.rarity,
+              element.image,
+              element.type,
+              element.cost
+            )
+        );
+        break;
+      case "1":
+        PM.datas.sort((a, b) => {
+          if (rares.indexOf(a.rarity) > rares.indexOf(b.rarity)) {
+            return -1;
+          } else if (rares.indexOf(a.rarity) < rares.indexOf(b.rarity)) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
 
-      break;
-    case "2":
-      PM.datas.sort((a, b) => {
-        if (rares.indexOf(a.rarity) > rares.indexOf(b.rarity)) {
-          return 1;
-        } else if (rares.indexOf(a.rarity) < rares.indexOf(b.rarity)) {
-          return -1;
-        } else {
-          return 0;
-        }
-      });
-      break;
-    case "3":
-      PM.datas.sort((a, b) => a.cost - b.cost);
-      break;
-    case "4":
-      PM.datas.sort((a, b) => b.cost - a.cost);
-      break;
-    default:
-      console.log("def");
-      break;
-  }
-  PM.render(window.location.pathname == "/index.html");
+        break;
+      case "2":
+        PM.datas.sort((a, b) => {
+          if (rares.indexOf(a.rarity) > rares.indexOf(b.rarity)) {
+            return 1;
+          } else if (rares.indexOf(a.rarity) < rares.indexOf(b.rarity)) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
+        break;
+      case "3":
+        PM.datas.sort((a, b) => a.cost - b.cost);
+        break;
+      case "4":
+        PM.datas.sort((a, b) => b.cost - a.cost);
+        break;
+      default:
+        console.log("def");
+        break;
+      }
+      PM.render(window.location.pathname == "/index.html");
+    searchFunc();
 });

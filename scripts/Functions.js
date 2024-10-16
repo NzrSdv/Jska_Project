@@ -82,3 +82,40 @@ function minusCartProduct(id) {
   PM.CartUpdate();
   PM.render(false);
 }
+
+function searchFunc(){
+  if (search.value.trim() == "") {
+    PM.render(true);
+    searchIsEmpty = true;
+  } else {
+    let value = search.value;
+    document.querySelectorAll(".product").forEach((element) => {
+      if (
+        element
+          .querySelector(".search--akparat")
+          .textContent.toLowerCase()
+          .includes(value)
+      ) {
+        element.classList.remove("none");
+      } else {
+        element.classList.add("none");
+        if (document.querySelector(".message") != null) {
+          document.querySelector(".message").remove();
+        }
+      }
+    });
+    if (
+      document.querySelectorAll(".product.none").length == PM.datas.length &&
+      document.querySelector(".message") == null
+    ) {
+      products.innerHTML += `
+      <div class="message">
+              <h2 class="text-message">ничего не найдено</h2>
+            </div>
+      `;
+      searchIsEmpty = false;
+    } else {
+      searchIsEmpty = false;
+    }
+  }
+}
