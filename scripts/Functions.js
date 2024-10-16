@@ -187,53 +187,67 @@ function sortation(isCatalog) {
         console.log("def");
         break;
     }
+  PM.render(isCatalog);
+  searchFunc();
   } else if (!isCatalog && cartCheck()) {
-    switch (val) {
-      case "0":
-        PM.carts = JSON.parse(localStorage.getItem("cart")).map((element) => {
-          return new CartProduct(
-            element.id,
-            element.name,
-            element.rarity,
-            element.image,
-            element.type,
-            element.cost,
-            element.quantity
-          );
-        });
-        break;
-      case "1":
-        PM.carts.sort((a, b) => {
-          if (rares.indexOf(a.rarity) > rares.indexOf(b.rarity)) {
-            return -1;
-          } else if (rares.indexOf(a.rarity) < rares.indexOf(b.rarity)) {
-            return 1;
-          } else {
-            return 0;
-          }
-        });
+    if(val.trim() == ""){
+      products.innerHTML += `
+      <div class="message">
+              <h2 class="text-message">ничего не найдено</h2>
+            </div>
+      `;
+    }
+    else{
+      switch (val) {
+        case "0":
+          PM.carts = JSON.parse(localStorage.getItem("cart")).map((element) => {
+            return new CartProduct(
+              element.id,
+              element.name,
+              element.rarity,
+              element.image,
+              element.type,
+              element.cost,
+              element.quantity
+            );
+          });
+          break;
+        case "1":
+          PM.carts.sort((a, b) => {
+            if (rares.indexOf(a.rarity) > rares.indexOf(b.rarity)) {
+              return -1;
+            } else if (rares.indexOf(a.rarity) < rares.indexOf(b.rarity)) {
+              return 1;
+            } else {
+              return 0;
+            }
+          });
+  
+          break;
+        case "2":
+          PM.carts.sort((a, b) => {
+            if (rares.indexOf(a.rarity) > rares.indexOf(b.rarity)) {
+              return 1;
+            } else if (rares.indexOf(a.rarity) < rares.indexOf(b.rarity)) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+          break;
+        case "3":
+          PM.carts.sort((a, b) => a.cost - b.cost);
+          break;
+        case "4":
+          PM.carts.sort((a, b) => b.cost - a.cost);
+          break;
+        default:
+          console.log("def");
+          break;
+      }
+  PM.render(isCatalog);
+  searchFunc();
 
-        break;
-      case "2":
-        PM.carts.sort((a, b) => {
-          if (rares.indexOf(a.rarity) > rares.indexOf(b.rarity)) {
-            return 1;
-          } else if (rares.indexOf(a.rarity) < rares.indexOf(b.rarity)) {
-            return -1;
-          } else {
-            return 0;
-          }
-        });
-        break;
-      case "3":
-        PM.carts.sort((a, b) => a.cost - b.cost);
-        break;
-      case "4":
-        PM.carts.sort((a, b) => b.cost - a.cost);
-        break;
-      default:
-        console.log("def");
-        break;
     }
   } else {
     products.innerHTML += `
@@ -242,6 +256,4 @@ function sortation(isCatalog) {
             </div>
       `;
   }
-  PM.render(isCatalog);
-  searchFunc();
 }
