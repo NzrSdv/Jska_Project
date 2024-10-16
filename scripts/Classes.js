@@ -53,17 +53,26 @@ class ProductManager {
       for (let i = 0; i < this.datas.length / 10; i++) {
         for (let j = 0; j < 10; j++) {
           products.innerHTML += `
-          <div class="product ${this.datas[i * 10 + j].rarity}" data-fullInfo = "${JSON.stringify(this.datas[i*10 + j])}">
+          <div class="product ${this.datas[i * 10 + j].rarity}">
+      <div class="search--akparat">
       <img src="${
         this.datas[i * 10 + j].image
       }" alt="" class="product--image" loading="lazy">
-      <h2 class="product-name info-important">${this.datas[i * 10 + j].name}</h2>
+      <h2 class="product-name info-important">${
+        this.datas[i * 10 + j].name
+      }</h2>
       <div class="line">
-          <h3 class="product-type info-important">${this.datas[i * 10 + j].type}</h3>
-          <h3 class="product-rarity info-important">${this.datas[i * 10 + j].rarity}</h3>
+          <h3 class="product-type info-important">${
+            this.datas[i * 10 + j].type
+          }</h3>
+          <h3 class="product-rarity info-important">${
+            this.datas[i * 10 + j].rarity
+          }</h3>
+      </div>
+      
+<h3 class="product-rarity info-important">${this.datas[i * 10 + j].cost} VB</h3>
       </div>
       <div class = "line"> 
-      <h3 class="product-cost info-important">${this.datas[i * 10 + j].cost} VB</h3>
       <button class="product--cart" onclick="addToTheCartButton(${
         this.datas[i * 10 + j].id
       })">add to cart</button>

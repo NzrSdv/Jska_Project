@@ -30,7 +30,6 @@ body::-webkit-scrollbar{
 }
 .catalog{
   margin-top: 10px;
-
   background-color:rgb(87, 94, 225);
   padding:20px 20px;
   border-radius: 20px;
@@ -100,6 +99,12 @@ body::-webkit-scrollbar{
   border-radius: 20px;
   padding:20px 0;
   max-width: 1fr;
+}
+.search--akparat{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:10px;
 }
 .product--image {
   width: 250px;

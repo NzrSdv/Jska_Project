@@ -1,16 +1,9 @@
 let cartLink = document.getElementById("cartLink");
 
-let search = document.querySelector(".catalog-search");
 
 const loading = document.querySelector(".loader");
 let fetchStatus = false;
 LoadingAnimation();
-<<<<<<< HEAD
-if(JSON.parse(localStorage.getItem("logged"))){
-  document.querySelectorAll(".not-logged").forEach(element => {
-    element.classList.add("none")
-  })
-=======
 if (JSON.parse(localStorage.getItem("logged"))) {
   document.querySelectorAll(".not-logged").forEach((element) => {
     element.remove();
@@ -19,7 +12,6 @@ if (JSON.parse(localStorage.getItem("logged"))) {
   document.querySelectorAll(".is-logged").forEach((element) => {
     element.remove();
   });
->>>>>>> be67898246b74277f1470de707114a55ee72739d
 }
 let PM;
 if (!localStorage.getItem("products")) {
@@ -54,8 +46,8 @@ if (!localStorage.getItem("products")) {
     });
 } else {
   fetchStatus = true;
-  let data = JSON.parse(localStorage.getItem("products"));
-  PM = new ProductManager([...data], []);
+  let data = [...JSON.parse(localStorage.getItem("products"))];
+  PM = new ProductManager(data, []);
   PM.render(true);
 }
 
@@ -64,6 +56,7 @@ cartLink.addEventListener("click", () => {
     cartLink.href = "./pages/SignIn.html";
   }
 });
+let search = document.querySelector(".catalog-search");
 
 search.addEventListener("input", () => {
   if (search.value.trim() == "") {
@@ -71,7 +64,7 @@ search.addEventListener("input", () => {
   } else {
     let value = search.value;
     document.querySelectorAll(".product").forEach((element) => {
-      if (element.getAttribute("data-fullInfo").textContent.toLowerCase().includes(value)) {
+      if (element.querySelector(".search--akparat").textContent.toLowerCase().includes(value)) {
         element.classList.remove("none");
       } else {
         element.classList.add("none");
@@ -144,5 +137,5 @@ select.addEventListener("change", () => {
       console.log("def");
       break;
   }
-  PM.render(window.location.pathname == "/");
+  PM.render(window.location.pathname == "/index.html");
 });
