@@ -5,7 +5,7 @@ let fetchStatus = false;
 LoadingAnimation();
 if(JSON.parse(localStorage.getItem("logged"))){
   document.querySelectorAll(".not-logged").forEach(element => {
-    element.remove();
+    element.classList.add("none")
   })
 }
 let PM;
