@@ -56,8 +56,10 @@ if (window.location.pathname == "/pages/SignUp.html" && UM.hasLastUser()) {
     let label = element.parentElement.children[0];
     label.classList.remove("normal--position");
     label.classList.add("moved--position");
-  });
+  }
+  );
 }
+
 signInBtn.addEventListener("click", () => {
   if (signInBtn.textContent == "Sign in") {
     let name = inputs[0].value;

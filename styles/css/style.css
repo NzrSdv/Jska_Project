@@ -69,8 +69,17 @@ body::-webkit-scrollbar{
   color:white;
 }
 .sort {
+  border:1px solid white !important;
+  padding:10px;
+  border-radius: 10px;
+  background-color: rgb(87, 94, 225);
+  color:white;
   outline: none;
   border:none;
+}
+select>option{
+  border-radius: 10px;
+  background-color: rgb(87, 94, 225);
 }
 @media (max-width:768px) {
     .catalog-search::placeholder{

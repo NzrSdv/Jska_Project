@@ -44,10 +44,18 @@ if (!localStorage.getItem("products")) {
       PM.render(true);
     });
 } else {
-  fetchStatus = true;
   let data = [...JSON.parse(localStorage.getItem("products"))];
-  PM = new ProductManager(data, []);
+  if(JSON.parse(localStorage.getItem("cart"))){
+    let cart = JSON.parse(localStorage.getItem("cart")).map(element => {
+      return new Product(element.id,element.name,element.rarity,element.image,element.type,element.cost);
+    })
+    PM = new ProductManager(data,cart);
+  }
+  else{
+    PM = new ProductManager(data, []);
+  }
   PM.render(true);
+  fetchStatus = true;
 }
 
 cartLink.addEventListener("click", () => {
@@ -57,9 +65,7 @@ cartLink.addEventListener("click", () => {
 });
 let search = document.querySelector(".catalog-search");
 let searchIsEmpty = true;
-search.addEventListener("input", () => {
-  searchFunc();
-});
+search.addEventListener("input",searchFunc);
 
 let select = document.querySelector(".sort");
 //default rarity- rarity+ cost+ cost -
