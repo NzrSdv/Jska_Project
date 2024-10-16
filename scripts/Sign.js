@@ -3,9 +3,8 @@ let signInBtn = document.querySelector(".signBtn");
 let showBtn = document.querySelector(".show-btn");
 const specialChar = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
 const numbersChar = /\d/;
-const validEmail =
-  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 const namings = ["name", "login", "email", "password"];
+
 inputs.forEach((element, index) => {
   element.addEventListener("focus", () => {
     let label = element.parentElement.children[0];
@@ -26,7 +25,9 @@ inputs.forEach((element, index) => {
     }
   });
 });
+
 let UM;
+
 if (JSON.parse(localStorage.getItem("users")) != undefined) {
   let list = [];
   let data = JSON.parse(localStorage.getItem("users"));
@@ -47,10 +48,7 @@ if (JSON.parse(localStorage.getItem("users")) != undefined) {
 } else {
   UM = new UserManager([], {});
 }
-if (
-  window.location.pathname == "/pages/SignUp.html" &&
-  localStorage.getItem("lastUser")
-) {
+if (window.location.pathname == "/pages/SignUp.html" && UM.hasLastUser()) {
   let user = JSON.parse(localStorage.getItem("lastUser"));
   inputs[0].value = user.login;
   inputs[1].value = user.password;
@@ -87,7 +85,11 @@ signInBtn.addEventListener("click", () => {
     } else if (specialChar.test(login)) {
       inputs[1].previousElementSibling.textContent = "invalid value";
       inputs[1].previousElementSibling.classList.add("error");
-    } else if (email.match(validEmail)) {
+    } else if (
+      !email.match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      )
+    ) {
       inputs[2].previousElementSibling.textContent = "invalid value";
       inputs[2].previousElementSibling.classList.add("error");
     } else if (password.length < 8) {
@@ -98,7 +100,7 @@ signInBtn.addEventListener("click", () => {
       let user = new User(name, login, email, password);
       UM.lastUser = user;
       UM.addUser(user);
-      window.open("../pages/SignUp.html","_self");
+      window.open("../pages/SignUp.html", "_self");
     }
   } else {
     let login = inputs[0].value;
@@ -118,10 +120,10 @@ signInBtn.addEventListener("click", () => {
     if (UM.userFind(login, password) != -1) {
       let index = UM.userFind(login, password);
       UM.users[index].loggedLS();
-      window.open("../index.html","_self");
+      window.open("../index.html", "_self");
     }
-    console.log(UM.userFind(login, password))
-    console.log(UM.userFind(login, password) != -1)
+    console.log(UM.userFind(login, password));
+    console.log(UM.userFind(login, password) != -1);
   }
 });
 

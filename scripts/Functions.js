@@ -21,30 +21,35 @@ function AddedBoxAnimation() {
     boxIndex++;
   }
 }
-async function addToTheCartButton(id) {
-  let status = false;
-  let inde;
-  PM.carts.forEach((element, index) => {
-    if (element.id == id) {
-      status = true;
-      inde = index;
+function addToTheCartButton(id) {
+  if(JSON.parse(localStorage.getItem("logged")) != undefined){
+    let status = false;
+    let inde;
+    PM.carts.forEach((element, index) => {
+      if (element.id == id) {
+        status = true;
+        inde = index;
+      }
+    });
+    if (status && inde != undefined) {
+      //объект есть в localstorage и
+      PM.carts[inde].PlusQuantity();
+      PM.CartUpdate();
+      Addedbox[boxIndex].textContent = "+1 к уже имеющему товару в корзине";
+    } else {
+      let elem = PM.datas[id];
+      PM.addCart(
+        new CartProduct(id, elem.name, elem.rarity, elem.type, elem.image, 100, 1)
+      );
+      PM.carts[PM.carts.length - 1].AllSumUpdate();
+      Addedbox[boxIndex].textContent = "Успешно добавлено в корзину";
+      PM.CartUpdate();
     }
-  });
-  if (status && inde != undefined) {
-    //объект есть в localstorage и
-    PM.carts[inde].PlusQuantity();
-    PM.CartUpdate();
-    Addedbox[boxIndex].textContent = "+1 к уже имеющему товару в корзине";
-  } else {
-    let elem = PM.datas[id];
-    PM.addCart(
-      new CartProduct(id, elem.name, elem.rarity, elem.type, elem.image, 100, 1)
-    );
-    PM.carts[PM.carts.length - 1].AllSumUpdate();
-    Addedbox[boxIndex].textContent = "Успешно добавлено в корзину";
-    PM.CartUpdate();
+    AddedBoxAnimation();
   }
-  AddedBoxAnimation();
+  else{
+    window.open("../pages/SignIn.html","_self")
+  }
 }
 
 function plusCartProduct(id) {
