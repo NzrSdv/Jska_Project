@@ -91,8 +91,7 @@ function minusCartProduct(id) {
 }
 
 function searchFunc() {
-  if (search.value.trim() == "") {
-    PM.render(window.location.pathname == "/index.html");
+  if (search.value.trim() == "" || search.value == "") {
   } else {
     let value = search.value;
     document.querySelectorAll(".product").forEach((element) => {
@@ -115,7 +114,7 @@ function searchFunc() {
       document.querySelector(".message") == null &&
       window.location.pathname == "/index.html"
     ) {
-      products.innerHTML += `
+      products.innerHTML = `
       <div class="message">
               <h2 class="text-message">ничего не найдено</h2>
             </div>
@@ -125,7 +124,7 @@ function searchFunc() {
       document.querySelector(".message") == null &&
       window.location.pathname == "/pages/Cart.html"
     ) {
-      products.innerHTML += `
+      products.innerHTML = `
       <div class="message">
               <h2 class="text-message">ничего не найдено</h2>
             </div>
@@ -138,6 +137,13 @@ function cartCheck() {
 }
 function sortation(isCatalog) {
   let val = select.value;
+  if(val == "" || val.trim() == ""){
+    products.innerHTML = `
+    <div class="message">
+            <h2 class="text-message">ничего не найдено</h2>
+          </div>
+    `;
+  }
   if (isCatalog) {
     switch (val) {
       case "0":
@@ -190,8 +196,8 @@ function sortation(isCatalog) {
   PM.render(isCatalog);
   searchFunc();
   } else if (!isCatalog && cartCheck()) {
-    if(val.trim() == ""){
-      products.innerHTML += `
+    if(val == "" || val.trim() == ""){
+      products.innerHTML = `
       <div class="message">
               <h2 class="text-message">ничего не найдено</h2>
             </div>
@@ -247,10 +253,9 @@ function sortation(isCatalog) {
       }
   PM.render(isCatalog);
   searchFunc();
-
     }
   } else {
-    products.innerHTML += `
+    products.innerHTML = `
       <div class="message">
               <h2 class="text-message">ничего не найдено</h2>
             </div>
