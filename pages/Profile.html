@@ -1,24 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../styles/css/style.css">    
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <link rel="stylesheet" href="../styles/css/style.css" />
+    <link rel="stylesheet" href="../styles/css/profile.css">
+    <link rel="stylesheet" href="../styles/css/sign.csswj">
 </head>
-<body>
+  <body>
     <header class="header">
-        <div class="header--left">
-            <a href="../index.html" class="logo--link">
-                Home
-            </a>
-        </div>
-        <div class="header--right">
-            <ul class="links-list">
-                <li><a href="../pages/Cart.html">Cart</a></li>
-            </ul>
-        </div>
+      <div class="header--left">
+        <a href="../index.html" class="logo--link"> Home </a>
+      </div>
+      <div class="header--right">
+        <ul class="links-list">
+          <li><a href="../pages/Cart.html">Cart</a></li>
+        </ul>
+      </div>
     </header>
-</body>
+        <div class="sign-window">
+            <h3 class="sign-title">Sign In</h3>
+            <div class="inputs-section">
+                <div class="input-line">
+                    <div class="input-field">
+                        <h4 class="input-name normal--position">name</h4>
+                        <input type="text" class="input">
+                    </div>
+                </div>
+                <div class="input-line">
+                    <div class="input-field">
+                        <h4 class="input-name normal--position">login</h4>
+                        <input type="text" class="input">
+                    </div>
+                </div>
+                <div class="input-line">
+                    <div class="input-field">
+                        <h4 class="input-name normal--position">email</h4>
+                        <input type="email" class="input">
+                    </div>
+                </div>
+                <div class="input-line">
+                    <div class="input-field">
+                        <h4 class="input-name normal--position">passowrd</h4>
+                    <input type="password" class="input">
+                </div>
+                <button class="show-btn"><img src="../imgs/visible-ico.svg" alt=""></button>
+                </div>
+            </div>
+            <button class="signBtn">Sign in</button>
+            <p class="alternative--pages">
+                don't have an account? <a class="link-page" href="./SignUp.html">Sign up</a>
+            </p>
+            <a href="../index.html" class="link-page">Home</a>
+        </div>
+    </main>
+  </body>
 </html>

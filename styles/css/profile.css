@@ -1,0 +1,11 @@
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.prof-window {
+    width: 800px;
+    height: 400px;
+    border-radius: 10px;
+    background-color:rgb(87, 94, 225)
+}

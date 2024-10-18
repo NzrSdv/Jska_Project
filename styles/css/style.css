@@ -5,6 +5,8 @@
 /* files */
 @import url("./templates.css");
 @import url("./header.css");
+
+@import url("./profile.css");
 *{
   padding: 0;
   margin: 0;
