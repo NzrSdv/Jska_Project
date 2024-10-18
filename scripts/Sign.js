@@ -78,7 +78,7 @@ signInBtn.addEventListener("click", () => {
     let user = new User(name, login, email, password);
     UM.lastUser = user;
     UM.addUser(user);
-    window.open("/pages/SignUp.html", "_self");
+    window.open("/Jska_Project/pages/SignIn.html", "_self");
   } else if (signInBtn.textContent == "Sign up" && inputsCheck()) {
     
   } else if (
