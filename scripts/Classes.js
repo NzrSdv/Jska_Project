@@ -43,27 +43,26 @@ class ProductManager {
   addCart(element) {
     this.carts.push(element);
   }
-  removeCart(id){
-    this.carts = this.carts.filter(elem => {
-      if(elem.id != id){
-        return elem
-      } 
-    })
-    if(this.carts.length == 0){
+  removeCart(id) {
+    this.carts = this.carts.filter((elem) => {
+      if (elem.id != id) {
+        return elem;
+      }
+    });
+    if (this.carts.length == 0) {
       products.innerHTML = `
       <div class="message">
               <h2 class="text-message">ничего не найдено</h2>
             </div>
       `;
       localStorage.removeItem("cart");
-    }
-    else{
+    } else {
       this.CartUpdate();
-      console.log(this.carts)
+      console.log(this.carts);
       this.render(false);
     }
   }
-  
+
   CartUpdate() {
     localStorage.setItem("cart", JSON.stringify(this.carts));
   }
@@ -125,7 +124,14 @@ class ProductManager {
   }
 }
 class Product {
-  constructor(id, name, rarity, image='../imgs/default_image.webp', type, cost = 100) {
+  constructor(
+    id,
+    name,
+    rarity,
+    image = "../imgs/default_image.webp",
+    type,
+    cost = 100
+  ) {
     this.id = id;
     this.name = name;
     this.rarity = rarity;
@@ -221,7 +227,7 @@ class Product {
   }
 }
 class CartProduct extends Product {
-  constructor(id, name, rarity, type, image, cost, quantity) {
+  constructor(id, name, rarity, image, type, cost, quantity) {
     super(id, name, rarity, image, type, cost);
     this.quantity = quantity;
     this.toFindTheCost();
@@ -242,7 +248,7 @@ class CartProduct extends Product {
       this.AllSumUpdate();
     } else {
       selectedCartProductId = this.id;
-      delw.classList.remove("none")
+      delw.classList.remove("none");
     }
   }
 }

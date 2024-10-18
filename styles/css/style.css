@@ -205,3 +205,137 @@ button.product--cart:hover {
 .none {
   display: none;
 }
+
+
+.sign-window {
+  width: 600px;
+  height: 500px;
+  border-radius: 20px;
+  background-color: rgb(87, 94, 225);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px 0;
+}
+.inputs-section {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+.input-line {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-direction: row;
+  gap: 10px;
+  padding-bottom: 3px;
+}
+.input-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.input-name {
+  font-size: small;
+  pointer-events: none;
+  transition: 0.2s ease-in-out;
+
+}
+.normal--position {
+  opacity: 0.3;
+  transform: translateY(30px);
+}
+.moved--position {
+  opacity: 1;
+  transform: translateY(0px);
+}
+.input {
+  border-radius: 40px;
+  background-color: rgb(67, 73, 172);
+  padding: 10px 20px;
+  width: 200px;
+  height: 40px;
+  color: white;
+  outline: transparent;
+  border: none;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  letter-spacing: 0.125em;
+  font-size: 15px;
+  text-align: center;
+  text-decoration: none;
+  /* border-bottom: 1px solid rgba(255, 255, 255, 0.539); */
+}
+input:focus,
+input:active {
+  outline: none;
+}
+
+.signBtn {
+  padding: 10px 20px;
+  border-radius: 20px;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  color: white;
+  transition: ease-in-out 0.2s;
+  border: 1px solid white;
+}
+.signBtn:hover {
+  transform: translateY(-5px);
+  background-color: rgb(78, 84, 207);
+}
+.link-page {
+  opacity: 0.5;
+  font-style: normal;
+  text-decoration: underline;
+}
+p,
+.link-page {
+  color: rgba(255, 255, 255, 0.5);
+}
+.error {
+  opacity: 1;
+  transition:  all 0s;
+  color: rgb(213, 79, 79);
+  text-align: center;
+  font-size: small;
+  animation: errorAnimation forwards .4s ;
+}
+
+.show-btn {
+  background: rgb(87, 94, 225);
+  border: none;
+  padding: 5px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid white;
+  border-radius: 20px;
+  transition: ease-in-out 0.1s;
+}
+.show-btn:hover {
+  transform: scale(1.1);
+  background-color: rgb(78, 84, 207);
+}
+.show-btn img {
+  pointer-events: none;
+}
+
+
+@keyframes errorAnimation{
+  0%,100%{
+    transform: translateX(0px);
+  }
+  20%,50%,80%{
+    transform: translateX(10px);
+  }
+  30%,60%,90%{
+    transform: translateX(-10px);
+  }
+}

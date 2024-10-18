@@ -56,12 +56,68 @@ if (window.location.pathname == "/pages/SignUp.html" && UM.hasLastUser()) {
     let label = element.parentElement.children[0];
     label.classList.remove("normal--position");
     label.classList.add("moved--position");
-  }
-  );
+  });
+} else if (window.location.pathname == "/pages/Profile.html") {
+  let user = UM.lastUser == {} ? JSON.parse(localStorage.getItem("logged")) : UM.lastUser;
+  console.log(user);
+  inputs.forEach((element, index) => {
+    element.value = user[`${namings[index]}`];
+    element.setAttribute("readonly", "readonly");
+    let label = element.parentElement.children[0];
+    label.classList.remove("normal--position");
+    label.classList.add("moved--position");
+  });
 }
 
 signInBtn.addEventListener("click", () => {
-  if (signInBtn.textContent == "Sign in") {
+  if (signInBtn.textContent == "Sign in" && inputsCheck()) {
+    let name = inputs[0].value;
+    let login = inputs[1].value;
+    let email = inputs[2].value;
+    let password = inputs[3].value;
+    let user = new User(name, login, email, password);
+    UM.lastUser = user;
+    UM.addUser(user);
+    window.open("../pages/SignUp.html", "_self");
+  } else if (signInBtn.textContent == "Sign up" && inputsCheck()) {
+    
+  } else if (
+    window.location.pathname == "/pages/Profile.html" &&
+    inputsCheck()
+  ) {
+    if (signInBtn.textContent == "Redact") {
+      signInBtn.textContent = "Confirm";
+      inputs.forEach((element) => {
+        element.removeAttribute("readonly");
+      });
+    } else if (signInBtn.textContent == "Confirm") {
+      signInBtn.textContent = "Redact";
+      let user = new User("", "", "", "");
+      inputs.forEach((element, index) => {
+        element.setAttribute("readonly", "readonly");
+        user[`${namings[index]}`] = element.value;
+      });
+      localStorage.setItem("logged",JSON.stringify(user));
+    }
+  }
+});
+
+showBtn.addEventListener("click", () => {
+  let passwordInput = showBtn.previousElementSibling.lastElementChild;
+  if (passwordInput.type == "text") {
+    passwordInput.type = "password";
+    showBtn.firstElementChild.src = "../imgs/visible-ico.svg";
+  } else {
+    passwordInput.type = "text";
+    showBtn.firstElementChild.src = "../imgs/not-visible-ico.svg";
+  }
+});
+
+function inputsCheck() {
+  if (
+    signInBtn.textContent == "Sign in" ||
+    signInBtn.textContent == "Confirm"
+  ) {
     let name = inputs[0].value;
     let login = inputs[1].value;
     let email = inputs[2].value;
@@ -99,12 +155,10 @@ signInBtn.addEventListener("click", () => {
         "password length more than 8";
       inputs[3].previousElementSibling.classList.add("error");
     } else {
-      let user = new User(name, login, email, password);
-      UM.lastUser = user;
-      UM.addUser(user);
-      window.open("../pages/SignUp.html", "_self");
+      return true;
     }
-  } else {
+    return false;
+  } else if (signInBtn.textContent == "Sign up") {
     let login = inputs[0].value;
     let password = inputs[1].value;
     if (login.trim() == "") {
@@ -123,19 +177,24 @@ signInBtn.addEventListener("click", () => {
       let index = UM.userFind(login, password);
       UM.users[index].loggedLS();
       window.open("../index.html", "_self");
+      return true;
+    } else {
+      inputs[0].previousElementSibling.textContent = "inapropriate value";
+      inputs[0].previousElementSibling.classList.add("error");
+      inputs[1].previousElementSibling.textContent = "inapropriate value";
+      inputs[1].previousElementSibling.classList.add("error");
+      window.open("../pages/SignIn.html")
     }
     console.log(UM.userFind(login, password));
     console.log(UM.userFind(login, password) != -1);
+    return false;
   }
-});
-
-showBtn.addEventListener("click", () => {
-  let passwordInput = showBtn.previousElementSibling.lastElementChild;
-  if (passwordInput.type == "text") {
-    passwordInput.type = "password";
-    showBtn.firstElementChild.src = "../imgs/visible-ico.svg";
-  } else {
-    passwordInput.type = "text";
-    showBtn.firstElementChild.src = "../imgs/not-visible-ico.svg";
+  else if(window.location.pathname == "/pages/Profile.html"){
+    return true;
   }
-});
+}
+let signoutBtn = document.querySelector(".SignOut")
+signoutBtn.addEventListener("click",() => {
+  localStorage.removeItem("logged");
+  window.open("../index.html","_self")
+})

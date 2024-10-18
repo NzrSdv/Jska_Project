@@ -1,12 +1,13 @@
 function LoadingAnimation() {
-  setTimeout(() => {
-    if (!fetchStatus) {
-      loading.classList.remove("none");
+  if (!fetchStatus) {
+    loading.classList.remove("none");
+    setTimeout(() => {
       LoadingAnimation();
-    } else {
-      loading.classList.add("none");
-    }
-  }, 1000);
+    }, 100);
+  } else {
+    loading.classList.add("none");
+  }
+  
 }
 function AddedBoxAnimation() {
   let initialIndex = boxIndex;
@@ -262,3 +263,5 @@ function sortation(isCatalog) {
       `;
   }
 }
+
+

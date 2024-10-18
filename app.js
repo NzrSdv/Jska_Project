@@ -13,6 +13,7 @@ if (JSON.parse(localStorage.getItem("logged"))) {
   });
 }
 let PM;
+// localStorage.clear();
 if (!localStorage.getItem("products")) {
   fetch("https://fortnite-api.com/v2/cosmetics/br/?&language=ru", {
     //https://dash.fortnite-api.com/endpoints/banners
@@ -29,7 +30,7 @@ if (!localStorage.getItem("products")) {
             ans.data[i].name,
             ans.data[i].rarity.value,
             ans.data[i].images.icon == undefined
-              ? "./imgs/default_image.webp"
+              ? "/imgs/default_image.webp"
               : ans.data[i].images.icon,
             ans.data[i].type.value
           )
