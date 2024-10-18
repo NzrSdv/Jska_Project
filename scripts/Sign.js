@@ -48,7 +48,7 @@ if (JSON.parse(localStorage.getItem("users")) != undefined) {
 } else {
   UM = new UserManager([], {});
 }
-if (window.location.pathname == "/pages/SignUp.html" && UM.hasLastUser()) {
+if (window.location.pathname == "./pages/SignUp.html" && UM.hasLastUser()) {
   let user = JSON.parse(localStorage.getItem("lastUser"));
   inputs[0].value = user.login;
   inputs[1].value = user.password;
@@ -78,7 +78,7 @@ signInBtn.addEventListener("click", () => {
     let user = new User(name, login, email, password);
     UM.lastUser = user;
     UM.addUser(user);
-    window.open("/Jska_Project/pages/SignIn.html", "_self");
+    window.open("../pages/SignIn.html", "_self");
   } else if (signInBtn.textContent == "Sign up" && inputsCheck()) {
     
   } else if (
