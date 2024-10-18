@@ -56,7 +56,7 @@ function addToTheCartButton(id) {
     }
     AddedBoxAnimation();
   } else {
-    window.open("../pages/SignIn.html", "_self");
+    window.open("/pages/SignIn.html", "_self");
   }
 }
 

@@ -61,7 +61,7 @@ if (!localStorage.getItem("products")) {
 
 cartLink.addEventListener("click", () => {
   if (!JSON.parse(localStorage.getItem("logged"))) {
-    cartLink.href = "./pages/SignIn.html";
+    cartLink.href = "/pages/SignIn.html";
   }
 });
 let search = document.querySelector(".catalog-search");

@@ -78,7 +78,7 @@ signInBtn.addEventListener("click", () => {
     let user = new User(name, login, email, password);
     UM.lastUser = user;
     UM.addUser(user);
-    window.open("../pages/SignUp.html", "_self");
+    window.open("/pages/SignUp.html", "_self");
   } else if (signInBtn.textContent == "Sign up" && inputsCheck()) {
     
   } else if (
@@ -183,7 +183,7 @@ function inputsCheck() {
       inputs[0].previousElementSibling.classList.add("error");
       inputs[1].previousElementSibling.textContent = "inapropriate value";
       inputs[1].previousElementSibling.classList.add("error");
-      window.open("../pages/SignIn.html")
+      window.open("/pages/SignIn.html")
     }
     console.log(UM.userFind(login, password));
     console.log(UM.userFind(login, password) != -1);
