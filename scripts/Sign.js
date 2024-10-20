@@ -36,7 +36,7 @@ if (JSON.parse(localStorage.getItem("users")) != undefined) {
       new User(element.name, element.login, element.email, element.password)
     );
   });
-  if (JSON.parse(localStorage.getItem("lastUser")) != undefined) {
+  if (JSON.parse(localStorage.getItem("lastUser"))) {
     let lastOne = JSON.parse(localStorage.getItem("lastUser"));
     UM = new UserManager(
       list,
@@ -78,9 +78,8 @@ signInBtn.addEventListener("click", () => {
     let user = new User(name, login, email, password);
     UM.lastUser = user;
     UM.addUser(user);
-    window.open("../pages/SignIn.html", "_self");
+    window.open("../pages/SignUp.html", "_self");
   } else if (signInBtn.textContent == "Sign up" && inputsCheck()) {
-    
   } else if (
     window.location.pathname == "/pages/Profile.html" &&
     inputsCheck()
@@ -183,7 +182,6 @@ function inputsCheck() {
       inputs[0].previousElementSibling.classList.add("error");
       inputs[1].previousElementSibling.textContent = "inapropriate value";
       inputs[1].previousElementSibling.classList.add("error");
-      window.open("/pages/SignIn.html")
     }
     console.log(UM.userFind(login, password));
     console.log(UM.userFind(login, password) != -1);
@@ -193,8 +191,10 @@ function inputsCheck() {
     return true;
   }
 }
-let signoutBtn = document.querySelector(".SignOut")
-signoutBtn.addEventListener("click",() => {
-  localStorage.removeItem("logged");
-  window.open("../index.html","_self")
-})
+if(window.location.pathname == "../pages/Profile.html"){
+  let signoutBtn = document.querySelector(".SignOut")
+  signoutBtn.addEventListener("click",() => {
+    localStorage.removeItem("logged");
+    window.open("../index.html","_self")
+  })
+}

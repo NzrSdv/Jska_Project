@@ -93,8 +93,9 @@ function minusCartProduct(id) {
 
 function searchFunc() {
   if (search.value.trim() == "" || search.value == "") {
+    PM.render(window.location.pathname == "/index.html");
   } else {
-    let value = search.value;
+    let value = search.value.toLowerCase();
     document.querySelectorAll(".product").forEach((element) => {
       if (
         element

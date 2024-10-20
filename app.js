@@ -67,6 +67,7 @@ cartLink.addEventListener("click", () => {
 let search = document.querySelector(".catalog-search");
 search.addEventListener("input",searchFunc);
 
+
 let select = document.querySelector(".sort");
 //default rarity- rarity+ cost+ cost -
 select.addEventListener("change", () => {
