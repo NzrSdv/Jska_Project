@@ -81,7 +81,7 @@ signInBtn.addEventListener("click", () => {
     UM.addUser(user);
     let hrefList = window.location.pathname.split("/")
     hrefList.pop()
-    window.open(window.location.origin + hrefList.join("/") + "SignUp.html", "_self");
+    window.open(window.location.origin + hrefList.join("/") + "/SignUp.html", "_self");
   } else if (signInBtn.textContent == "Sign up" && inputsCheck()) {
 
   } else if (
