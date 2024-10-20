@@ -56,7 +56,7 @@ function addToTheCartButton(id) {
     }
     AddedBoxAnimation();
   } else {
-    window.open("/pages/SignIn.html", "_self");
+    window.open(window.location.origin + "/pages/SignIn.html", "_self");
   }
 }
 
@@ -93,7 +93,7 @@ function minusCartProduct(id) {
 
 function searchFunc() {
   if (search.value.trim() == "" || search.value == "") {
-    PM.render(window.location.pathname == "/index.html");
+    PM.render(window.location.pathname.includes("/index.html"));
   } else {
     let value = search.value.toLowerCase();
     document.querySelectorAll(".product").forEach((element) => {
@@ -114,7 +114,7 @@ function searchFunc() {
     if (
       document.querySelectorAll(".product.none").length == PM.datas.length &&
       document.querySelector(".message") == null &&
-      window.location.pathname == "/index.html"
+      window.location.pathname.includes("/index.html")
     ) {
       products.innerHTML = `
       <div class="message">
@@ -124,7 +124,7 @@ function searchFunc() {
     } else if (
       document.querySelectorAll(".product.none").length == PM.carts.length &&
       document.querySelector(".message") == null &&
-      window.location.pathname == "/pages/Cart.html"
+      window.location.pathname.includes("/Cart.html")
     ) {
       products.innerHTML = `
       <div class="message">

@@ -78,7 +78,7 @@ signInBtn.addEventListener("click", () => {
     let user = new User(name, login, email, password);
     UM.lastUser = user;
     UM.addUser(user);
-    window.open("../pages/SignUp.html", "_self");
+    window.open(window.location.origin + "/pages/SignUp.html", "_self");
   } else if (signInBtn.textContent == "Sign up" && inputsCheck()) {
 
   } else if (
@@ -176,7 +176,7 @@ function inputsCheck() {
     if (UM.userFind(login, password) != -1) {
       let index = UM.userFind(login, password);
       UM.users[index].loggedLS();
-      window.open("../index.html", "_self");
+      window.open(window.location.origin + "/index.html", "_self");
       return true;
     } else {
       inputs[0].previousElementSibling.textContent = "inapropriate value";
@@ -188,7 +188,7 @@ function inputsCheck() {
     console.log(UM.userFind(login, password) != -1);
     return false;
   }
-  else if(window.location.pathname == "/pages/Profile.html"){
+  else if(window.location.pathname.includes("/pages/Profile.html")){
     return true;
   }
 }
@@ -196,6 +196,6 @@ if(window.location.pathname.includes("/Profile.html")){
   let signoutBtn = document.querySelector(".SignOut")
   signoutBtn.addEventListener("click",() => {
     localStorage.removeItem("logged");
-    window.open("../index.html","_self")
+    window.open(window.location.origin + "/index.html","_self")
   })
 }
