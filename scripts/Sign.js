@@ -32,8 +32,9 @@ if (JSON.parse(localStorage.getItem("users")) != undefined) {
   let list = [];
   let data = JSON.parse(localStorage.getItem("users"));
   data.forEach((element) => {
+    let userka = new User(element.name, element.login, element.email, element.password)
     list.push(
-      new User(element.name, element.login, element.email, element.password)
+      userka
     );
   });
   if (JSON.parse(localStorage.getItem("lastUser"))) {
@@ -78,7 +79,9 @@ signInBtn.addEventListener("click", () => {
     let user = new User(name, login, email, password);
     UM.lastUser = user;
     UM.addUser(user);
-    window.open(window.location.href + "/pages/SignUp.html", "_self");
+    let hrefList = window.location.pathname.split("/")
+    hrefList.pop()
+    window.open(window.location.origin + hrefList.join("/") + "/SignUp.html", "_self");
   } else if (signInBtn.textContent == "Sign up" && inputsCheck()) {
 
   } else if (
@@ -176,7 +179,10 @@ function inputsCheck() {
     if (UM.userFind(login, password) != -1) {
       let index = UM.userFind(login, password);
       UM.users[index].loggedLS();
-      window.open(window.location.href + "/index.html", "_self");
+      let hrefList = window.location.pathname.split("/")
+      hrefList.pop()
+      hrefList.pop()
+      window.open(window.location.origin + hrefList.join("/") + "/index.html", "_self");
       return true;
     } else {
       inputs[0].previousElementSibling.textContent = "inapropriate value";
@@ -196,6 +202,9 @@ if(window.location.pathname.includes("/Profile.html")){
   let signoutBtn = document.querySelector(".SignOut")
   signoutBtn.addEventListener("click",() => {
     localStorage.removeItem("logged");
-    window.open(window.location.href + "/index.html","_self")
+    let hrefList = window.location.pathname.split("/")
+    hrefList.pop()
+    hrefList.pop()
+    window.open(window.location.origin + hrefList.join("/") + "/index.html", "_self");
   })
 }
