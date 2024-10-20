@@ -61,6 +61,7 @@ class ProductManager {
       console.log(this.carts);
       this.render(false);
     }
+    this.totalCost(); 
   }
 
   CartUpdate() {
@@ -117,9 +118,26 @@ class ProductManager {
     <button class="changeQ minus-Q" onclick="minusCartProduct(${element.id})">-</button>
 </div>
 <h3 class="product-sum">${element.AllSum} VB</h3>
+<button class="product-delete" onclick="removeCartProduct(${element.id})">Delete</button>
     </div>
             </div>`;
       });
+      this.totalCost();
+      
+    }
+
+  }
+
+  totalCost(){
+    let sum = 0;
+    if(this.carts.length){
+      this.carts.forEach(elem => {
+        sum += elem.AllSum 
+      })
+      document.querySelector(".total").textContent = `total: ${sum} VB`
+    }
+    else{
+      document.querySelector(".total").textContent = `total: ${sum} VB`
     }
   }
 }

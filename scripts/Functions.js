@@ -98,6 +98,12 @@ function minusCartProduct(id) {
   PM.render(false);
 }
 
+function removeCartProduct(id){
+  delw.classList.remove("none");
+  selectedCartProductId = id;
+  render(false);
+}
+
 function searchFunc() {
   if (search.value.trim() == "" || search.value == "") {
     PM.render(window.location.pathname.includes("/index.html"));
