@@ -202,9 +202,9 @@ if(window.location.pathname.includes("/Profile.html")){
   let signoutBtn = document.querySelector(".SignOut")
   signoutBtn.addEventListener("click",() => {
     localStorage.removeItem("logged");
-    let hrefList = window.location.pathname.split("/")
+    let hrefList = window.location.href.split("/")
     hrefList.pop()
     hrefList.pop()
-    window.open(window.location.origin + hrefList.join("/") + "/index.html", "_self");
+    window.open(hrefList.join("/") + "/index.html", "_self");
   })
 }
