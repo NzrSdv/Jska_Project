@@ -81,7 +81,7 @@ signInBtn.addEventListener("click", () => {
     UM.addUser(user);
     let hrefList = window.location.pathname.split("/")
     hrefList.pop()
-    window.open(window.location.origin + hrefList.join("/") + "/SignUp.html", "_self");
+    window.open(window.location.origin + hrefList.join("/") + "SignUp.html", "_self");
   } else if (signInBtn.textContent == "Sign up" && inputsCheck()) {
 
   } else if (
@@ -182,7 +182,7 @@ function inputsCheck() {
       let hrefList = window.location.pathname.split("/")
       hrefList.pop()
       hrefList.pop()
-      window.open(window.location.origin + hrefList.join("/") + "/index.html", "_self");
+      window.open(window.location.origin + hrefList.join("/") + "index.html", "_self");
       return true;
     } else {
       inputs[0].previousElementSibling.textContent = "inapropriate value";
@@ -205,6 +205,6 @@ if(window.location.pathname.includes("/Profile.html")){
     let hrefList = window.location.pathname.split("/")
     hrefList.pop()
     hrefList.pop()
-    window.open(window.location.origin + hrefList.join("/") + "/index.html", "_self");
+    window.open(window.location.origin + hrefList.join("/") + "index.html", "_self");
   })
 }
