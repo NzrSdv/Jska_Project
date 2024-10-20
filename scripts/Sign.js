@@ -179,10 +179,10 @@ function inputsCheck() {
     if (UM.userFind(login, password) != -1) {
       let index = UM.userFind(login, password);
       UM.users[index].loggedLS();
-      let hrefList = window.location.pathname.split("/")
+      let hrefList = window.location.href.split("/")
       hrefList.pop()
       hrefList.pop()
-      window.open(window.location.origin + hrefList.join("/") + "/index.html", "_self");
+      window.open(hrefList.join("/") + "/"+"index.html", "_self");
       return true;
     } else {
       inputs[0].previousElementSibling.textContent = "inapropriate value";
@@ -205,6 +205,6 @@ if(window.location.pathname.includes("/Profile.html")){
     let hrefList = window.location.href.split("/")
     hrefList.pop()
     hrefList.pop()
-    window.open(hrefList.join("/") + "/index.html", "_self");
+    window.open(hrefList.join("/") + "/" +"index.html", "_self");
   })
 }
