@@ -59,7 +59,7 @@ function addToTheCartButton(id) {
     if(window.location.pathname.includes("index.html")){
       let hrefList = window.location.href.split("/");
       hrefList.pop();
-    window.open( hrefList.join("/") + "pages/SignIn.html", "_self");
+    window.open( hrefList.join("/") + "/pages/SignIn.html", "_self");
     }
     else{
       window.open(window.location.href  + "pages/SignIn.html", "_self");
