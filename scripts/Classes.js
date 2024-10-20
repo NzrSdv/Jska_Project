@@ -277,6 +277,8 @@ class User {
     this.login = login;
     this.email = email;
     this.password = password;
+    this.cart = [];
+    this.cartWrite();
   }
   passwordCheck(newPassword) {
     return this.password == newPassword;
@@ -286,6 +288,19 @@ class User {
   }
   loggedLS() {
     localStorage.setItem("logged", JSON.stringify(this));
+    if(this.cart != []){
+      localStorage.setItem("cart",JSON.stringify(this.cart))
+    }
+  }
+  cartWrite(){
+    if(localStorage.getItem("cart") != undefined)
+      {
+        let data = JSON.parse(localStorage.getItem("cart"));
+        let cart = data.map(elem => {
+          return new CartProduct(elem.id,elem.name,elem.rarity,elem.image,elem.type,elem.cost,elem.quantity);
+        })
+        this.cart = cart;
+      }
   }
 }
 class UserManager {

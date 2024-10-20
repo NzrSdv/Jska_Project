@@ -28,16 +28,20 @@ inputs.forEach((element, index) => {
 
 let UM;
 
-if (JSON.parse(localStorage.getItem("users")) != undefined) {
+if (JSON.parse(localStorage.getItem("users")) != null) {
   let list = [];
   let data = JSON.parse(localStorage.getItem("users"));
   data.forEach((element) => {
-    let userka = new User(element.name, element.login, element.email, element.password)
-    list.push(
-      userka
+    let userka = new User(
+      element.name,
+      element.login,
+      element.email,
+      element.password
     );
+    userka.cartWrite();
+    list.push(userka);
   });
-  if (JSON.parse(localStorage.getItem("lastUser"))) {
+  if (JSON.parse(localStorage.getItem("lastUser")) != undefined) {
     let lastOne = JSON.parse(localStorage.getItem("lastUser"));
     UM = new UserManager(
       list,
@@ -50,7 +54,9 @@ if (JSON.parse(localStorage.getItem("users")) != undefined) {
   UM = new UserManager([], {});
 }
 if (window.location.href.includes("/SignUp.html") && UM.hasLastUser()) {
-  let user = UM.hasLastUser() ? UM.lastUser : JSON.parse(localStorage.getItem("lastUser"));
+  let user = UM.hasLastUser()
+    ? UM.lastUser
+    : JSON.parse(localStorage.getItem("lastUser"));
   inputs[0].value = user.login;
   inputs[1].value = user.password;
   inputs.forEach((element) => {
@@ -59,7 +65,9 @@ if (window.location.href.includes("/SignUp.html") && UM.hasLastUser()) {
     label.classList.add("moved--position");
   });
 } else if (window.location.href.includes("/Profile.html")) {
-  let user = UM.hasLastUser() ? UM.lastUser : JSON.parse(localStorage.getItem("logged"));
+  let user = UM.hasLastUser()
+    ? UM.lastUser
+    : JSON.parse(localStorage.getItem("logged"));
   console.log(user);
   inputs.forEach((element, index) => {
     element.value = user[`${namings[index]}`];
@@ -79,15 +87,22 @@ signInBtn.addEventListener("click", () => {
     let user = new User(name, login, email, password);
     UM.lastUser = user;
     UM.addUser(user);
-    let hrefList = window.location.pathname.split("/")
-    hrefList.pop()
-    window.open(window.location.origin + hrefList.join("/") + "/SignUp.html", "_self");
+    let hrefList = window.location.pathname.split("/");
+    hrefList.pop();
+    window.open(
+      window.location.origin + hrefList.join("/") + "/SignUp.html",
+      "_self"
+    );
   } else if (signInBtn.textContent == "Sign up" && inputsCheck()) {
-
-  } else if (
-    window.location.href.includes("/Profile.html") &&
-    inputsCheck()
-  ) {
+    let login = inputs[0].value;
+    let password = inputs[1].value;
+    let index = UM.userFind(login, password);
+    UM.users[index].loggedLS();
+    let hrefList = window.location.href.split("/");
+    hrefList.pop();
+    hrefList.pop();
+    window.open(hrefList.join("/") + "/" + "index.html", "_self");
+  } else if (window.location.href.includes("/Profile.html") && inputsCheck()) {
     if (signInBtn.textContent == "Redact") {
       signInBtn.textContent = "Confirm";
       inputs.forEach((element) => {
@@ -100,7 +115,7 @@ signInBtn.addEventListener("click", () => {
         element.setAttribute("readonly", "readonly");
         user[`${namings[index]}`] = element.value;
       });
-      localStorage.setItem("logged",JSON.stringify(user));
+      localStorage.setItem("logged", JSON.stringify(user));
     }
   }
 });
@@ -177,12 +192,6 @@ function inputsCheck() {
       inputs[1].previousElementSibling.classList.add("error");
     }
     if (UM.userFind(login, password) != -1) {
-      let index = UM.userFind(login, password);
-      UM.users[index].loggedLS();
-      let hrefList = window.location.href.split("/")
-      hrefList.pop()
-      hrefList.pop()
-      window.open(hrefList.join("/") + "/"+"index.html", "_self");
       return true;
     } else {
       inputs[0].previousElementSibling.textContent = "inapropriate value";
@@ -193,18 +202,22 @@ function inputsCheck() {
     console.log(UM.userFind(login, password));
     console.log(UM.userFind(login, password) != -1);
     return false;
-  }
-  else if(window.location.pathname.includes("/pages/Profile.html")){
+  } else if (window.location.pathname.includes("/pages/Profile.html")) {
     return true;
   }
 }
-if(window.location.pathname.includes("/Profile.html")){
-  let signoutBtn = document.querySelector(".SignOut")
-  signoutBtn.addEventListener("click",() => {
+if (window.location.pathname.includes("/Profile.html")) {
+  let signoutBtn = document.querySelector(".SignOut");
+  signoutBtn.addEventListener("click", () => {
+    let user = JSON.parse(localStorage.getItem("lastUser"));
+    let id = UM.userFind(user.login, user.password);
+    UM.users[id] = UM.users[id].cartWrite();
+    UM.localStorageUpdate();
+    localStorage.removeItem("cart");
     localStorage.removeItem("logged");
-    let hrefList = window.location.href.split("/")
-    hrefList.pop()
-    hrefList.pop()
-    window.open(hrefList.join("/") + "/" +"index.html", "_self");
-  })
+    let hrefList = window.location.href.split("/");
+    hrefList.pop();
+    hrefList.pop();
+    window.open(hrefList.join("/") + "/" + "index.html", "_self");
+  });
 }

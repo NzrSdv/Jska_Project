@@ -1,6 +1,6 @@
 let PM;
 window.onload = function () {
-  if (localStorage.getItem("cart")) {
+  if (JSON.parse(localStorage.getItem("cart")).length != 0) {
     let Newdata = JSON.parse(localStorage.getItem("products")).map(
       (element) => {
         return new Product(
@@ -41,11 +41,13 @@ window.onload = function () {
       }
     );
     PM = new ProductManager(Newdata, []);
-    products.innerHTML += `
+    if(JSON.parse(localStorage.getItem("cart")).length == 0){
+      products.innerHTML += `
       <div class="message">
               <h2 class="text-message">ничего не найдено</h2>
             </div>
       `;
+    }
   }
 };
 
