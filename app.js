@@ -46,7 +46,7 @@ if (!localStorage.getItem("products")) {
     });
 } else {
   let data = [...JSON.parse(localStorage.getItem("products"))];
-  if(JSON.parse(localStorage.getItem("cart"))){
+  if(JSON.parse(localStorage.getItem("cart")) != undefined){
     let cart = JSON.parse(localStorage.getItem("cart")).map(element => {
       return new CartProduct(element.id,element.name,element.rarity,element.image,element.type,element.cost,element.quantity);
     })
@@ -61,7 +61,15 @@ if (!localStorage.getItem("products")) {
 
 cartLink.addEventListener("click", () => {
   if (!JSON.parse(localStorage.getItem("logged"))) {
-    cartLink.href = "/pages/SignIn.html";
+    if(window.location.href.includes("index")){
+      let ist = window.location.href.split("/");
+      ist.pop()
+      window.open(ist.join("/") + "/pages/SignIn.html");
+    }
+    else{
+      window.open(list.location.href + "/pages/SignIn.html"); 
+    }
+
   }
 });
 let search = document.querySelector(".catalog-search");

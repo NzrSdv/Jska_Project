@@ -272,12 +272,12 @@ class CartProduct extends Product {
 }
 
 class User {
-  constructor(name, login, email, password,cart = []) {
+  constructor(name, login, email, password) {
     this.name = name;
     this.login = login;
     this.email = email;
     this.password = password;
-    this.cart = cart;
+    this.cart = [];
     this.cartWrite();
   }
   passwordCheck(newPassword) {
@@ -293,11 +293,13 @@ class User {
     }
   }
   cartWrite(){
-    if(localStorage.getItem("cart") != undefined || JSON.parse(localStorage.getItem("cart")) != null)
+    if(localStorage.getItem("cart") != undefined)
       {
-        this.cart = JSON.parse(localStorage.getItem("cart"))
-        console.log(this.cart)
-        
+        let data = JSON.parse(localStorage.getItem("cart"));
+        let cart = data.map(elem => {
+          return new CartProduct(elem.id,elem.name,elem.rarity,elem.image,elem.type,elem.cost,elem.quantity);
+        })
+        this.cart = cart;
       }
   }
 }

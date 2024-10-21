@@ -36,7 +36,8 @@ if (JSON.parse(localStorage.getItem("users")) != null) {
       element.name,
       element.login,
       element.email,
-      element.password
+      element.password,
+      element.cart
     );
     userka.cartWrite();
     list.push(userka);
@@ -45,7 +46,7 @@ if (JSON.parse(localStorage.getItem("users")) != null) {
     let lastOne = JSON.parse(localStorage.getItem("lastUser"));
     UM = new UserManager(
       list,
-      new User(lastOne.name, lastOne.login, lastOne.email, lastOne.password)
+      new User(lastOne.name, lastOne.login, lastOne.email, lastOne.password,lastOne.cart)
     );
   } else {
     UM = new UserManager(list, {});
@@ -97,6 +98,9 @@ signInBtn.addEventListener("click", () => {
     let login = inputs[0].value;
     let password = inputs[1].value;
     let index = UM.userFind(login, password);
+    if(UM.users[index].cart != []){
+      localStorage.setItem("cart",UM.users[index].cart);
+    }
     UM.users[index].loggedLS();
     let hrefList = window.location.href.split("/");
     hrefList.pop();
@@ -211,13 +215,14 @@ if (window.location.pathname.includes("/Profile.html")) {
   signoutBtn.addEventListener("click", () => {
     let user = JSON.parse(localStorage.getItem("lastUser"));
     let id = UM.userFind(user.login, user.password);
-    UM.users[id] = UM.users[id].cartWrite();
+    UM.users[id].cartWrite()
+    UM.lastUser.cartWrite();
     UM.localStorageUpdate();
-    localStorage.removeItem("cart");
-    localStorage.removeItem("logged");
     let hrefList = window.location.href.split("/");
     hrefList.pop();
     hrefList.pop();
+    localStorage.removeItem("cart");
+    localStorage.removeItem("logged");
     window.open(hrefList.join("/") + "/" + "index.html", "_self");
   });
 }
