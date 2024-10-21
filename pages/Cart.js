@@ -34,8 +34,8 @@ window.onload = function () {
           element.id,
           element.name,
           element.rarity,
-          element.type,
           element.image,
+          element.type,
           element.cost
         );
       }
