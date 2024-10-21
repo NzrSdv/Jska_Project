@@ -71,3 +71,16 @@ let yes = document.querySelector(".yes");
 yes.addEventListener("click", () => {
   PM.removeCart(selectedCartProductId);
 });
+
+
+let buyBtn = document.querySelector(".buy-All");
+buyBtn.addEventListener("click", () => {
+  if(PM.carts != []){
+    PM.carts = [];
+    PM.CartUpdate();
+    PM.render();
+  }
+  else{
+    alert("a");
+  }
+})
