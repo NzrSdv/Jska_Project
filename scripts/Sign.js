@@ -39,7 +39,6 @@ if (JSON.parse(localStorage.getItem("users")) != null) {
       element.password,
       element.cart
     );
-    userka.cartWrite();
     list.push(userka);
   });
   if (JSON.parse(localStorage.getItem("lastUser")) != undefined) {
@@ -77,6 +76,7 @@ if (window.location.href.includes("/SignUp.html") && UM.hasLastUser()) {
     label.classList.remove("normal--position");
     label.classList.add("moved--position");
   });
+  
 }
 
 signInBtn.addEventListener("click", () => {
@@ -102,6 +102,8 @@ signInBtn.addEventListener("click", () => {
       localStorage.setItem("cart",UM.users[index].cart);
     }
     UM.users[index].loggedLS();
+    UM.lastUser = UM.users[index];
+    UM.localStorageUpdate();
     let hrefList = window.location.href.split("/");
     hrefList.pop();
     hrefList.pop();
@@ -213,15 +215,13 @@ function inputsCheck() {
 if (window.location.pathname.includes("/Profile.html")) {
   let signoutBtn = document.querySelector(".SignOut");
   signoutBtn.addEventListener("click", () => {
-    let user = JSON.parse(localStorage.getItem("lastUser"));
-    let id = UM.userFind(user.login, user.password);
-    UM.users[id].cartWrite()
-    UM.lastUser.cartWrite();
+    let id = UM.userFind(UM.lastUser.login,UM.lastUser.password);
+    UM.users[id].cartWrite();
+    localStorage.removeItem("cart");
     UM.localStorageUpdate();
     let hrefList = window.location.href.split("/");
     hrefList.pop();
     hrefList.pop();
-    localStorage.removeItem("cart");
     localStorage.removeItem("logged");
     window.open(hrefList.join("/") + "/" + "index.html", "_self");
   });

@@ -72,7 +72,7 @@ class ProductManager {
 
     if (isData) {
       this.datas.forEach((element) => {
-        console.log([element.id,element.name])
+
           products.innerHTML += `
           <div class="product ${element.rarity}">
       <div class="search--akparat">
@@ -277,7 +277,6 @@ class User {
     this.email = email;
     this.password = password;
     this.cart = cart;
-    this.cartWrite();
   }
   passwordCheck(newPassword) {
     return this.password == newPassword;
