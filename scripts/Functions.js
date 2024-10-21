@@ -38,7 +38,13 @@ function addToTheCartButton(id) {
       PM.CartUpdate();
       Addedbox[boxIndex].textContent = "+1 к уже имеющему товару в корзине";
     } else {
-      let elem = PM.datas[id];
+      PM.datas.forEach((element, index) => {
+        if (element.id == id) {
+          status = true;
+          inde = index;
+        }
+      });
+      let elem = PM.datas[inde];
       PM.addCart(
         new CartProduct(
           id,
@@ -76,8 +82,6 @@ function plusCartProduct(id) {
   });
   if (sorted != undefined) {
     PM.carts[sorted].PlusQuantity();
-  } else {
-    PM.removeCart(selectedCartProductId);
   }
   PM.CartUpdate();
   PM.render(false);

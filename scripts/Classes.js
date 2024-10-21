@@ -71,36 +71,35 @@ class ProductManager {
     products.innerHTML = "";
 
     if (isData) {
-      for (let i = 0; i < this.datas.length / 10; i++) {
-        for (let j = 0; j < 10; j++) {
+      this.datas.forEach((element) => {
+        console.log([element.id,element.name])
           products.innerHTML += `
-          <div class="product ${this.datas[i * 10 + j].rarity}">
+          <div class="product ${element.rarity}">
       <div class="search--akparat">
       <img src="${
-        this.datas[i * 10 + j].image
+        element.image
       }" alt="" class="product--image" loading="lazy">
       <h2 class="product-name info-important">${
-        this.datas[i * 10 + j].name
+        element.name
       }</h2>
       <div class="line">
           <h3 class="product-type info-important">${
-            this.datas[i * 10 + j].type
+            element.type
           }</h3>
           <h3 class="product-rarity info-important">${
-            this.datas[i * 10 + j].rarity
+            element.rarity
           }</h3>
       </div>
       
-<h3 class="product-rarity info-important">${this.datas[i * 10 + j].cost} VB</h3>
+<h3 class="product-rarity info-important">${element.cost} VB</h3>
       </div>
       <div class = "line"> 
       <button class="product--cart" onclick="addToTheCartButton(${
-        this.datas[i * 10 + j].id
+        element.id
       })">add to cart</button>
       </div>
   </div>`;
-        }
-      }
+        })
     } else {
       this.carts.forEach((element) => {
         products.innerHTML += `
