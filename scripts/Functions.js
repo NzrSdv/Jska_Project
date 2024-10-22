@@ -103,7 +103,7 @@ function minusCartProduct(id) {
 function removeCartProduct(id) {
   delw.classList.remove("none");
   selectedCartProductId = id;
-  render(false);
+  PM.render(false);
 }
 
 function searchFunc() {

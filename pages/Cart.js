@@ -19,14 +19,15 @@ window.onload = function () {
         element.id,
         element.name,
         element.rarity,
-        element.type,
         element.image,
+        element.type,
         element.cost,
         element.quantity
       );
     });
     PM = new ProductManager(Newdata, Newcart);
-    PM.render(false);
+  PM.render(false);
+
   } else {
     let Newdata = JSON.parse(localStorage.getItem("products")).map(
       (element) => {
@@ -34,16 +35,14 @@ window.onload = function () {
           element.id,
           element.name,
           element.rarity,
-          element.image,
           element.type,
+          element.image,
           element.cost
         );
       }
     );
     PM = new ProductManager(Newdata, []);
-    if (JSON.parse(localStorage.getItem("cart")).length == 0) {
-      fillerShow();
-    }
+    fillerShow();
   }
 };
 
@@ -67,4 +66,3 @@ let yes = document.querySelector(".yes");
 yes.addEventListener("click", () => {
   PM.removeCart(selectedCartProductId);
 });
-

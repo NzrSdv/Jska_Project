@@ -50,12 +50,8 @@ class ProductManager {
       }
     });
     if (this.carts.length == 0) {
-      products.innerHTML = `
-      <div class="message">
-              <h2 class="text-message">ничего не найдено</h2>
-            </div>
-      `;
       localStorage.removeItem("cart");
+      fillerShow();
     } else {
       this.CartUpdate();
       console.log(this.carts);
@@ -71,37 +67,35 @@ class ProductManager {
     products.innerHTML = "";
 
     if (isData) {
-      for (let i = 0; i < this.datas.length / 10; i++) {
-        for (let j = 0; j < 10; j++) {
+      this.datas.forEach(elem => {
           products.innerHTML += `
-          <div class="product ${this.datas[i * 10 + j].rarity}">
+          <div class="product ${elem.rarity}">
       <div class="search--akparat">
       <img src="${
-        this.datas[i * 10 + j].image
+        elem.image
       }" alt="" class="product--image" loading="lazy">
       <h2 class="product-name info-important">${
-        this.datas[i * 10 + j].name
+        elem.name
       }</h2>
       <div class="line">
           <h3 class="product-type info-important">${
-            this.datas[i * 10 + j].type
+            elem.type
           }</h3>
           <h3 class="product-rarity info-important">${
-            this.datas[i * 10 + j].rarity
+            elem.rarity
           }</h3>
       </div>
       
-<h3 class="product-rarity info-important">${this.datas[i * 10 + j].cost} VB</h3>
+<h3 class="product-rarity info-important">${elem.cost} VB</h3>
       </div>
       <div class = "line"> 
       <button class="product--cart" onclick="addToTheCartButton(${
-        this.datas[i * 10 + j].id
+        elem.id
       })">add to cart</button>
       </div>
   </div>`;
-        }
-      }
-    } else {
+        })
+      }else {
       if (this.carts.length != 0) {
         this.carts.forEach((element) => {
           products.innerHTML += `
@@ -124,9 +118,8 @@ class ProductManager {
               </div>`;
         });
         this.totalCost();
-      }
-      else if(this.carts.length == 0){
-       fillerShow()
+      } else {
+        fillerShow();
       }
     }
   }
@@ -148,8 +141,8 @@ class Product {
     id,
     name,
     rarity,
-    image = "../imgs/default_image.webp",
     type,
+    image = "../imgs/default_image.webp",
     cost = 100
   ) {
     this.id = id;
@@ -247,8 +240,8 @@ class Product {
   }
 }
 class CartProduct extends Product {
-  constructor(id, name, rarity, image, type, cost, quantity) {
-    super(id, name, rarity, image, type, cost);
+  constructor(id, name, rarity, type, image, cost, quantity) {
+    super(id, name, rarity, type, image, cost);
     this.quantity = quantity;
     this.toFindTheCost();
     this.AllSum = 0;
@@ -302,8 +295,8 @@ class User {
           elem.id,
           elem.name,
           elem.rarity,
-          elem.image,
           elem.type,
+          elem.image,
           elem.cost,
           elem.quantity
         );
