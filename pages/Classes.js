@@ -61,7 +61,7 @@ class ProductManager {
       console.log(this.carts);
       this.render(false);
     }
-    this.totalCost(); 
+    this.totalCost();
   }
 
   CartUpdate() {
@@ -102,42 +102,44 @@ class ProductManager {
         }
       }
     } else {
-      this.carts.forEach((element) => {
-        products.innerHTML += `
-            <div class="product ${element.rarity}">
-            <div class="search--akparat">
-            <img src="${element.image}" loading="lazy" alt="" class="product--image">
-            <h2 class="product-name">${element.name}</h2>
-  <div class="line">
-      <h3 class="product-type">${element.type}</h3>
-      <h3 class="product-rarity">${element.rarity}</h3>
-  </div>
-  <div class = "line"> 
-    <button class="changeQ plus-Q" onclick="plusCartProduct(${element.id})">+</button>
-    <h3 class="product-Q">${element.quantity}</h3>
-    <button class="changeQ minus-Q" onclick="minusCartProduct(${element.id})">-</button>
-</div>
-<h3 class="product-sum">${element.AllSum} VB</h3>
-<button class="product-delete" onclick="removeCartProduct(${element.id})">Delete</button>
+      if (this.carts.length != 0) {
+        this.carts.forEach((element) => {
+          products.innerHTML += `
+              <div class="product ${element.rarity}">
+              <div class="search--akparat">
+              <img src="${element.image}" loading="lazy" alt="" class="product--image">
+              <h2 class="product-name">${element.name}</h2>
+    <div class="line">
+        <h3 class="product-type">${element.type}</h3>
+        <h3 class="product-rarity">${element.rarity}</h3>
     </div>
-            </div>`;
-      });
-      this.totalCost();
-      
+    <div class = "line"> 
+      <button class="changeQ plus-Q" onclick="plusCartProduct(${element.id})">+</button>
+      <h3 class="product-Q">${element.quantity}</h3>
+      <button class="changeQ minus-Q" onclick="minusCartProduct(${element.id})">-</button>
+  </div>
+  <h3 class="product-sum">${element.AllSum} VB</h3>
+  <button class="product-delete" onclick="removeCartProduct(${element.id})">Delete</button>
+      </div>
+              </div>`;
+        });
+        this.totalCost();
+      }
+      else if(this.carts.length == 0){
+       fillerShow()
+      }
     }
-
   }
 
-  totalCost(){
+  totalCost() {
     let sum = 0;
-    if(this.carts.length){
-      this.carts.forEach(elem => {
-        sum += elem.AllSum 
-      })
-      document.querySelector(".total").textContent = `total: ${sum} VB`
-    }
-    else{
-      document.querySelector(".total").textContent = `total: ${sum} VB`
+    if (this.carts.length) {
+      this.carts.forEach((elem) => {
+        sum += elem.AllSum;
+      });
+      document.querySelector(".total").textContent = `total: ${sum} VB`;
+    } else {
+      document.querySelector(".total").textContent = `total: ${sum} VB`;
     }
   }
 }
@@ -288,19 +290,26 @@ class User {
   }
   loggedLS() {
     localStorage.setItem("logged", JSON.stringify(this));
-    if(this.cart != []){
-      localStorage.setItem("cart",JSON.stringify(this.cart))
+    if (this.cart != []) {
+      localStorage.setItem("cart", JSON.stringify(this.cart));
     }
   }
-  cartWrite(){
-    if(localStorage.getItem("cart") != undefined)
-      {
-        let data = JSON.parse(localStorage.getItem("cart"));
-        let cart = data.map(elem => {
-          return new CartProduct(elem.id,elem.name,elem.rarity,elem.image,elem.type,elem.cost,elem.quantity);
-        })
-        this.cart = cart;
-      }
+  cartWrite() {
+    if (localStorage.getItem("cart") != undefined) {
+      let data = JSON.parse(localStorage.getItem("cart"));
+      let cart = data.map((elem) => {
+        return new CartProduct(
+          elem.id,
+          elem.name,
+          elem.rarity,
+          elem.image,
+          elem.type,
+          elem.cost,
+          elem.quantity
+        );
+      });
+      this.cart = cart;
+    }
   }
 }
 class UserManager {

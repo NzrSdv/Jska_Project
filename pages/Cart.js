@@ -7,8 +7,8 @@ window.onload = function () {
           element.id,
           element.name,
           element.rarity,
-          element.image,
           element.type,
+          element.image,
           element.cost
         );
       }
@@ -19,8 +19,8 @@ window.onload = function () {
         element.id,
         element.name,
         element.rarity,
-        element.image,
         element.type,
+        element.image,
         element.cost,
         element.quantity
       );
@@ -41,12 +41,8 @@ window.onload = function () {
       }
     );
     PM = new ProductManager(Newdata, []);
-    if(JSON.parse(localStorage.getItem("cart")).length == 0){
-      products.innerHTML += `
-      <div class="message">
-              <h2 class="text-message">ничего не найдено</h2>
-            </div>
-      `;
+    if (JSON.parse(localStorage.getItem("cart")).length == 0) {
+      fillerShow();
     }
   }
 };
@@ -72,15 +68,3 @@ yes.addEventListener("click", () => {
   PM.removeCart(selectedCartProductId);
 });
 
-
-let buyBtn = document.querySelector(".buy-All");
-buyBtn.addEventListener("click", () => {
-  if(PM.carts != []){
-    PM.carts = [];
-    PM.CartUpdate();
-    PM.render();
-  }
-  else{
-    alert("a");
-  }
-})

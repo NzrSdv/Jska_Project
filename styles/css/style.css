@@ -162,7 +162,11 @@ button.product--cart:hover {
 .delete-window {
   width: 100dvw;
   height: 100dvh;
-  position: absolute;
+  position:sticky;
+  top:0;
+  bottom: 0;
+  z-index: 2;
+
   background-color: rgba(0,0,0,.4);
   display: flex;
   justify-content: center;

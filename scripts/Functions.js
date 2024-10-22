@@ -7,7 +7,6 @@ function LoadingAnimation() {
   } else {
     loading.classList.add("none");
   }
-  
 }
 function AddedBoxAnimation() {
   let initialIndex = boxIndex;
@@ -62,13 +61,12 @@ function addToTheCartButton(id) {
     }
     AddedBoxAnimation();
   } else {
-    if(window.location.pathname.includes("index.html")){
+    if (window.location.pathname.includes("index.html")) {
       let hrefList = window.location.href.split("/");
       hrefList.pop();
-    window.open( hrefList.join("/") + "/pages/SignIn.html", "_self");
-    }
-    else{
-      window.open(window.location.href  + "pages/SignIn.html", "_self");
+      window.open(hrefList.join("/") + "/pages/SignIn.html", "_self");
+    } else {
+      window.open(window.location.href + "pages/SignIn.html", "_self");
     }
   }
 }
@@ -94,7 +92,7 @@ function minusCartProduct(id) {
     }
   });
   if (sorted != undefined) {
-     PM.carts[sorted].MinusQuantity();
+    PM.carts[sorted].MinusQuantity();
   } else {
     alert("nod");
   }
@@ -102,7 +100,7 @@ function minusCartProduct(id) {
   PM.render(false);
 }
 
-function removeCartProduct(id){
+function removeCartProduct(id) {
   delw.classList.remove("none");
   selectedCartProductId = id;
   render(false);
@@ -156,7 +154,7 @@ function cartCheck() {
 }
 function sortation(isCatalog) {
   let val = select.value;
-  if(val == "" || val.trim() == ""){
+  if (val == "" || val.trim() == "") {
     products.innerHTML = `
     <div class="message">
             <h2 class="text-message">ничего не найдено</h2>
@@ -212,17 +210,16 @@ function sortation(isCatalog) {
         console.log("def");
         break;
     }
-  PM.render(isCatalog);
-  searchFunc();
+    PM.render(isCatalog);
+    searchFunc();
   } else if (!isCatalog && cartCheck()) {
-    if(val == "" || val.trim() == ""){
+    if (val == "" || val.trim() == "") {
       products.innerHTML = `
       <div class="message">
               <h2 class="text-message">ничего не найдено</h2>
             </div>
       `;
-    }
-    else{
+    } else {
       switch (val) {
         case "0":
           PM.carts = JSON.parse(localStorage.getItem("cart")).map((element) => {
@@ -247,7 +244,7 @@ function sortation(isCatalog) {
               return 0;
             }
           });
-  
+
           break;
         case "2":
           PM.carts.sort((a, b) => {
@@ -270,8 +267,8 @@ function sortation(isCatalog) {
           console.log("def");
           break;
       }
-  PM.render(isCatalog);
-  searchFunc();
+      PM.render(isCatalog);
+      searchFunc();
     }
   } else {
     products.innerHTML = `
@@ -282,4 +279,22 @@ function sortation(isCatalog) {
   }
 }
 
+function buyAll() {
+  console.log("buy");
+  console.log(PM.carts);
+  PM.carts = [];
+  if (JSON.parse(localStorage.getItem("cart")).length != 0) {
+    PM.render(false);
+    PM.CartUpdate();
+  }
+  fillerShow();
 
+}
+
+function fillerShow(){
+  products.innerHTML  = `
+  <div class="message">
+          <h2 class="text-message">ничего не найдено</h2>
+        </div>
+  `;
+}

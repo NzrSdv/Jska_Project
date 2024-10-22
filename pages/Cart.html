@@ -9,15 +9,7 @@
 </head>
 
 <body>
-    <div class="delete-window none">
-        <div class="dw-content">
-           <h2> are you sure to delete product from the cart?</h2>
-        <div class="buttons">
-            <button class="commitBtn yes">yes</button>
-        <button class="commitBtn no">no</button>
-        </div>
-        </div>
-    </div>
+  
     <header class="header">
         <div class="header--left">
             <a href="../index.html" class="logo--link">
@@ -37,7 +29,7 @@
               <div class="catalog--info--main">
                 <h2 class="title">Cart</h2>
                 <h3 class="total">total: 0 VB</h3>
-                <button class="buy-All">Buy All</button>
+                <button class="buy-All" onclick="buyAll()">Buy All</button>
               </div>
               <div class="catalog-business">
                 <input type="text" class="catalog-search" placeholder="search" />
@@ -57,7 +49,15 @@
           </div>
         </section>
       </main>
-
+      <div class="delete-window none">
+        <div class="dw-content">
+           <h2> are you sure to delete product from the cart?</h2>
+        <div class="buttons">
+            <button class="commitBtn yes">yes</button>
+        <button class="commitBtn no">no</button>
+        </div>
+        </div>
+    </div>
       <script src="../scripts/Functions.js"></script>
       <script src="../scripts/Classes.js"></script>
     <script src="../scripts/Cart.js"></script>
