@@ -230,8 +230,8 @@ function sortation(isCatalog) {
               element.id,
               element.name,
               element.rarity,
-              element.image,
               element.type,
+              element.image,
               element.cost,
               element.quantity
             );

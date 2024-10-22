@@ -159,7 +159,6 @@ class Product {
   toFindTheCost() {
     let k = rares.indexOf(this.rarity);
     let kt = types.indexOf(this.type);
-    let list = [k, kt];
     if (k == 1) {
       if (kt == 0) {
         this.cost = 300;
@@ -244,8 +243,8 @@ class Product {
   }
 }
 class CartProduct extends Product {
-  constructor(id, name, rarity, image, type, cost, quantity) {
-    super(id, name, rarity, image, type, cost);
+  constructor(id, name, rarity,type ,image, cost, quantity) {
+    super(id, name, rarity, type ,image, cost);
     this.quantity = quantity;
     this.toFindTheCost();
     this.AllSum = 0;
