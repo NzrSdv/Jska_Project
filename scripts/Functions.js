@@ -146,7 +146,7 @@ function searchFunc() {
   }
 }
 function cartCheck() {
-  return localStorage.getItem("cart") == undefined ? false : true;
+  return localStorage.getItem("cart") == undefined || localStorage.getItem("cart") == "[]"? false : true;
 }
 function sortation(isCatalog) {
   let val = select.value;
@@ -218,9 +218,6 @@ function sortation(isCatalog) {
             element.quantity
           );
         });
-        if(!cartCheck()){
-          fillerShow();
-        }
         break;
       case "1":
         PM.carts.sort((a, b) => {
@@ -258,24 +255,32 @@ function sortation(isCatalog) {
     PM.render(isCatalog);
     searchFunc();
   } 
-  fillerShow()
 }
 
 function buyAll() {
-  console.log("buy");
-  console.log(PM.carts);
   PM.carts = [];
   if (JSON.parse(localStorage.getItem("cart")).length > 0) {
-    PM.render(false);
     PM.CartUpdate();
+    PM.render(false);
   }
-  fillerShow();
 }
 
 function fillerShow() {
+  if(products.innerHTML != `
+  <div class="message">
+          <h2 class="text-message">ничего не найдено</h2>
+        </div>
+  `){
   products.innerHTML += `
   <div class="message">
           <h2 class="text-message">ничего не найдено</h2>
         </div>
-  `;
-}
+  `;}
+  else{
+    products.innerHTML = `
+    <div class="message">
+            <h2 class="text-message">ничего не найдено</h2>
+          </div>
+    `;}
+  }
+

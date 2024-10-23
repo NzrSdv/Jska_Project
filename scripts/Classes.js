@@ -101,27 +101,33 @@ class ProductManager {
   </div>`;
         })
     } else {
-      this.carts.forEach((element) => {
-        products.innerHTML += `
-            <div class="product ${element.rarity}">
-            <div class="search--akparat">
-            <img src="${element.image}" loading="lazy" alt="" class="product--image">
-            <h2 class="product-name">${element.name}</h2>
-  <div class="line">
-      <h3 class="product-type">${element.type}</h3>
-      <h3 class="product-rarity">${element.rarity}</h3>
-  </div>
-  <div class = "line"> 
-    <button class="changeQ plus-Q" onclick="plusCartProduct(${element.id})">+</button>
-    <h3 class="product-Q">${element.quantity}</h3>
-    <button class="changeQ minus-Q" onclick="minusCartProduct(${element.id})">-</button>
-</div>
-<h3 class="product-sum">${element.AllSum} VB</h3>
-<button class="product-delete" onclick="removeCartProduct(${element.id})">Delete</button>
+      if(cartCheck()){
+        this.carts.forEach((element) => {
+          products.innerHTML += `
+              <div class="product ${element.rarity}">
+              <div class="search--akparat">
+              <img src="${element.image}" loading="lazy" alt="" class="product--image">
+              <h2 class="product-name">${element.name}</h2>
+    <div class="line">
+        <h3 class="product-type">${element.type}</h3>
+        <h3 class="product-rarity">${element.rarity}</h3>
     </div>
-            </div>`;
-      });
-      this.totalCost();
+    <div class = "line"> 
+      <button class="changeQ plus-Q" onclick="plusCartProduct(${element.id})">+</button>
+      <h3 class="product-Q">${element.quantity}</h3>
+      <button class="changeQ minus-Q" onclick="minusCartProduct(${element.id})">-</button>
+  </div>
+  <h3 class="product-sum">${element.AllSum} VB</h3>
+  <button class="product-delete" onclick="removeCartProduct(${element.id})">Delete</button>
+      </div>
+              </div>`;
+        });
+        this.totalCost();
+      }
+      else{
+        this.totalCost();
+        fillerShow();
+      }
       
     }
 
