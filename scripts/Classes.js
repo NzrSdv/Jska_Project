@@ -61,7 +61,7 @@ class ProductManager {
       console.log(this.carts);
       this.render(false);
     }
-    this.totalCost(); 
+    this.totalCost();
   }
 
   CartUpdate() {
@@ -71,37 +71,30 @@ class ProductManager {
     products.innerHTML = "";
 
     if (isData) {
-      this.datas.forEach((element) => {
-
+      if (this.datas == [] || this.datas == undefined) {
+        fillerShow();
+      } else {
+        this.datas.forEach((element) => {
           products.innerHTML += `
           <div class="product ${element.rarity}">
       <div class="search--akparat">
-      <img src="${
-        element.image
-      }" alt="" class="product--image" loading="lazy">
-      <h2 class="product-name info-important">${
-        element.name
-      }</h2>
+      <img src="${element.image}" alt="" class="product--image" loading="lazy">
+      <h2 class="product-name info-important">${element.name}</h2>
       <div class="line">
-          <h3 class="product-type info-important">${
-            element.type
-          }</h3>
-          <h3 class="product-rarity info-important">${
-            element.rarity
-          }</h3>
+          <h3 class="product-type info-important">${element.type}</h3>
+          <h3 class="product-rarity info-important">${element.rarity}</h3>
       </div>
       
 <h3 class="product-rarity info-important">${element.cost} VB</h3>
       </div>
       <div class = "line"> 
-      <button class="product--cart" onclick="addToTheCartButton(${
-        element.id
-      })">add to cart</button>
+      <button class="product--cart" onclick="addToTheCartButton(${element.id})">add to cart</button>
       </div>
   </div>`;
-        })
+        });
+      }
     } else {
-      if(cartCheck()){
+      if (cartCheck()) {
         this.carts.forEach((element) => {
           products.innerHTML += `
               <div class="product ${element.rarity}">
@@ -123,26 +116,22 @@ class ProductManager {
               </div>`;
         });
         this.totalCost();
-      }
-      else{
+      } else {
         this.totalCost();
         fillerShow();
       }
-      
     }
-
   }
 
-  totalCost(){
+  totalCost() {
     let sum = 0;
-    if(this.carts.length){
-      this.carts.forEach(elem => {
-        sum += elem.AllSum 
-      })
-      document.querySelector(".total").textContent = `total: ${sum} VB`
-    }
-    else{
-      document.querySelector(".total").textContent = `total: ${sum} VB`
+    if (this.carts.length) {
+      this.carts.forEach((elem) => {
+        sum += elem.AllSum;
+      });
+      document.querySelector(".total").textContent = `total: ${sum} VB`;
+    } else {
+      document.querySelector(".total").textContent = `total: ${sum} VB`;
     }
   }
 }
@@ -249,8 +238,8 @@ class Product {
   }
 }
 class CartProduct extends Product {
-  constructor(id, name, rarity,type ,image, cost, quantity) {
-    super(id, name, rarity, type ,image, cost);
+  constructor(id, name, rarity, type, image, cost, quantity) {
+    super(id, name, rarity, type, image, cost);
     this.quantity = quantity;
     this.toFindTheCost();
     this.AllSum = 0;
@@ -276,7 +265,7 @@ class CartProduct extends Product {
 }
 
 class User {
-  constructor(name, login, email, password,cart = []) {
+  constructor(name, login, email, password, cart = []) {
     this.name = name;
     this.login = login;
     this.email = email;
@@ -291,17 +280,18 @@ class User {
   }
   loggedLS() {
     localStorage.setItem("logged", JSON.stringify(this));
-    if(this.cart != []){
-      localStorage.setItem("cart",JSON.stringify(this.cart))
+    if (this.cart != []) {
+      localStorage.setItem("cart", JSON.stringify(this.cart));
     }
   }
-  cartWrite(){
-    if(localStorage.getItem("cart") != undefined || JSON.parse(localStorage.getItem("cart")) != null)
-      {
-        this.cart = JSON.parse(localStorage.getItem("cart"))
-        console.log(this.cart)
-        
-      }
+  cartWrite() {
+    if (
+      localStorage.getItem("cart") != undefined ||
+      JSON.parse(localStorage.getItem("cart")) != null
+    ) {
+      this.cart = JSON.parse(localStorage.getItem("cart"));
+      console.log(this.cart);
+    }
   }
 }
 class UserManager {

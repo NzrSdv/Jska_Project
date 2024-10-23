@@ -27,6 +27,9 @@ window.onload = function () {
     });
     PM = new ProductManager(Newdata, Newcart);
     PM.render(false);
+    if(!cartCheck){
+      fillerShow();
+    }
   } else {
     let Newdata = JSON.parse(localStorage.getItem("products")).map(
       (element) => {
@@ -41,7 +44,7 @@ window.onload = function () {
       }
     );
     PM = new ProductManager(Newdata, []);
-    if(cartCheck()){
+    if(!cartCheck()){
      fillerShow();
     }
   }

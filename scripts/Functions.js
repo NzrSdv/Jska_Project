@@ -266,7 +266,7 @@ function buyAll() {
 
 function fillerShow() {
   if (
-    products.textContent ==  `ничего не найдено`
+    document.querySelector(".message")
   ) {
     products.innerHTML = `
   <div class="message">
