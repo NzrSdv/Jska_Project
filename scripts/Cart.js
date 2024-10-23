@@ -41,12 +41,8 @@ window.onload = function () {
       }
     );
     PM = new ProductManager(Newdata, []);
-    if(JSON.parse(localStorage.getItem("cart")) == undefined){
-      products.innerHTML += `
-      <div class="message">
-              <h2 class="text-message">ничего не найдено</h2>
-            </div>
-      `;
+    if(cartCheck()){
+     fillerShow();
     }
   }
 };
