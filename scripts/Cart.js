@@ -1,6 +1,6 @@
 let PM;
 window.onload = function () {
-  if (JSON.parse(localStorage.getItem("cart")).length != 0) {
+  if (JSON.parse(localStorage.getItem("cart"))) {
     let Newdata = JSON.parse(localStorage.getItem("products")).map(
       (element) => {
         return new Product(

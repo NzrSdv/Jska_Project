@@ -131,11 +131,7 @@ function searchFunc() {
       document.querySelector(".message") == null &&
       window.location.pathname.includes("/index.html")
     ) {
-      products.innerHTML = `
-      <div class="message">
-              <h2 class="text-message">ничего не найдено</h2>
-            </div>
-      `;
+      fillerShow();
     } else if (
       document.querySelectorAll(".product.none").length == PM.carts.length &&
       document.querySelector(".message") == null &&
@@ -209,64 +205,60 @@ function sortation(isCatalog) {
     PM.render(isCatalog);
     searchFunc();
   } else if (!isCatalog && cartCheck()) {
-    if (val == "" || val.trim() == "") {
-      fillerShow();
+    switch (val) {
+      case "0":
+        PM.carts = JSON.parse(localStorage.getItem("cart")).map((element) => {
+          return new CartProduct(
+            element.id,
+            element.name,
+            element.rarity,
+            element.image,
+            element.type,
+            element.cost,
+            element.quantity
+          );
+        });
+        if(!cartCheck()){
+          fillerShow();
+        }
+        break;
+      case "1":
+        PM.carts.sort((a, b) => {
+          if (rares.indexOf(a.rarity) > rares.indexOf(b.rarity)) {
+            return -1;
+          } else if (rares.indexOf(a.rarity) < rares.indexOf(b.rarity)) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
 
-    } else {
-      switch (val) {
-        case "0":
-          PM.carts = JSON.parse(localStorage.getItem("cart")).map((element) => {
-            return new CartProduct(
-              element.id,
-              element.name,
-              element.rarity,
-              element.image,
-              element.type,
-              element.cost,
-              element.quantity
-            );
-          });
-          break;
-        case "1":
-          PM.carts.sort((a, b) => {
-            if (rares.indexOf(a.rarity) > rares.indexOf(b.rarity)) {
-              return -1;
-            } else if (rares.indexOf(a.rarity) < rares.indexOf(b.rarity)) {
-              return 1;
-            } else {
-              return 0;
-            }
-          });
-
-          break;
-        case "2":
-          PM.carts.sort((a, b) => {
-            if (rares.indexOf(a.rarity) > rares.indexOf(b.rarity)) {
-              return 1;
-            } else if (rares.indexOf(a.rarity) < rares.indexOf(b.rarity)) {
-              return -1;
-            } else {
-              return 0;
-            }
-          });
-          break;
-        case "3":
-          PM.carts.sort((a, b) => a.cost - b.cost);
-          break;
-        case "4":
-          PM.carts.sort((a, b) => b.cost - a.cost);
-          break;
-        default:
-          console.log("def");
-          break;
-      }
-      PM.render(isCatalog);
-      searchFunc();
+        break;
+      case "2":
+        PM.carts.sort((a, b) => {
+          if (rares.indexOf(a.rarity) > rares.indexOf(b.rarity)) {
+            return 1;
+          } else if (rares.indexOf(a.rarity) < rares.indexOf(b.rarity)) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
+        break;
+      case "3":
+        PM.carts.sort((a, b) => a.cost - b.cost);
+        break;
+      case "4":
+        PM.carts.sort((a, b) => b.cost - a.cost);
+        break;
+      default:
+        console.log("def");
+        break;
     }
-  } else {
-    fillerShow();
-
-  }
+    PM.render(isCatalog);
+    searchFunc();
+  } 
+  fillerShow()
 }
 
 function buyAll() {
@@ -281,7 +273,7 @@ function buyAll() {
 }
 
 function fillerShow() {
-  products.innerHTML = `
+  products.innerHTML += `
   <div class="message">
           <h2 class="text-message">ничего не найдено</h2>
         </div>
