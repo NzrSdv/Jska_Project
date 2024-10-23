@@ -1,49 +1,33 @@
 let PM;
+PM = new ProductManager([], []);
 window.onload = function () {
-  if (JSON.parse(localStorage.getItem("cart")).length != 0) {
-    let Newdata = JSON.parse(localStorage.getItem("products")).map(
+  if (cartCheck()) {
+   PM.datas = JSON.parse(localStorage.getItem("products")).map(
       (element) => {
         return new Product(
           element.id,
           element.name,
           element.rarity,
-          element.type,
           element.image,
+          element.type,
           element.cost
-        );
+        )
       }
     );
-    let Newcart;
-    Newcart = JSON.parse(localStorage.getItem("cart")).map((element) => {
+    PM.carts = JSON.parse(localStorage.getItem("cart")).map((element) => {
       return new CartProduct(
         element.id,
         element.name,
         element.rarity,
-        element.type,
         element.image,
+        element.type,
         element.cost,
         element.quantity
-      );
+      )
     });
-    PM = new ProductManager(Newdata, Newcart);
     PM.render(false);
   } else {
-    let Newdata = JSON.parse(localStorage.getItem("products")).map(
-      (element) => {
-        return new Product(
-          element.id,
-          element.name,
-          element.rarity,
-          element.image,
-          element.type,
-          element.cost
-        );
-      }
-    );
-    PM = new ProductManager(Newdata, []);
-    if (JSON.parse(localStorage.getItem("cart")).length == 0) {
-      fillerShow();
-    }
+    fillerShow();
   }
 };
 

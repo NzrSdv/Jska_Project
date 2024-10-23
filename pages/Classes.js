@@ -50,11 +50,7 @@ class ProductManager {
       }
     });
     if (this.carts.length == 0) {
-      products.innerHTML = `
-      <div class="message">
-              <h2 class="text-message">ничего не найдено</h2>
-            </div>
-      `;
+      fillerShow();
       localStorage.removeItem("cart");
     } else {
       this.CartUpdate();

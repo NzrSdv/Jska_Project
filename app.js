@@ -22,7 +22,7 @@ if (!localStorage.getItem("products")) {
     .then((res) => res.json())
     .then((ans) => {
       let list = [];
-      PM = new ProductManager(list, []);
+      PM = new ProductManager([], []);
       for (let i = 0; i < 50; i++) {
         list.push(
           new Product(
@@ -46,13 +46,20 @@ if (!localStorage.getItem("products")) {
     });
 } else {
   let data = [...JSON.parse(localStorage.getItem("products"))];
-  if(JSON.parse(localStorage.getItem("cart")) != undefined){
-    let cart = JSON.parse(localStorage.getItem("cart")).map(element => {
-      return new CartProduct(element.id,element.name,element.rarity,element.image,element.type,element.cost,element.quantity);
-    })
-    PM = new ProductManager(data,cart);
-  }
-  else{
+  if (JSON.parse(localStorage.getItem("cart")) != undefined) {
+    let cart = JSON.parse(localStorage.getItem("cart")).map((element) => {
+      return new CartProduct(
+        element.id,
+        element.name,
+        element.rarity,
+        element.image,
+        element.type,
+        element.cost,
+        element.quantity
+      );
+    });
+    PM = new ProductManager(data, cart);
+  } else {
     PM = new ProductManager(data, []);
   }
   PM.render(true);
@@ -61,20 +68,17 @@ if (!localStorage.getItem("products")) {
 
 cartLink.addEventListener("click", () => {
   if (!JSON.parse(localStorage.getItem("logged"))) {
-    if(window.location.href.includes("index")){
+    if (window.location.href.includes("index")) {
       let ist = window.location.href.split("/");
-      ist.pop()
+      ist.pop();
       window.open(ist.join("/") + "/pages/SignIn.html");
+    } else {
+      window.open(list.location.href + "/pages/SignIn.html");
     }
-    else{
-      window.open(list.location.href + "/pages/SignIn.html"); 
-    }
-
   }
 });
 let search = document.querySelector(".catalog-search");
-search.addEventListener("input",searchFunc);
-
+search.addEventListener("input", searchFunc);
 
 let select = document.querySelector(".sort");
 //default rarity- rarity+ cost+ cost -

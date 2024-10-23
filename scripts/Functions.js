@@ -51,7 +51,7 @@ function addToTheCartButton(id) {
           elem.rarity,
           elem.type,
           elem.image,
-          100,
+          elem.cost,
           1
         )
       );
@@ -103,7 +103,7 @@ function minusCartProduct(id) {
 function removeCartProduct(id) {
   delw.classList.remove("none");
   selectedCartProductId = id;
-  render(false);
+  PM.render(false);
 }
 
 function searchFunc() {
@@ -155,11 +155,7 @@ function cartCheck() {
 function sortation(isCatalog) {
   let val = select.value;
   if (val == "" || val.trim() == "") {
-    products.innerHTML = `
-    <div class="message">
-            <h2 class="text-message">ничего не найдено</h2>
-          </div>
-    `;
+    fillerShow();
   }
   if (isCatalog) {
     switch (val) {
@@ -214,11 +210,8 @@ function sortation(isCatalog) {
     searchFunc();
   } else if (!isCatalog && cartCheck()) {
     if (val == "" || val.trim() == "") {
-      products.innerHTML = `
-      <div class="message">
-              <h2 class="text-message">ничего не найдено</h2>
-            </div>
-      `;
+      fillerShow();
+
     } else {
       switch (val) {
         case "0":
@@ -227,8 +220,8 @@ function sortation(isCatalog) {
               element.id,
               element.name,
               element.rarity,
-              element.type,
               element.image,
+              element.type,
               element.cost,
               element.quantity
             );
@@ -271,11 +264,8 @@ function sortation(isCatalog) {
       searchFunc();
     }
   } else {
-    products.innerHTML = `
-      <div class="message">
-              <h2 class="text-message">ничего не найдено</h2>
-            </div>
-      `;
+    fillerShow();
+
   }
 }
 
@@ -283,16 +273,15 @@ function buyAll() {
   console.log("buy");
   console.log(PM.carts);
   PM.carts = [];
-  if (JSON.parse(localStorage.getItem("cart")).length != 0) {
+  if (JSON.parse(localStorage.getItem("cart")).length > 0) {
     PM.render(false);
     PM.CartUpdate();
   }
   fillerShow();
-
 }
 
-function fillerShow(){
-  products.innerHTML  = `
+function fillerShow() {
+  products.innerHTML = `
   <div class="message">
           <h2 class="text-message">ничего не найдено</h2>
         </div>
