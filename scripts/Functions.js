@@ -265,15 +265,7 @@ function buyAll() {
 }
 
 function fillerShow() {
-  if (
-    document.querySelector(".message")
-  ) {
-    products.innerHTML = `
-  <div class="message">
-          <h2 class="text-message">ничего не найдено</h2>
-        </div>
-  `;
-  } else {
+  if (!document.querySelector(".message")) {
     products.innerHTML += `
     <div class="message">
             <h2 class="text-message">ничего не найдено</h2>

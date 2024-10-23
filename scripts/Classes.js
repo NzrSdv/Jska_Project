@@ -69,7 +69,6 @@ class ProductManager {
   }
   render(isData) {
     products.innerHTML = "";
-
     if (isData) {
       if (this.datas == [] || this.datas == undefined) {
         fillerShow();
