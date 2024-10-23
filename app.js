@@ -65,7 +65,6 @@ if (!localStorage.getItem("products")) {
   }
   PM.CartUpdate();
   PM.render(true);
-
   fetchStatus = true;
 }
 

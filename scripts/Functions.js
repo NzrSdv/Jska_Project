@@ -108,7 +108,12 @@ function removeCartProduct(id) {
 
 function searchFunc() {
   if (search.value.trim() == "" || search.value == "") {
-    PM.render(window.location.pathname.includes("/index.html"));
+    if(!window.location.pathname.includes("/Cart.html")){
+      PM.render(true);
+    }
+    else{
+      PM.render(false);
+    }
   } else {
     let value = search.value.toLowerCase();
     document.querySelectorAll(".product").forEach((element) => {
@@ -265,15 +270,7 @@ function buyAll() {
 }
 
 function fillerShow() {
-  if (
-    document.querySelector(".message")
-  ) {
-    products.innerHTML = `
-  <div class="message">
-          <h2 class="text-message">ничего не найдено</h2>
-        </div>
-  `;
-  } else {
+  if (!document.querySelector(".message")) {
     products.innerHTML += `
     <div class="message">
             <h2 class="text-message">ничего не найдено</h2>

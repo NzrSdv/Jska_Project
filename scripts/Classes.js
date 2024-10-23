@@ -69,9 +69,8 @@ class ProductManager {
   }
   render(isData) {
     products.innerHTML = "";
-
     if (isData) {
-      if (this.datas == [] || this.datas == undefined) {
+      if (document.querySelectorAll(".product.none").length == PM.datas.length) {
         fillerShow();
       } else {
         this.datas.forEach((element) => {
