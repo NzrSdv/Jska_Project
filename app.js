@@ -39,6 +39,7 @@ if (!localStorage.getItem("products")) {
       }
       localStorage.setItem("products", JSON.stringify(list));
       PM.datas = list;
+      PM.CartUpdate();
     })
     .then(() => {
       fetchStatus = true;
@@ -62,7 +63,9 @@ if (!localStorage.getItem("products")) {
   } else {
     PM = new ProductManager(data, []);
   }
+  PM.CartUpdate();
   PM.render(true);
+
   fetchStatus = true;
 }
 
