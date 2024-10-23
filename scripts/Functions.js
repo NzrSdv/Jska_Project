@@ -49,8 +49,8 @@ function addToTheCartButton(id) {
           id,
           elem.name,
           elem.rarity,
-          elem.type,
           elem.image,
+          elem.type,
           elem.cost,
           1
         )
