@@ -108,10 +108,9 @@ function removeCartProduct(id) {
 
 function searchFunc() {
   if (search.value.trim() == "" || search.value == "") {
-    if(!window.location.pathname.includes("/Cart.html")){
+    if (!window.location.pathname.includes("/Cart.html")) {
       PM.render(true);
-    }
-    else{
+    } else {
       PM.render(false);
     }
   } else {
@@ -265,6 +264,24 @@ function buyAll() {
   PM.carts = [];
   if (JSON.parse(localStorage.getItem("cart")).length > 0) {
     PM.CartUpdate();
+    $(".window--successful--purchase").animate(
+      {
+        right: "+=100",
+        opacity: 1,
+      },
+      500,
+      () => {}
+    );
+    setTimeout(() => {
+      $(".window--successful--purchase").animate(
+        {
+          right: "-=100",
+          opacity: 0,
+        },
+        500,
+        () => {}
+      );
+    }, 500);
     PM.render(false);
   }
 }

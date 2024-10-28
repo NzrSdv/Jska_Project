@@ -1,4 +1,12 @@
 let PM;
+$(".window--successful--purchase").animate(
+  {
+    right: "-=100",
+    opacity: 0,
+  },
+  10,
+  () => {}
+);
 window.onload = function () {
   if (JSON.parse(localStorage.getItem("cart"))) {
     let Newdata = JSON.parse(localStorage.getItem("products")).map(
