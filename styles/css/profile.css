@@ -22,5 +22,16 @@
 
 .SignOut:hover{
     transform: translateY(-5px);
+}
 
+.confirmed--changes--window{
+padding:10px 20px;
+border-radius: 40px;
+  position: absolute;
+  background-color: green;
+  z-index: 2;
+  right: 0;
+  bottom: 10px;
+  /* opacity: 0; */
+  /* display: none; */
 }

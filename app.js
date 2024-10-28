@@ -87,3 +87,5 @@ let select = document.querySelector(".sort");
 select.addEventListener("change", () => {
   sortation(true);
 });
+
+
