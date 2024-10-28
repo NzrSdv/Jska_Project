@@ -327,4 +327,12 @@ class UserManager {
       return -1;
     }
   }
+  removeUser(login){
+    this.users = this.users.filter((element) => {
+      if(element.login != login){
+        return element;
+      }
+    })
+    console.log(this.users)
+  }
 }

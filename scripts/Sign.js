@@ -114,6 +114,7 @@ signInBtn.addEventListener("click", () => {
       inputs.forEach((element) => {
         element.removeAttribute("readonly");
       });
+
     } else if (signInBtn.textContent == "Confirm") {
       signInBtn.textContent = "Redact";
       let user = new User("", "", "", "");
@@ -122,6 +123,12 @@ signInBtn.addEventListener("click", () => {
         user[`${namings[index]}`] = element.value;
       });
       localStorage.setItem("logged", JSON.stringify(user));
+      UM.lastUser = user;
+      let logged = JSON.parse(localStorage.getItem("logged"))
+      let id = UM.userFind(logged.login,logged.password);
+      UM.removeUser(logged.login);
+      UM.addUser(user);
+      UM.localStorageUpdate();
     }
   }
 });
