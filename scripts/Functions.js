@@ -262,7 +262,7 @@ function sortation(isCatalog) {
 
 function buyAll() {
   PM.carts = [];
-  if (JSON.parse(localStorage.getItem("cart")).length > 0) {
+  if (JSON.parse(localStorage.getItem("cart"))!= []) {
     PM.CartUpdate();
     $(".window--successful--purchase").animate(
       {
@@ -283,6 +283,9 @@ function buyAll() {
       );
     }, 500);
     PM.render(false);
+  }
+  else{
+    alert("a")
   }
 }
 

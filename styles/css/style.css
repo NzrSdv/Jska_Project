@@ -84,7 +84,10 @@ select>option{
   border-radius: 10px;
   background-color: rgb(87, 94, 225);
 }
-@media (max-width:768px) {
+@media (max-width<768px) {
+  .sort{
+    display: none;
+  }
     .catalog-search::placeholder{
         content:'';
     }
