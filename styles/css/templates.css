@@ -1,6 +1,9 @@
 .backpack {
   background-color: rgb(76, 115, 180);
 }
+.common{
+  background-color: rgb(135, 135, 135);
+}
 .rare {
   background-color: rgb(44, 108, 23);
 }

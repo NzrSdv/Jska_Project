@@ -94,6 +94,7 @@ select>option{
 }
 
 
+
 .products {
   display: grid;
   grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
@@ -346,4 +347,30 @@ p,
   30%,60%,90%{
     transform: translateX(-10px);
   }
+}
+
+
+.page--buttons{
+  display: flex;
+  padding: 10px 20px;
+  justify-content: center;
+  gap:10px;
+}
+
+.nums{
+  padding:10px;
+  border:none;
+  border-radius: 5px;
+  outline: none;
+  background-color: rgb(141, 161, 222);
+  color:white; 
+  transition: ease-in-out .1s;
+}
+.nums:hover{
+  transform: scale(1.1);
+  background-color: rgb(114, 130, 185);
+}
+.activePage{
+  background-color: white;
+  color:black;
 }

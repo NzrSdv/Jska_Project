@@ -1,5 +1,5 @@
+let PM;
 let cartLink = document.getElementById("cartLink");
-
 const loading = document.querySelector(".loader");
 let fetchStatus = false;
 LoadingAnimation();
@@ -12,41 +12,11 @@ if (JSON.parse(localStorage.getItem("logged"))) {
     element.remove();
   });
 }
-let PM;
+PM = new ProductManager([], []);
 // localStorage.clear();
-if (!localStorage.getItem("products")) {
-  fetch("https://fortnite-api.com/v2/cosmetics/br/?&language=ru", {
-    //https://dash.fortnite-api.com/endpoints/banners
-    method: "GET",
-  })
-    .then((res) => res.json())
-    .then((ans) => {
-      let list = [];
-      PM = new ProductManager([], []);
-      for (let i = 0; i < 50; i++) {
-        list.push(
-          new Product(
-            i,
-            ans.data[i].name,
-            ans.data[i].rarity.value,
-            ans.data[i].images.icon == undefined
-              ? "/imgs/default_image.webp"
-              : ans.data[i].images.icon,
-            ans.data[i].type.value
-          )
-        );
-        list[i].toFindTheCost();
-      }
-      localStorage.setItem("products", JSON.stringify(list));
-      PM.datas = list;
-      PM.CartUpdate();
-    })
-    .then(() => {
-      fetchStatus = true;
-      PM.render(true);
-    });
-} else {
-  let data = [...JSON.parse(localStorage.getItem("products"))];
+getAllfetch();
+pageBtnRender();
+if (localStorage.getItem("products")) {
   if (JSON.parse(localStorage.getItem("cart")) != undefined) {
     let cart = JSON.parse(localStorage.getItem("cart")).map((element) => {
       return new CartProduct(
@@ -59,9 +29,7 @@ if (!localStorage.getItem("products")) {
         element.quantity
       );
     });
-    PM = new ProductManager(data, cart);
-  } else {
-    PM = new ProductManager(data, []);
+    PM.carts = cart;
   }
   PM.CartUpdate();
   PM.render(true);
@@ -88,4 +56,49 @@ select.addEventListener("change", () => {
   sortation(true);
 });
 
+function getAllfetch() {
+  fetch(`./api.json`, {
+    //https://dash.fortnite-api.com/endpoints/banners
+    method: "GET",
+  })
+    .then((res) => res.json())
+    .then((ans) => {
+      let list = [];
+      for (let i = 0; i < (ans.data.br.length / 10) - 1; i++) {
+        let subList = [];
+        for (let j = 0; j < 30; j++) {
+          let num = i * 30 + j;
 
+          if(
+            ans.data.br[num] != undefined 
+            )
+            {subList.push(
+              new Product(
+                num,
+                ans.data.br[num].name != undefined ? ans.data.br[num].name : ans.data.br[num].title,
+                ans.data.br[num].rarity.value,
+                ans.data.br[num].images.icon == undefined
+                  ? "./imgs/default_image.webp"
+                  : ans.data.br[num].images.icon,
+                ans.data.br[num].type.value
+              )
+            );
+            subList[j].toFindTheCost();}
+        }
+        list.push(subList);
+      }
+      if (localStorage.getItem("page")) {
+        let page = JSON.parse(localStorage.getItem("page"));
+        PM.setPage(page);
+      } else {
+        localStorage.setItem("products", JSON.stringify(list[0]));
+        localStorage.setItem("page", 0);
+      }
+      PM.datas = list;
+      PM.CartUpdate();
+    })
+    .then(() => {
+      fetchStatus = true;
+      PM.render(true);
+    });
+}

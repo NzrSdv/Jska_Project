@@ -131,7 +131,7 @@ function searchFunc() {
       }
     });
     if (
-      document.querySelectorAll(".product.none").length == PM.datas.length &&
+      document.querySelectorAll(".product.none").length == PM.datas[PM.page].length &&
       document.querySelector(".message") == null &&
       window.location.pathname.includes("/index.html")
     ) {
@@ -297,4 +297,28 @@ function fillerShow() {
           </div>
     `;
   }
+}
+
+function pageBtnRender(){
+  let btnsRow = document.querySelector(".page--buttons");
+  let now = (PM.page <= 3 && PM.page >= 0)  ? 0 : PM.page-3;
+  btnsRow.querySelectorAll(".nums").forEach((element) => {
+    if(element.classList.contains("activePage")){
+      element.classList.remove("activePage")
+    }
+  })
+  btnsRow.innerHTML = ``;
+  
+  for(let i = now; i < now+6;i++){
+    btnsRow.innerHTML += `
+    <button class="nums" onclick="NextPage(${i},this)">${i+1}</button>
+    `
+  }
+}
+
+function NextPage(pageNum,elem){
+  PM.setPage(pageNum);
+  PM.render(true);
+  pageBtnRender();
+  elem.classList.add("activePage")
 }

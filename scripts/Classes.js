@@ -21,10 +21,10 @@ const types = [
   "wrap",
   "emote",
   "glider",
-  "harvester",
+  "pickaxe",
   "pet",
   "backpack",
-  "skin",
+  "outfit",
 ];
 
 //add Box window
@@ -36,12 +36,19 @@ class ProductManager {
   constructor(datas, carts) {
     this.datas = datas;
     this.carts = carts;
+    this.page = 0;
   }
   addData(element) {
     this.datas.push(element);
   }
   addCart(element) {
     this.carts.push(element);
+  }
+  setPage(newPage){
+    this.page = newPage;
+    console.log(this.page);
+    localStorage.setItem("page",this.page)
+    localStorage.setItem("products", JSON.stringify(this.datas[this.page]));
   }
   removeCart(id) {
     this.carts = this.carts.filter((elem) => {
@@ -70,10 +77,10 @@ class ProductManager {
   render(isData) {
     products.innerHTML = "";
     if (isData) {
-      if (document.querySelectorAll(".product.none").length == PM.datas.length) {
+      if (PM.datas[PM.page] != undefined && document.querySelectorAll(".product.none").length == PM.datas[PM.page].length ) {
         fillerShow();
       } else {
-        this.datas.forEach((element) => {
+        this.datas[this.page].forEach((element) => {
           products.innerHTML += `
           <div class="product ${element.rarity}">
       <div class="search--akparat">
