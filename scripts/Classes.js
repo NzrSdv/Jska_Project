@@ -46,9 +46,8 @@ class ProductManager {
   }
   setPage(newPage){
     this.page = newPage;
-    console.log(this.page);
     localStorage.setItem("page",this.page)
-    localStorage.setItem("products", JSON.stringify(this.datas[this.page]));
+    localStorage.setItem("products",JSON.stringify(this.datas[this.page]));
   }
   removeCart(id) {
     this.carts = this.carts.filter((elem) => {
@@ -80,24 +79,27 @@ class ProductManager {
       if (PM.datas[PM.page] != undefined && document.querySelectorAll(".product.none").length == PM.datas[PM.page].length ) {
         fillerShow();
       } else {
-        this.datas[this.page].forEach((element) => {
-          products.innerHTML += `
-          <div class="product ${element.rarity}">
-      <div class="search--akparat">
-      <img src="${element.image}" alt="" class="product--image" loading="lazy">
-      <h2 class="product-name info-important">${element.name}</h2>
-      <div class="line">
-          <h3 class="product-type info-important">${element.type}</h3>
-          <h3 class="product-rarity info-important">${element.rarity}</h3>
-      </div>
-      
-<h3 class="product-rarity info-important">${element.cost} VB</h3>
-      </div>
-      <div class = "line"> 
-      <button class="product--cart" onclick="addToTheCartButton(${element.id})">add to cart</button>
-      </div>
-  </div>`;
-        });
+        pageBtnRender();
+        if(this.datas[this.page] != undefined){
+          this.datas[this.page].forEach((element) => {
+            products.innerHTML += `
+            <div class="product ${element.rarity}">
+        <div class="search--akparat">
+        <img src="${element.image}" alt="" class="product--image" loading="eager">
+        <h2 class="product-name info-important">${element.name}</h2>
+        <div class="line">
+            <h3 class="product-type info-important">${element.type}</h3>
+            <h3 class="product-rarity info-important">${element.rarity}</h3>
+        </div>
+        
+  <h3 class="product-rarity info-important">${element.cost} VB</h3>
+        </div>
+        <div class = "line"> 
+        <button class="product--cart" onclick="addToTheCartButton(${element.id})">add to cart</button>
+        </div>
+    </div>`;
+          });
+        } 
       }
     } else {
       if (cartCheck()) {
@@ -146,7 +148,7 @@ class Product {
     id,
     name,
     rarity,
-    image = "../imgs/default_image.webp",
+    image = window.location.origin + "/imgs/default_image.webp",
     type,
     cost = 100
   ) {
@@ -244,7 +246,7 @@ class Product {
   }
 }
 class CartProduct extends Product {
-  constructor(id, name, rarity, type, image, cost, quantity) {
+  constructor(id, name, rarity, type , image, cost, quantity) {
     super(id, name, rarity, type, image, cost);
     this.quantity = quantity;
     this.toFindTheCost();

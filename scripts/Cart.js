@@ -9,18 +9,6 @@ $(".window--successful--purchase").animate(
 );
 window.onload = function () {
   if (JSON.parse(localStorage.getItem("cart"))) {
-    let Newdata = JSON.parse(localStorage.getItem("products")).map(
-      (element) => {
-        return new Product(
-          element.id,
-          element.name,
-          element.rarity,
-          element.image,
-          element.type,
-          element.cost
-        );
-      }
-    );
     let Newcart;
     Newcart = JSON.parse(localStorage.getItem("cart")).map((element) => {
       return new CartProduct(
@@ -33,25 +21,16 @@ window.onload = function () {
         element.quantity
       );
     });
-    PM = new ProductManager(Newdata, Newcart);
+    PM = new ProductManager([], Newcart);
+    getAllfetch()
     PM.render(false);
     if(!cartCheck){
       fillerShow();
     }
   } else {
-    let Newdata = JSON.parse(localStorage.getItem("products")).map(
-      (element) => {
-        return new Product(
-          element.id,
-          element.name,
-          element.rarity,
-          element.image,
-          element.type,
-          element.cost
-        );
-      }
-    );
-    PM = new ProductManager(Newdata, []);
+    
+    PM = new ProductManager([], []);
+    getAllfetch()
     if(!cartCheck()){
      fillerShow();
     }

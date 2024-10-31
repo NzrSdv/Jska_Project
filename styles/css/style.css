@@ -45,7 +45,9 @@ body::-webkit-scrollbar{
 .catalog--info{
   display: flex;
   justify-content: space-between;
-  padding:0 10px;
+  padding:0 10px 10px;
+  /* border-bottom: 2px solid rgb(143, 147, 230); */
+
 }
 .title {
   font-size: 30px;
@@ -101,7 +103,8 @@ select>option{
   grid-template-rows: repeat(auto,400px);
   justify-content: center;
   gap: 20px;
-  border-top: 2px solid rgb(143, 147, 230);
+  /* border-top: 2px solid rgb(143, 147, 230);
+  border-bottom: 2px solid rgb(143, 147, 230); */
   padding: 20px;
 }
 
@@ -113,7 +116,7 @@ select>option{
   gap:10px;
   color: white;
   border-radius: 20px;
-  padding:20px 0;
+  padding:15px 10px;
   max-width: 1fr;
 }
 .search--akparat{
@@ -125,6 +128,8 @@ select>option{
 }
 .product--image {
   width: 250px;
+  border-radius: 10px;
+  border:1px solid rgba(255, 255, 255, .4)
 }
 .product-name{
   font-size: medium;
@@ -139,13 +144,20 @@ select>option{
 }
 
 .changeQ{
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     outline: none;
     border: none;
     border-radius: 50%;
     background-color: rgb(87, 147, 87);
+    font-size: 20px;
     color:white;
+    transition: ease-in-out .1s;
+}
+.changeQ:hover{
+  transform: scale(1.1);
+  background-color: rgb(110, 172, 110);
+
 }
 
 button.product--cart {
@@ -357,6 +369,10 @@ p,
   gap:10px;
 }
 
+.borderka{
+  border-top: 2px solid rgb(143, 147, 230);
+  border-bottom: 2px solid rgb(143, 147, 230);
+}
 .nums{
   padding:10px;
   border:none;
@@ -366,11 +382,10 @@ p,
   color:white; 
   transition: ease-in-out .1s;
 }
-.nums:hover{
-  transform: scale(1.1);
-  background-color: rgb(114, 130, 185);
-}
 .activePage{
   background-color: white;
   color:black;
+}
+.nums:hover{
+  transform: scale(1.2);
 }

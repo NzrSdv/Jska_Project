@@ -8,6 +8,51 @@ function LoadingAnimation() {
     loading.classList.add("none");
   }
 }
+function getAllfetch() {
+  fetch(`./api.json`, {
+    //https://dash.fortnite-api.com/endpoints/banners
+    method: "GET",
+  })
+    .then((res) => res.json())
+    .then((ans) => {
+      let list = [];
+      console.log(ans.data)
+      for (let i = 0; i < (ans.data.length / 30) - 1; i++) {
+        let subList = [];
+        for (let j = 0; j < 15; j++) {
+          let num = i * 15 + j;
+
+          if(
+            ans.data[num] != undefined 
+            )
+            {subList.push(
+              new Product(
+                num,
+                ans.data[num].name != undefined ? ans.data[num].name : ans.data[num].title,
+                ans.data[num].rarity.value,
+                ans.data[num].images.icon == undefined
+                  ? "./imgs/default_image.webp"
+                  : ans.data[num].images.icon,
+                ans.data[num].type.value
+              )
+            );
+            subList[j].toFindTheCost();}
+        }
+        list.push(subList);
+      }
+      PM.datas = list;
+      if (localStorage.getItem("page")) {
+        let page = JSON.parse(localStorage.getItem("page"));
+        PM.setPage(page);
+      }
+      PM.CartUpdate();
+    })
+    .then(() => {
+      fetchStatus = true;
+      PM.render(true);
+    });
+}
+
 function AddedBoxAnimation() {
   let initialIndex = boxIndex;
   Addedbox[boxIndex].classList.remove("none");
@@ -37,13 +82,13 @@ function addToTheCartButton(id) {
       PM.CartUpdate();
       Addedbox[boxIndex].textContent = "+1 к уже имеющему товару в корзине";
     } else {
-      PM.datas.forEach((element, index) => {
+      PM.datas[PM.page].forEach((element, index) => {
         if (element.id == id) {
           status = true;
           inde = index;
         }
       });
-      let elem = PM.datas[inde];
+      let elem = PM.datas[PM.page][inde];
       PM.addCart(
         new CartProduct(
           id,
@@ -107,9 +152,11 @@ function removeCartProduct(id) {
 }
 
 function searchFunc() {
+  let search = document.querySelector("input.catalog-search");
   if (search.value.trim() == "" || search.value == "") {
     if (!window.location.pathname.includes("/Cart.html")) {
-      PM.render(true);
+      PM.render(true); 
+      pageBtnRender();
     } else {
       PM.render(false);
     }
@@ -131,10 +178,17 @@ function searchFunc() {
       }
     });
     if (
-      document.querySelectorAll(".product.none").length == PM.datas[PM.page].length &&
+      document.querySelectorAll(".product.none").length ==
+        PM.datas[PM.page].length &&
       document.querySelector(".message") == null &&
-      window.location.pathname.includes("/index.html")
+      !window.location.pathname.includes("/Cart.html")
     ) {
+      let btnsRow = document.querySelectorAll(".page--buttons");   
+      btnsRow.forEach(element => {
+        element.innerHTML = ``;
+        element.classList.remove("borderka");
+      }
+      )
       fillerShow();
     } else if (
       document.querySelectorAll(".product.none").length == PM.carts.length &&
@@ -159,21 +213,10 @@ function sortation(isCatalog) {
   if (isCatalog) {
     switch (val) {
       case "0":
-        PM.datas = JSON.parse(localStorage.getItem("products")).map(
-          (element) => {
-            return new Product(
-              element.id,
-              element.name,
-              element.rarity,
-              element.image,
-              element.type,
-              element.cost
-            );
-          }
-        );
+        getAllfetch();
         break;
       case "1":
-        PM.datas.sort((a, b) => {
+        PM.datas[PM.page].sort((a, b) => {
           if (rares.indexOf(a.rarity) > rares.indexOf(b.rarity)) {
             return -1;
           } else if (rares.indexOf(a.rarity) < rares.indexOf(b.rarity)) {
@@ -185,7 +228,7 @@ function sortation(isCatalog) {
 
         break;
       case "2":
-        PM.datas.sort((a, b) => {
+        PM.datas[PM.page].sort((a, b) => {
           if (rares.indexOf(a.rarity) > rares.indexOf(b.rarity)) {
             return 1;
           } else if (rares.indexOf(a.rarity) < rares.indexOf(b.rarity)) {
@@ -196,13 +239,12 @@ function sortation(isCatalog) {
         });
         break;
       case "3":
-        PM.datas.sort((a, b) => a.cost - b.cost);
+        PM.datas[PM.page].sort((a, b) => a.cost - b.cost);
         break;
       case "4":
-        PM.datas.sort((a, b) => b.cost - a.cost);
+        PM.datas[PM.page].sort((a, b) => b.cost - a.cost);
         break;
       default:
-        console.log("def");
         break;
     }
     PM.render(isCatalog);
@@ -252,18 +294,19 @@ function sortation(isCatalog) {
         PM.carts.sort((a, b) => b.cost - a.cost);
         break;
       default:
-        console.log("def");
         break;
     }
     PM.render(isCatalog);
     searchFunc();
   }
 }
-
+var timerStatus = false;
 function buyAll() {
   PM.carts = [];
-  if (JSON.parse(localStorage.getItem("cart"))!= []) {
+  if (localStorage.getItem("cart") != '[]' && !timerStatus) {
     PM.CartUpdate();
+     $(".window--successful--purchase").text = "Успешная покупка"
+    timerStatus = true;
     $(".window--successful--purchase").animate(
       {
         right: "+=100",
@@ -281,11 +324,32 @@ function buyAll() {
         500,
         () => {}
       );
+      timerStatus = false;
     }, 500);
     PM.render(false);
-  }
-  else{
-    alert("a")
+  } else {
+     PM.CartUpdate();
+    timerStatus = true;
+     $(".window--successful--purchase").text = "Ничего нет"
+    $(".window--successful--purchase").animate(
+      {
+        right: "+=100",
+        opacity: 1,
+      },
+      500,
+      () => {}
+    );
+    setTimeout(() => {
+      $(".window--successful--purchase").animate(
+        {
+          right: "-=100",
+          opacity: 0,
+        },
+        500,
+        () => {}
+      );
+      timerStatus = false;
+    }, 500);
   }
 }
 
@@ -299,26 +363,39 @@ function fillerShow() {
   }
 }
 
-function pageBtnRender(){
-  let btnsRow = document.querySelector(".page--buttons");
-  let now = (PM.page <= 3 && PM.page >= 0)  ? 0 : PM.page-3;
-  btnsRow.querySelectorAll(".nums").forEach((element) => {
-    if(element.classList.contains("activePage")){
-      element.classList.remove("activePage")
+function pageBtnRender() {
+  let btnsRow = document.querySelectorAll(".page--buttons");
+  let now = PM.page <= 3 && PM.page >= 0 ? 0 : PM.page - 3;
+ btnsRow.forEach(element => {
+  element.classList.add("borderka");
+    element.innerHTML = ``;
+    element.innerHTML += `<button class="nums" onclick="NextPage(${0},this)"><<<</button>`
+    element.innerHTML += `<button class="nums" onclick="NextPage(${PM.page <= 12 && PM.page >= 0 ? (12 - PM.page <= 3 && 12-PM.page >= 0 ? 12-PM.page : (PM.page == 0 ? PM.datas.length-1 : 0)): (PM.page - 12)},this)"><</button>`
+    for (let i = now; i < now + 6; i++) {
+      if(i <=PM.datas.length-1){
+        if(i == PM.page){
+          element.innerHTML += `
+          <button class="nums activePage" onclick="NextPage(${i},this)">${i + 1}</button>
+          `;
+        }
+        else{
+          element.innerHTML += `
+          <button class="nums" onclick="NextPage(${i},this)">${i + 1}</button>
+          `;
+        }
+      }
     }
+    element.innerHTML += `<button class="nums" onclick="NextPage(${PM.page <= PM.datas.length-1 && PM.page >= PM.datas.length-10 ? (PM.datas.length-1 - PM.page <= 3 && PM.datas.length-1 - PM.page >=0 ? PM.datas.length-1-PM.page : PM.datas.length-1) :(PM.page+10)},this)">></button>`
+    element.innerHTML += `<button class="nums" onclick="NextPage(${PM.datas.length-1},this)">>>></button>`
   })
-  btnsRow.innerHTML = ``;
-  
-  for(let i = now; i < now+6;i++){
-    btnsRow.innerHTML += `
-    <button class="nums" onclick="NextPage(${i},this)">${i+1}</button>
-    `
-  }
 }
 
-function NextPage(pageNum,elem){
+function NextPage(pageNum,elem) {
   PM.setPage(pageNum);
   PM.render(true);
   pageBtnRender();
-  elem.classList.add("activePage")
+  elem.classList.add("activePage");
+  let search = document.querySelector("input.catalog-search");
+  search.value = ""
+
 }
