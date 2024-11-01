@@ -83,13 +83,13 @@ function addToTheCartButton(id) {
       PM.CartUpdate();
       Addedbox[boxIndex].textContent = "+1 к уже имеющему товару в корзине";
     } else {
-      PM.datas[PM.page].forEach((element, index) => {
+      PM.searchAndSort[PM.searchPage].forEach((element, index) => {
         if (element.id == id) {
           status = true;
           inde = index;
         }
       });
-      let elem = PM.datas[PM.page][inde];
+      let elem = PM.searchAndSort[PM.searchPage][inde];
       PM.addCart(
         new CartProduct(
           id,
