@@ -11,28 +11,39 @@ window.onload = function () {
   if (JSON.parse(localStorage.getItem("cart"))) {
     let Newcart;
     Newcart = JSON.parse(localStorage.getItem("cart")).map((element) => {
-      return new CartProduct(
-        element.id,
-        element.name,
-        element.rarity,
-        element.image,
-        element.type,
-        element.cost,
-        element.quantity
-      );
+      if (element.image.includes("./imgs/default_image.webp")) {
+        return new CartProduct(
+          element.id,
+          element.name,
+          element.rarity,
+          "../imgs/default_image.webp",
+          element.type,
+          element.cost,
+          element.quantity
+        );
+      } else {
+        return new CartProduct(
+          element.id,
+          element.name,
+          element.rarity,
+          element.image,
+          element.type,
+          element.cost,
+          element.quantity
+        );
+      }
     });
     PM = new ProductManager([], Newcart);
-    getAllfetch()
+    getAllfetch();
     PM.render(false);
-    if(!cartCheck){
+    if (!cartCheck) {
       fillerShow();
     }
   } else {
-    
     PM = new ProductManager([], []);
-    getAllfetch()
-    if(!cartCheck()){
-     fillerShow();
+    getAllfetch();
+    if (!cartCheck()) {
+      fillerShow();
     }
   }
 };
@@ -40,14 +51,11 @@ window.onload = function () {
 let search = document.querySelector(".catalog-search");
 
 search.addEventListener("input", (e) => {
-  console.log(e)
-  if(e.inputType.includes("delete")){
+  if (e.inputType.includes("delete")) {
     searchFunc()
-    if(search.value.trim() == ""){
-    pageBtnRender(false);
-  }}
+  }
   else{
-    pageBtnRender(true);
+    searchFunc()
   }
 });
 

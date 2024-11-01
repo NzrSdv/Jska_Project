@@ -41,13 +41,14 @@ class ProductManager {
     this.searchPage = 0;
   }
   setSearched(array) {
-    if(window.location.href.includes("/Cart.html")){
-    this.searchAndSort = array;
+    if (array) {
+      if (window.location.href.includes("/Cart.html")) {
+        this.searchAndSort = array;
+      } else {
+        this.searchAndSort = this.splitSearch(array);
+      }
+      this.searchAndSortRender(window.location.href.includes("/Cart.html"));
     }
-    else{
-      this.searchAndSort = this.splitSearch(array);
-    }
-    this.searchAndSortRender(window.location.href.includes("/Cart.html"))
   }
   splitSearch(array) {
     const itemsPerRow = 16;
@@ -134,7 +135,7 @@ class ProductManager {
           products.innerHTML += `
               <div class="product ${element.rarity}" data-id="${element.id}">
               <div class="search--akparat">
-              <img src="${element.image}" loading="lazy" alt="" class="product--image">
+              <img src="${element.image}" alt="" class="product--image">
               <h2 class="product-name">${element.name}</h2>
     <div class="line">
         <h3 class="product-type">${element.type}</h3>
@@ -145,7 +146,7 @@ class ProductManager {
       <h3 class="product-Q">${element.quantity}</h3>
       <button class="changeQ minus-Q" onclick="minusCartProduct(${element.id})">-</button>
   </div>
-  <h3 class="product-sum">${element.AllSum} VB</h3>
+  <h3 class="product-sum" data-cost="${element.cost}">${element.AllSum} VB</h3>
   <button class="product-delete" onclick="removeCartProduct(${element.id})">Delete</button>
       </div>
               </div>`;
@@ -159,56 +160,68 @@ class ProductManager {
   }
   searchAndSortRender(isCart) {
     products.innerHTML = "";
-    if(isCart){
-      if (cartCheck()) {
-        this.searchAndSort.forEach((element) => {
-          products.innerHTML += `
-              <div class="product ${element.rarity}">
-              <div class="search--akparat">
-              <img src="${element.image}" loading="lazy" alt="" class="product--image">
-              <h2 class="product-name">${element.name}</h2>
-    <div class="line">
-        <h3 class="product-type">${element.type}</h3>
-        <h3 class="product-rarity">${element.rarity}</h3>
-    </div>
-    <div class = "line"> 
-      <button class="changeQ plus-Q" onclick="plusCartProduct(${element.id})">+</button>
-      <h3 class="product-Q">${element.quantity}</h3>
-      <button class="changeQ minus-Q" onclick="minusCartProduct(${element.id})">-</button>
-  </div>
-  <h3 class="product-sum">${element.AllSum} VB</h3>
-  <button class="product-delete" onclick="removeCartProduct(${element.id})">Delete</button>
+    if (this.searchAndSort.length) {
+      if (isCart) {
+        if (cartCheck()) {
+          let accumulator = 0;
+          this.searchAndSort.forEach((element) => {
+            products.innerHTML += `
+                <div class="product ${element.rarity}">
+                <div class="search--akparat">
+                <img src="${element.image}" loading="lazy" alt="" class="product--image">
+                <h2 class="product-name">${element.name}</h2>
+      <div class="line">
+          <h3 class="product-type">${element.type}</h3>
+          <h3 class="product-rarity">${element.rarity}</h3>
       </div>
-              </div>`;
-        });
-        this.totalCost();
-      } else if(document.querySelectorAll(".product.none") == this.searchAndSort.length) {
-        this.totalCost();
-        fillerShow();
+      <div class = "line"> 
+        <button class="changeQ plus-Q" onclick="plusCartProduct(${element.id})">+</button>
+        <h3 class="product-Q">${element.quantity}</h3>
+        <button class="changeQ minus-Q" onclick="minusCartProduct(${element.id})">-</button>
+    </div>
+    <h3 class="product-sum">${element.AllSum} VB</h3>
+    <button class="product-delete" onclick="removeCartProduct(${element.id})">Delete</button>
+        </div>
+                </div>`;
+            accumulator += element.AllSum;
+          });
+          document.querySelector(
+            ".total"
+          ).textContent = `total: ${accumulator} VB`;
+        } else{
+          document.querySelector(
+            ".total"
+          ).textContent = `total: 0 VB`;
+          fillerShow();
+        }
+      } else {
+        if (this.searchAndSort[this.searchPage] != undefined) {
+          this.searchAndSort[this.searchPage].forEach((elem) => {
+            products.innerHTML += `
+                    <div class="product ${elem.rarity}">
+                <div class="search--akparat">
+                <img src="${elem.image}" alt="" class="product--image" loading="eager">
+                <h2 class="product-name info-important">${elem.name}</h2>
+                <div class="line">
+                    <h3 class="product-type info-important">${elem.type}</h3>
+                    <h3 class="product-rarity info-important">${elem.rarity}</h3>
+                </div>
+                
+          <h3 class="product-rarity info-important">${elem.cost} VB</h3>
+                </div>
+                <div class = "line"> 
+                <button class="product--cart" onclick="addToTheCartButton(${elem.id})">add to cart</button>
+                </div>
+            </div>`;
+          });
+          pageBtnRender(true);
+        }
       }
-    }
-    else{
-      if(this.searchAndSort[this.searchPage] != undefined){
-        this.searchAndSort[this.searchPage].forEach((elem) => {
-          products.innerHTML += `
-                  <div class="product ${elem.rarity}">
-              <div class="search--akparat">
-              <img src="${elem.image}" alt="" class="product--image" loading="eager">
-              <h2 class="product-name info-important">${elem.name}</h2>
-              <div class="line">
-                  <h3 class="product-type info-important">${elem.type}</h3>
-                  <h3 class="product-rarity info-important">${elem.rarity}</h3>
-              </div>
-              
-        <h3 class="product-rarity info-important">${elem.cost} VB</h3>
-              </div>
-              <div class = "line"> 
-              <button class="product--cart" onclick="addToTheCartButton(${elem.id})">add to cart</button>
-              </div>
-          </div>`;
-        });
-        pageBtnRender(true);
-      }
+    } else {
+      document.querySelector(
+        ".total"
+      ).textContent = `total: 0 VB`;
+      fillerShow();
     }
   }
 
@@ -229,7 +242,7 @@ class Product {
     id,
     name,
     rarity,
-    image = window.location.origin + "/imgs/default_image.webp",
+    image = "../imgs/default_image.webp",
     type,
     cost = 100
   ) {
