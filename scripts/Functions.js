@@ -162,9 +162,10 @@ function searchFunc() {
     } else {
       PM.render(false);
     }
+    
   } else {
     let value = search.value.toLowerCase();
-    if (window.location.pathname.includes("/Cart.html")) {
+    if (window.location.pathname.includes("Cart.html")) {
       PM.carts.forEach((element) => {
         let status = false;
         Object.keys(element).forEach((key) => {
@@ -172,14 +173,13 @@ function searchFunc() {
             key != "image" &&
             `${element[`${key}`]}`.trim().toLowerCase().includes(value)
           ) {
-status = true;  
+          status = true;  
           }
         });
         if(status){
           PM.searchAndSort.push(element);
         }
       });
-      PM.setSearched(PM.searchAndSort);
     } else {
       PM.datas.forEach((element) => {
         element.forEach((subElement) => {
@@ -198,9 +198,9 @@ status = true;
         });
       });
     }
-    PM.setSearched(PM.searchAndSort);
     console.log(PM.searchAndSort);
-
+    PM.setSearched(PM.searchAndSort);
+    pageBtnRender(true);
     if (
       document.querySelectorAll(".product.none").length == PM.carts.length &&
       document.querySelector(".message") == null &&
@@ -390,12 +390,12 @@ function pageBtnRender(isSearching) {
   let btnsRow = document.querySelectorAll(".page--buttons");
   if (isSearching) {
     if (
-      document.querySelector(".catalog-search").value.trim() == "" ||
-      !PM.searchAndSort.length
+      PM.searchAndSort.length == 0
     ) {
-      btnsRow.forEach((element) => {
-        element.innerHTML = "";
-      });
+      btnsRow.forEach(element => {
+        element.innerHTML = '';
+      })
+      
     } else {
       let now =
         PM.searchPage <= 5 && PM.searchPage >= 0 ? 0 : PM.searchPage - 5;

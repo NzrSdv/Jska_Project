@@ -160,38 +160,47 @@ class ProductManager {
   }
   searchAndSortRender(isCart) {
     products.innerHTML = "";
-    if (this.searchAndSort.length) {
+    if (this.searchAndSort.length != 0) {
       if (isCart) {
         if (cartCheck()) {
-          let accumulator = 0;
-          this.searchAndSort.forEach((element) => {
-            products.innerHTML += `
-                <div class="product ${element.rarity}">
-                <div class="search--akparat">
-                <img src="${element.image}" loading="lazy" alt="" class="product--image">
-                <h2 class="product-name">${element.name}</h2>
-      <div class="line">
-          <h3 class="product-type">${element.type}</h3>
-          <h3 class="product-rarity">${element.rarity}</h3>
-      </div>
-      <div class = "line"> 
-        <button class="changeQ plus-Q" onclick="plusCartProduct(${element.id})">+</button>
-        <h3 class="product-Q">${element.quantity}</h3>
-        <button class="changeQ minus-Q" onclick="minusCartProduct(${element.id})">-</button>
-    </div>
-    <h3 class="product-sum">${element.AllSum} VB</h3>
-    <button class="product-delete" onclick="removeCartProduct(${element.id})">Delete</button>
+          if(this.searchAndSort.length > 0){
+            let accumulator = 0;
+            this.searchAndSort.forEach((element) => {
+              products.innerHTML += `
+                  <div class="product ${element.rarity}">
+                  <div class="search--akparat">
+                  <img src="${element.image}" loading="lazy" alt="" class="product--image">
+                  <h2 class="product-name">${element.name}</h2>
+        <div class="line">
+            <h3 class="product-type">${element.type}</h3>
+            <h3 class="product-rarity">${element.rarity}</h3>
         </div>
-                </div>`;
-            accumulator += element.AllSum;
-          });
-          document.querySelector(
-            ".total"
-          ).textContent = `total: ${accumulator} VB`;
+        <div class = "line"> 
+          <button class="changeQ plus-Q" onclick="plusCartProduct(${element.id})">+</button>
+          <h3 class="product-Q">${element.quantity}</h3>
+          <button class="changeQ minus-Q" onclick="minusCartProduct(${element.id})">-</button>
+      </div>
+      <h3 class="product-sum">${element.AllSum} VB</h3>
+      <button class="product-delete" onclick="removeCartProduct(${element.id})">Delete</button>
+          </div>
+                  </div>`;
+              accumulator += element.AllSum;
+            });
+            
+            document.querySelector(
+              ".total"
+            ).textContent = `total: ${accumulator} VB`;
+          }
+          else{
+            if(window.location.href.includes("Cart.html")){
+              document.querySelector(
+                ".total"
+              ).textContent = `total: 0 VB`;
+            }
+          }
+          
         } else{
-          document.querySelector(
-            ".total"
-          ).textContent = `total: 0 VB`;
+          
           fillerShow();
         }
       } else {
@@ -218,9 +227,11 @@ class ProductManager {
         }
       }
     } else {
-      document.querySelector(
-        ".total"
-      ).textContent = `total: 0 VB`;
+      if(window.location.href.includes("Cart.html")){
+        document.querySelector(
+          ".total"
+        ).textContent = `total: 0 VB`;
+      }
       fillerShow();
     }
   }

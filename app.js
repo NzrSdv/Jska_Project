@@ -47,29 +47,6 @@ cartLink.addEventListener("click", () => {
     }
   }
 });
-let search = document.querySelector(".catalog-search");
-
-search.addEventListener("input", (e)=>{
-  if(e.inputType.includes("delete")){
-    if(search.value.trim() == ""){
-    pageBtnRender(false);
-  }
-  else{
-    pageBtnRender(true);
-  }
-  searchFunc()
-}
-  else{
-    searchFunc()
-    if(search.value.trim() == ""){
-      pageBtnRender(false);
-    }
-    else{
-      pageBtnRender(true);
-    }
-    
-  }
-});
 
 let select = document.querySelector(".sort");
 //default rarity- rarity+ cost+ cost -
