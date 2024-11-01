@@ -10,17 +10,17 @@ function LoadingAnimation() {
 }
 function getAllfetch() {
   fetch(`./api.json`, {
-    //https://dash.fortnite-api.com/endpoints/banners
+    //http.fortnite-api.com/endps://dashoints/banners
     method: "GET",
   })
     .then((res) => res.json())
     .then((ans) => {
       let list = [];
-      console.log(ans.data)
+ 
       for (let i = 0; i < (ans.data.length / 30) - 1; i++) {
         let subList = [];
-        for (let j = 0; j < 15; j++) {
-          let num = i * 15 + j;
+        for (let j = 0; j < 16; j++) {
+          let num = i * 16 + j;
 
           if(
             ans.data[num] != undefined 
@@ -153,49 +153,68 @@ function removeCartProduct(id) {
 
 function searchFunc() {
   let search = document.querySelector("input.catalog-search");
+  PM.searchAndSort = [];
   if (search.value.trim() == "" || search.value == "") {
     if (!window.location.pathname.includes("/Cart.html")) {
       PM.render(true); 
-      pageBtnRender();
+      pageBtnRender(false);
     } else {
       PM.render(false);
     }
   } else {
     let value = search.value.toLowerCase();
-    document.querySelectorAll(".product").forEach((element) => {
-      if (
-        element
-          .querySelector(".search--akparat")
-          .textContent.toLowerCase()
-          .includes(value)
-      ) {
-        element.classList.remove("none");
-      } else {
-        element.classList.add("none");
-        if (document.querySelector(".message") != null) {
-          document.querySelector(".message").remove();
+    if(window.location.pathname.includes("/Cart.html")){
+      document.querySelectorAll(".product").forEach(element => {
+        if(element.querySelector(".search--akparat").textContent.includes(value)){
+          let id = PM.carts.forEach((elementa,index) => {
+          if(elementa.id == element.getAttribute("data-id")){
+            return index;
+          }
+          });
+          if(id != undefined || id >= 0){
+            PM.searchAndSort.push(PM.cart[id]);
+          }
         }
-      }
-    });
-    if (
-      document.querySelectorAll(".product.none").length ==
-        PM.datas[PM.page].length &&
-      document.querySelector(".message") == null &&
-      !window.location.pathname.includes("/Cart.html")
-    ) {
-      let btnsRow = document.querySelectorAll(".page--buttons");   
-      btnsRow.forEach(element => {
-        element.innerHTML = ``;
-        element.classList.remove("borderka");
-      }
-      )
-      fillerShow();
-    } else if (
+      })
+    }
+    else{     
+      PM.datas.forEach((element) => {
+        element.forEach(subElement => {
+          let stat = false;
+          Object.keys(subElement).forEach((key) => {
+            // if(subElement[key].includes(value)){
+            //   stat = true;
+            // }
+            
+          })
+          if(stat){
+            PM.searchAndSort.push(subElement);
+          }
+        })
+      })
+    }
+    PM.setSearched(PM.searchAndSort);
+
+     if (
       document.querySelectorAll(".product.none").length == PM.carts.length &&
       document.querySelector(".message") == null &&
       window.location.pathname.includes("/Cart.html")
     ) {
       fillerShow();
+    }
+    else if (
+      PM.searchAndSort[PM.searchPage] != undefined &&
+      document.querySelectorAll(".product.none").length ==
+        PM.searchAndSort[PM.searchPage].length &&
+        !window.location.pathname.includes("/Cart.html") 
+    ) {
+      fillerShow();
+      let btnsRow = document.querySelectorAll(".page--buttons");   
+        btnsRow.forEach(element => {
+          element.innerHTML = ``;
+          element.classList.remove("borderka");
+        }
+      )
     }
   }
 }
@@ -363,39 +382,75 @@ function fillerShow() {
   }
 }
 
-function pageBtnRender() {
+function pageBtnRender(isSearching) {
   let btnsRow = document.querySelectorAll(".page--buttons");
-  let now = PM.page <= 3 && PM.page >= 0 ? 0 : PM.page - 3;
- btnsRow.forEach(element => {
-  element.classList.add("borderka");
-    element.innerHTML = ``;
-    element.innerHTML += `<button class="nums" onclick="NextPage(${0},this)"><<<</button>`
-    element.innerHTML += `<button class="nums" onclick="NextPage(${PM.page <= 12 && PM.page >= 0 ? (12 - PM.page <= 3 && 12-PM.page >= 0 ? 12-PM.page : (PM.page == 0 ? PM.datas.length-1 : 0)): (PM.page - 12)},this)"><</button>`
-    for (let i = now; i < now + 6; i++) {
-      if(i <=PM.datas.length-1){
-        if(i == PM.page){
-          element.innerHTML += `
-          <button class="nums activePage" onclick="NextPage(${i},this)">${i + 1}</button>
-          `;
-        }
-        else{
-          element.innerHTML += `
-          <button class="nums" onclick="NextPage(${i},this)">${i + 1}</button>
-          `;
+  if(isSearching){
+    let now = PM.searchPage <= 5 && PM.searchPage >= 0 ? 0 : PM.searchPage - 5;
+   btnsRow.forEach(element => {
+    element.classList.add("borderka");
+      element.innerHTML = ``;
+      element.innerHTML += `<button class="nums" onclick="NextPage(${0},this,${isSearching})"><<<</button>`
+      element.innerHTML += `<button class="nums" onclick="NextPage(${PM.searchPage <= 12 && PM.searchPage >= 0 ? (12 - PM.searchPage <= 5 && 12-PM.searchPage >= 0 ? 12-PM.searchPage : (PM.searchPage == 0 ? PM.searchAndSort.length-1 : 0)): (PM.searchPage - 12)},this,${isSearching})"><</button>`
+      for (let i = now; i < now + 10; i++) {
+        if(i <=PM.searchAndSort.length-1){
+          if(i == PM.searchPage){
+            element.innerHTML += `
+            <button class="nums activePage" onclick="NextPage(${i},this,${isSearching})">${i + 1}</button>
+            `;
+          }
+          else{
+            element.innerHTML += `
+            <button class="nums" onclick="NextPage(${i},this,${isSearching})">${i + 1}</button>
+            `;
+          }
         }
       }
-    }
-    element.innerHTML += `<button class="nums" onclick="NextPage(${PM.page <= PM.datas.length-1 && PM.page >= PM.datas.length-10 ? (PM.datas.length-1 - PM.page <= 3 && PM.datas.length-1 - PM.page >=0 ? PM.datas.length-1-PM.page : PM.datas.length-1) :(PM.page+10)},this)">></button>`
-    element.innerHTML += `<button class="nums" onclick="NextPage(${PM.datas.length-1},this)">>>></button>`
-  })
+      element.innerHTML += `<button class="nums" onclick="NextPage(${PM.searchPage <= PM.searchAndSort.length-1 && PM.searchPage >= PM.searchAndSort.length-11   ? (PM.searchAndSort.length-1 - PM.searchPage <= 5 && PM.searchAndSort.length-1 - PM.searchPage >=0 ? PM.searchAndSort.length-1-PM.searchPage : PM.searchAndSort.length-1) :(PM.searchPage+11)},this,${isSearching})">></button>`
+      element.innerHTML += `<button class="nums" onclick="NextPage(${PM.searchAndSort.length-1},this,${isSearching})">>>></button>`
+    })
+  }
+  else{
+      let now = PM.page <= 5 && PM.page >= 0 ? 0 : (PM.page >= PM.searchAndSort.length - 11 && PM.page <= PM.searchAndSort.length - 1 ? PM.search.searchAndSort.length - 11 : PM.page - 5);
+   btnsRow.forEach(element => {
+    element.classList.add("borderka");
+      element.innerHTML = ``;
+      element.innerHTML += `<button class="nums" onclick="NextPage(${0},this,${isSearching})"><<<</button>`
+      element.innerHTML += `<button class="nums" onclick="NextPage(${PM.page <= 10 && PM.page >= 0 ? (10 - PM.page <= 10 && 10-PM.page >= 0 ? 10-PM.page : (PM.page == 0 ? PM.datas.length-1 : 0)): (PM.page - 10)},this,${isSearching})"><</button>`
+      for (let i = now; i < now + 10 ; i++) {
+        if(i <=PM.datas.length-1){
+          if(i == PM.page){
+            element.innerHTML += `
+            <button class="nums activePage" onclick="NextPage(${i},this,${isSearching})">${i + 1}</button>
+            `;
+          }
+          else{
+            element.innerHTML += `
+            <button class="nums" onclick="NextPage(${i},this,${isSearching})">${i + 1}</button>
+            `;
+          }
+        }
+      }
+      element.innerHTML += `<button class="nums" onclick="NextPage(${PM.page <= PM.datas.length-1 && PM.page >= PM.datas.length-10   ? (PM.datas.length-1 - PM.page <= 3 && PM.datas.length-1 - PM.page >=0 ? PM.datas.length-1-PM.page : PM.datas.length-1) :(PM.page+10)},this,${isSearching})">></button>`
+      element.innerHTML += `<button class="nums" onclick="NextPage(${PM.datas.length-1},this,${isSearching})">>>></button>`
+    })
+  }
 }
 
-function NextPage(pageNum,elem) {
-  PM.setPage(pageNum);
-  PM.render(true);
-  pageBtnRender();
-  elem.classList.add("activePage");
-  let search = document.querySelector("input.catalog-search");
-  search.value = ""
+function NextPage(pageNum,elem,isSearching) {
+  if(isSearching){
+    PM.searchPage = pageNum;
+    PM.searchAndSortRender();
+    pageBtnRender(isSearching);
+    elem.classList.add("activePage");
+
+  }
+  else{
+    PM.setPage(pageNum);
+    PM.render(true);
+    pageBtnRender(isSearching);
+    elem.classList.add("activePage");
+    let search = document.querySelector("input.catalog-search");
+    search.value = ""
+  }
 
 }

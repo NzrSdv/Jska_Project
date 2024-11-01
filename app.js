@@ -50,10 +50,17 @@ cartLink.addEventListener("click", () => {
 let search = document.querySelector(".catalog-search");
 
 search.addEventListener("input", (e)=>{
+  console.log(e)
   if(e.inputType.includes("delete")){
     searchFunc()
-    pageBtnRender();
+    if(search.value.trim() == ""){
+    pageBtnRender(false);
   }
+  else{
+    pageBtnRender(true);
+
+  }
+}
   else{
     searchFunc();
   }

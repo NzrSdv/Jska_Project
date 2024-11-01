@@ -39,7 +39,17 @@ window.onload = function () {
 
 let search = document.querySelector(".catalog-search");
 
-search.addEventListener("input", searchFunc);
+search.addEventListener("input", (e) => {
+  console.log(e)
+  if(e.inputType.includes("delete")){
+    searchFunc()
+    if(search.value.trim() == ""){
+    pageBtnRender(false);
+  }}
+  else{
+    pageBtnRender(true);
+  }
+});
 
 let select = document.querySelector(".sort");
 select.addEventListener("input", () => {

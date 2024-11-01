@@ -37,6 +37,29 @@ class ProductManager {
     this.datas = datas;
     this.carts = carts;
     this.page = 0;
+    this.searchAndSort = [];
+    this.searchPage = 0;
+  }
+  setSearched(array) {
+    if(window.location.href.includes("/Cart.html")){
+    this.searchAndSort = array;
+    }
+    else{
+      this.searchAndSort = this.splitSearch(array);
+    }
+    this.searchAndSortRender(window.location.href.includes("/Cart.html"))
+  }
+  splitSearch(array) {
+    const itemsPerRow = 16;
+    return array.reduce((acc, val, ind) => {
+      let curRow = Math.floor(ind / itemsPerRow);
+      if (!acc[curRow]) {
+        acc[curRow] = [val];
+      } else {
+        acc[curRow].push(val);
+      }
+      return acc;
+    }, []);
   }
   addData(element) {
     this.datas.push(element);
@@ -44,10 +67,10 @@ class ProductManager {
   addCart(element) {
     this.carts.push(element);
   }
-  setPage(newPage){
+  setPage(newPage) {
     this.page = newPage;
-    localStorage.setItem("page",this.page)
-    localStorage.setItem("products",JSON.stringify(this.datas[this.page]));
+    localStorage.setItem("page", this.page);
+    localStorage.setItem("products", JSON.stringify(this.datas[this.page]));
   }
   removeCart(id) {
     this.carts = this.carts.filter((elem) => {
@@ -76,11 +99,15 @@ class ProductManager {
   render(isData) {
     products.innerHTML = "";
     if (isData) {
-      if (PM.datas[PM.page] != undefined && document.querySelectorAll(".product.none").length == PM.datas[PM.page].length ) {
+      if (
+        PM.datas[PM.page] != undefined &&
+        document.querySelectorAll(".product.none").length ==
+          PM.datas[PM.page].length
+      ) {
         fillerShow();
       } else {
-        pageBtnRender();
-        if(this.datas[this.page] != undefined){
+        pageBtnRender(false);
+        if (this.datas[this.page] != undefined) {
           this.datas[this.page].forEach((element) => {
             products.innerHTML += `
             <div class="product ${element.rarity}">
@@ -99,13 +126,13 @@ class ProductManager {
         </div>
     </div>`;
           });
-        } 
+        }
       }
     } else {
       if (cartCheck()) {
         this.carts.forEach((element) => {
           products.innerHTML += `
-              <div class="product ${element.rarity}">
+              <div class="product ${element.rarity}" data-id="${element.id}">
               <div class="search--akparat">
               <img src="${element.image}" loading="lazy" alt="" class="product--image">
               <h2 class="product-name">${element.name}</h2>
@@ -127,6 +154,60 @@ class ProductManager {
       } else {
         this.totalCost();
         fillerShow();
+      }
+    }
+  }
+  searchAndSortRender(isCart) {
+    products.innerHTML = "";
+    if(isCart){
+      if (cartCheck()) {
+        this.searchAndSort.forEach((element) => {
+          products.innerHTML += `
+              <div class="product ${element.rarity}">
+              <div class="search--akparat">
+              <img src="${element.image}" loading="lazy" alt="" class="product--image">
+              <h2 class="product-name">${element.name}</h2>
+    <div class="line">
+        <h3 class="product-type">${element.type}</h3>
+        <h3 class="product-rarity">${element.rarity}</h3>
+    </div>
+    <div class = "line"> 
+      <button class="changeQ plus-Q" onclick="plusCartProduct(${element.id})">+</button>
+      <h3 class="product-Q">${element.quantity}</h3>
+      <button class="changeQ minus-Q" onclick="minusCartProduct(${element.id})">-</button>
+  </div>
+  <h3 class="product-sum">${element.AllSum} VB</h3>
+  <button class="product-delete" onclick="removeCartProduct(${element.id})">Delete</button>
+      </div>
+              </div>`;
+        });
+        this.totalCost();
+      } else if(document.querySelectorAll(".product.none") == this.searchAndSort.length) {
+        this.totalCost();
+        fillerShow();
+      }
+    }
+    else{
+      if(this.searchAndSort[this.searchPage] != undefined){
+        this.searchAndSort[this.searchPage].forEach((elem) => {
+          products.innerHTML += `
+                  <div class="product ${elem.rarity}">
+              <div class="search--akparat">
+              <img src="${elem.image}" alt="" class="product--image" loading="eager">
+              <h2 class="product-name info-important">${elem.name}</h2>
+              <div class="line">
+                  <h3 class="product-type info-important">${elem.type}</h3>
+                  <h3 class="product-rarity info-important">${elem.rarity}</h3>
+              </div>
+              
+        <h3 class="product-rarity info-important">${elem.cost} VB</h3>
+              </div>
+              <div class = "line"> 
+              <button class="product--cart" onclick="addToTheCartButton(${elem.id})">add to cart</button>
+              </div>
+          </div>`;
+        });
+        pageBtnRender(true);
       }
     }
   }
@@ -246,7 +327,7 @@ class Product {
   }
 }
 class CartProduct extends Product {
-  constructor(id, name, rarity, type , image, cost, quantity) {
+  constructor(id, name, rarity, type, image, cost, quantity) {
     super(id, name, rarity, type, image, cost);
     this.quantity = quantity;
     this.toFindTheCost();
@@ -336,12 +417,12 @@ class UserManager {
       return -1;
     }
   }
-  removeUser(login){
+  removeUser(login) {
     this.users = this.users.filter((element) => {
-      if(element.login != login){
+      if (element.login != login) {
         return element;
       }
-    })
-    console.log(this.users)
+    });
+    console.log(this.users);
   }
 }
